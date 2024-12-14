@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Synaptics蠕虫病毒清理 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="丢脸，中蠕虫了。 症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xl">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/152/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/152/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Synaptics蠕虫病毒清理" />
+<meta property="og:description" content="丢脸，中蠕虫了。 症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xl" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/152/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-23T07:56:29+00:00" />
+<meta property="article:modified_time" content="2022-01-23T07:56:29+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Synaptics蠕虫病毒清理"/>
+<meta name="twitter:description" content="丢脸，中蠕虫了。 症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xl"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Synaptics蠕虫病毒清理",
+      "item": "https://a10nggg.github.io/archives/152/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Synaptics蠕虫病毒清理",
+  "name": "Synaptics蠕虫病毒清理",
+  "description": "丢脸，中蠕虫了。 症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xl",
+  "keywords": [
+    
+  ],
+  "articleBody": "丢脸，中蠕虫了。\n症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xlsm。\n用我垃圾的技术只能分析出 他调用的一些dll。大概是….我也不知道。\n在被感染的文件里我用ida打开，找到了他生成的exe文件。以及进程名\nSynaptics Pointing Device Driver。\n网上还有一些憨批说是 {.wp-editor-md-post-content-link}\nwdnmd,不懂就不要乱说好吗\n扔到疼讯哈勃分析了一下。\n{.wp-editor-md-post-content-link}\nemm大概就是修改注册表，一顿写文件，然后联网传数据，之前19年就有人中了，时间这么长，我估计接口已经废了但是我注册表和文件基本没被感染，应该是他权限不够。要是会逆就好了。\n解决方案： 一个吾爱大佬写的，跟我没有关系，我只是搬运工。\n解决方案就是，下载https://wwx.lanzoux.com/iXc0wiing0f\n双击打开并且等待结果就行。\n2020-11-17更新\n修复不扫描非NTFS格式磁盘以及U盘功能\n2020-05-22更新\n1：增加全盘扫描\n2：增加U盘扫描\n3：增加第二套扫描模式，遍历文件目录扫描(速度较慢，在检测到非NTFS文件系统下才会使用)\n4：使用Open XML SDK模块对被感染的Excel文件进行处理，删除病毒VBA代码，恢复成xlsx格式，被感染的xlsm文件以防万一移入回收站而不直接删除\n目前已知问题，对某些exe文件会无法恢复，问题发生的原因不明，程序会自动跳过该类文件但是病毒还在要小心\n对长路径名的文件无法处理，这个是Win系统的通病，我也不清楚病毒是怎么做到对长路径和长文件名的感染的\n被感染的xlsm文件恢复还处于验证阶段，需要你们的测试结果\n",
+  "wordCount" : "678",
+  "inLanguage": "en",
+  "datePublished": "2022-01-23T07:56:29Z",
+  "dateModified": "2022-01-23T07:56:29Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/152/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Synaptics蠕虫病毒清理
+    </h1>
+    <div class="post-meta"><span title='2022-01-23 07:56:29 +0000 +0000'>January 23, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>丢脸，中蠕虫了。<br>
+症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xlsm。<br>
+用我垃圾的技术只能分析出 他调用的一些dll。大概是&hellip;.我也不知道。<br>
+在被感染的文件里我用ida打开，找到了他生成的exe文件。以及进程名<br>
+Synaptics Pointing Device Driver。<br>
+网上还有一些憨批说是<a href="/uploads/2022/01/wp_editor_md_f5d6e7c24665e112c6cf14ca878af681.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_f5d6e7c24665e112c6cf14ca878af681.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>wdnmd,不懂就不要乱说好吗<br>
+扔到疼讯哈勃分析了一下。<br>
+<a href="/uploads/2022/01/wp_editor_md_9ffdc42f4cc94c923ffe1b9773e052a8.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_9ffdc42f4cc94c923ffe1b9773e052a8.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+emm大概就是修改注册表，一顿写文件，然后联网传数据，之前19年就有人中了，时间这么长，我估计接口已经废了但是我注册表和文件基本没被感染，应该是他权限不够。要是会逆就好了。</p>
+<h1 id="解决方案">解决方案：<a hidden class="anchor" aria-hidden="true" href="#解决方案">#</a></h1>
+<p>一个吾爱大佬写的，跟我没有关系，我只是搬运工。</p>
+<p>解决方案就是，下载https://wwx.lanzoux.com/iXc0wiing0f<br>
+双击打开并且等待结果就行。<br>
+2020-11-17更新<br>
+修复不扫描非NTFS格式磁盘以及U盘功能<br>
+2020-05-22更新<br>
+1：增加全盘扫描<br>
+2：增加U盘扫描<br>
+3：增加第二套扫描模式，遍历文件目录扫描(速度较慢，在检测到非NTFS文件系统下才会使用)<br>
+4：使用Open XML SDK模块对被感染的Excel文件进行处理，删除病毒VBA代码，恢复成xlsx格式，被感染的xlsm文件以防万一移入回收站而不直接删除<br>
+目前已知问题，对某些exe文件会无法恢复，问题发生的原因不明，程序会自动跳过该类文件但是病毒还在要小心<br>
+对长路径名的文件无法处理，这个是Win系统的通病，我也不清楚病毒是怎么做到对长路径和长文件名的感染的<br>
+被感染的xlsm文件恢复还处于验证阶段，需要你们的测试结果</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

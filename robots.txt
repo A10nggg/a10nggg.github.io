@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://a10nggg.github.io/sitemap.xml

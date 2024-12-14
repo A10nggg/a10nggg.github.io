@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>JAVA on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/java/</link>
+    <description>Recent content in JAVA on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Apr 2022 01:15:51 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java多线程笔记</title>
+      <link>https://a10nggg.github.io/archives/214/</link>
+      <pubDate>Wed, 06 Apr 2022 01:15:51 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/214/</guid>
+      <description>Thread start方法 ​ start()用来启动一个线程，当调用start方法后，系统才会开启一个新的线程来执行用户定义的子任务，在这个过程中，会为</description>
+    </item>
+  </channel>
+</rss>

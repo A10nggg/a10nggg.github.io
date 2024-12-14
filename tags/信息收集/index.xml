@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>信息收集 on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</link>
+    <description>Recent content in 信息收集 on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 21 Dec 2021 13:27:43 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>谷歌语法</title>
+      <link>https://a10nggg.github.io/archives/48/</link>
+      <pubDate>Tue, 21 Dec 2021 13:27:43 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/48/</guid>
+      <description>我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身</description>
+    </item>
+  </channel>
+</rss>

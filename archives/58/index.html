@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>记一次实战 CVE-2021-21972 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/58/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/58/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="记一次实战 CVE-2021-21972" />
+<meta property="og:description" content="最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/58/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-21T14:09:57+00:00" />
+<meta property="article:modified_time" content="2021-12-21T14:09:57+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记一次实战 CVE-2021-21972"/>
+<meta name="twitter:description" content="最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "记一次实战 CVE-2021-21972",
+      "item": "https://a10nggg.github.io/archives/58/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "记一次实战 CVE-2021-21972",
+  "name": "记一次实战 CVE-2021-21972",
+  "description": "最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正",
+  "keywords": [
+    
+  ],
+  "articleBody": "最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正经渗透测试，有授权的!）的时候通过CVE-2021-21972拿下了一台机器，并且成功登陆进了控制平台里，下面我给大家复原一下整个攻击的思路，。\nvSphere 是 VMware 推出的虚拟化平台套件，包含 ESXi、vCenter Server 等一系列的软件。其中 vCenter Server 为 ESXi 的控制中心，可从单一控制点统一管理数据中心的所有 vSphere 主机和虚拟机。\n这个受影响的范围为\n受影响版本\nVMware vCenter Server 7.0系列 \u003c 7.0.U1c\nVMware vCenter Server 6.7系列 \u003c 6.7.U3l\nVMware vCenter Server 6.5系列 \u003c 6.5 U3n\nVMware ESXi 7.0系列 \u003c ESXi70U1c-17325551\nVMware ESXi 6.7系列 \u003c ESXi670-202102401-SG\nVMware ESXi 6.5系列 \u003c ESXi650-202102101-SG\n具体过程\n进内网的时候非常混乱，发现了一大堆ESXi，有个有经验的师傅说找到vcenter就妥了，这一大堆机器就全干下来了，我们写脚本将这些url全跑一遍，通过返回的字节长度以及状态码，最终锁定了两台机器。\n首先我们访问https://ip/ui/vropspluginui/rest/services/uploadova 如果反回的状态码为405，那么可能机会存在这个洞。 {.wp-editor-md-post-content-link}\n然后再github找到一个exp。\nhttps://github.com/NS-Sp4ce/CVE-2021-21972\n这里有点坑，payload是默认的linux。而我们的机器是windows，打了半天打不进去才发现这个问题。后来改了脚本一瞬间就梭进去了。这儿需要修改的地方就是那个函数，根据实际情况修改。\n{.wp-editor-md-post-content-link}\n再攻击成功后会返回一个shell的地址，用冰蝎3进行连接。\n{.wp-editor-md-post-content-link}\n连接成功后就拿到了目标系统的system权限。\n这时候我们发现拿到机器也登陆不上控制平台，要登录还需要密码。\n在vcenter的安装目录里有一个vdcadmintool.exe，他的默认地址是\nC:\\Program Files\\VMware\\vCenter Server\\vmdird，我们可以利用这个工具对平台的密码进行修改，他会生成新的随机密码。 Please select:\n0. exit\nTest LDAP connectivity Force start replication cycle Reset account password Set log level and mask Set vmdir state Get vmdir state 7. Get vmdir log level and mask 运行它会出现一下选项，我们选择3，然后输入用户名，在这我们直接蒙了一个他的初始用户名administrator@vsphere.local，正确之后就能修改密码了。\n在修改成功之后。我们利用新生成的密码成功进入控制平台，进去之后发现里面有几十台虚拟机，其中包括好多的重要系统，报告提交game over！\n由于信息非常敏感，所以我就在网上随便找了一张相同的图,就是这么回事儿，大家凑活看看吧。\n{.wp-editor-md-post-content-link}\n",
+  "wordCount" : "985",
+  "inLanguage": "en",
+  "datePublished": "2021-12-21T14:09:57Z",
+  "dateModified": "2021-12-21T14:09:57Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/58/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      记一次实战 CVE-2021-21972
+    </h1>
+    <div class="post-meta"><span title='2021-12-21 14:09:57 +0000 +0000'>December 21, 2021</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正经渗透测试，有授权的!）的时候通过CVE-2021-21972拿下了一台机器，并且成功登陆进了控制平台里，下面我给大家复原一下整个攻击的思路，。<br>
+vSphere 是 VMware 推出的虚拟化平台套件，包含 ESXi、vCenter Server 等一系列的软件。其中 vCenter Server 为 ESXi 的控制中心，可从单一控制点统一管理数据中心的所有 vSphere 主机和虚拟机。<br>
+这个受影响的范围为<br>
+受影响版本<br>
+VMware vCenter Server 7.0系列 &lt; 7.0.U1c</p>
+<p>VMware vCenter Server 6.7系列 &lt; 6.7.U3l</p>
+<p>VMware vCenter Server 6.5系列 &lt; 6.5 U3n</p>
+<p>VMware ESXi 7.0系列 &lt; ESXi70U1c-17325551</p>
+<p>VMware ESXi 6.7系列 &lt; ESXi670-202102401-SG</p>
+<p>VMware ESXi 6.5系列 &lt; ESXi650-202102101-SG</p>
+<p>具体过程<br>
+进内网的时候非常混乱，发现了一大堆ESXi，有个有经验的师傅说找到vcenter就妥了，这一大堆机器就全干下来了，我们写脚本将这些url全跑一遍，通过返回的字节长度以及状态码，最终锁定了两台机器。</p>
+<pre><code>首先我们访问https://ip/ui/vropspluginui/rest/services/uploadova
+如果反回的状态码为405，那么可能机会存在这个洞。
+</code></pre>
+<p><a href="/uploads/2021/12/wp_editor_md_be25d68076cb55f7a55a367765d2c2cf.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_be25d68076cb55f7a55a367765d2c2cf.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+然后再github找到一个exp。<br>
+<a href="https://github.com/NS-Sp4ce/CVE-2021-21972">https://github.com/NS-Sp4ce/CVE-2021-21972</a><br>
+这里有点坑，payload是默认的linux。而我们的机器是windows，打了半天打不进去才发现这个问题。后来改了脚本一瞬间就梭进去了。这儿需要修改的地方就是那个函数，根据实际情况修改。<br>
+<a href="/uploads/2021/12/wp_editor_md_71aec06626e72854a0a3e662766fb120.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_71aec06626e72854a0a3e662766fb120.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+再攻击成功后会返回一个shell的地址，用冰蝎3进行连接。<br>
+<a href="/uploads/2021/12/wp_editor_md_f6ee746d4fba96a022949141d4a0a856.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_f6ee746d4fba96a022949141d4a0a856.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+连接成功后就拿到了目标系统的system权限。<br>
+这时候我们发现拿到机器也登陆不上控制平台，要登录还需要密码。<br>
+在vcenter的安装目录里有一个vdcadmintool.exe，他的默认地址是</p>
+<h1 id="cprogram-filesvmwarevcenter-servervmdird我们可以利用这个工具对平台的密码进行修改他会生成新的随机密码">C:\Program Files\VMware\vCenter Server\vmdird，我们可以利用这个工具对平台的密码进行修改，他会生成新的随机密码。<a hidden class="anchor" aria-hidden="true" href="#cprogram-filesvmwarevcenter-servervmdird我们可以利用这个工具对平台的密码进行修改他会生成新的随机密码">#</a></h1>
+<p>Please select:<br>
+0. exit</p>
+<ol>
+<li>Test LDAP connectivity</li>
+<li>Force start replication cycle</li>
+<li>Reset account password</li>
+<li>Set log level and mask</li>
+<li>Set vmdir state</li>
+<li>Get vmdir state</li>
+</ol>
+<h1 id="7-get-vmdir-log-level-and-mask">7. Get vmdir log level and mask<a hidden class="anchor" aria-hidden="true" href="#7-get-vmdir-log-level-and-mask">#</a></h1>
+<p>运行它会出现一下选项，我们选择3，然后输入用户名，在这我们直接蒙了一个他的初始用户名administrator@vsphere.local，正确之后就能修改密码了。<br>
+在修改成功之后。我们利用新生成的密码成功进入控制平台，进去之后发现里面有几十台虚拟机，其中包括好多的重要系统，报告提交game over！<br>
+由于信息非常敏感，所以我就在网上随便找了一张相同的图,就是这么回事儿，大家凑活看看吧。</p>
+<p><a href="/uploads/2021/12/wp_editor_md_a3d812fd455ce8117d6cd2614299d8a5.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_a3d812fd455ce8117d6cd2614299d8a5.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

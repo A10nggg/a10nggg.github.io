@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>笔记 on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 笔记 on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 10 Feb 2023 16:17:18 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个OneNote钓鱼样本分析</title>
+      <link>https://a10nggg.github.io/archives/399/</link>
+      <pubDate>Fri, 10 Feb 2023 16:17:18 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/399/</guid>
+      <description>一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分</description>
+    </item>
+    <item>
+      <title>go免杀捆绑器</title>
+      <link>https://a10nggg.github.io/archives/394/</link>
+      <pubDate>Fri, 14 Oct 2022 07:39:33 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/394/</guid>
+      <description>利用https://github.com/Yihsiwei/GoFileBinder改了加密算法和编译混淆。最开始不加混淆是可以过的，可能是</description>
+    </item>
+    <item>
+      <title>2022蓝帽决赛部分WP（awdp）</title>
+      <link>https://a10nggg.github.io/archives/370/</link>
+      <pubDate>Thu, 22 Sep 2022 15:43:55 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/370/</guid>
+      <description>web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p</description>
+    </item>
+    <item>
+      <title>CVE-2022-30190</title>
+      <link>https://a10nggg.github.io/archives/357/</link>
+      <pubDate>Fri, 02 Sep 2022 13:35:06 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/357/</guid>
+      <description>好久以前写的了，忘发了。。。 前言 昨天大哥扔了个MS office 0day（CVE-2022-30190）的截图到群里，晚上就复现了一下 ，随即有了下文 。 攻</description>
+    </item>
+    <item>
+      <title>ARL增强版搭建</title>
+      <link>https://a10nggg.github.io/archives/342/</link>
+      <pubDate>Fri, 02 Sep 2022 13:09:52 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/342/</guid>
+      <description>拉取项目 首先从GitHub克隆到服务器上。 git clone https://github.com/ki9mu/ARL-plus-docker/ 修改配置文件 因为ARL在配置文件里设置了黑名单，有时候项目为GOV或者EDU之类的时候无法进</description>
+    </item>
+    <item>
+      <title>Nuclei POC模板编写笔记（二）</title>
+      <link>https://a10nggg.github.io/archives/338/</link>
+      <pubDate>Mon, 08 Aug 2022 06:45:31 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/338/</guid>
+      <description>继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指</description>
+    </item>
+    <item>
+      <title>Nuclei POC模板编写笔记（一）</title>
+      <link>https://a10nggg.github.io/archives/325/</link>
+      <pubDate>Sun, 07 Aug 2022 08:54:50 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/325/</guid>
+      <description>打不动了，开摸，很多地方（其实是基本上）都是cv的，原文是英文的，阅读不方便，记下来方便自己看看。。 基本介绍 id ID 不得包含空格。这样做是为了让</description>
+    </item>
+    <item>
+      <title>DLL劫持（学习笔记）</title>
+      <link>https://a10nggg.github.io/archives/267/</link>
+      <pubDate>Fri, 06 May 2022 14:38:02 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/267/</guid>
+      <description>什么是DLL DLL(Dynamic Link Library)文件为动态链接库文件，又称“应用程序拓展”，是软件文件类型。在Windows中，许多应用程序并不是一个完整的</description>
+    </item>
+    <item>
+      <title>浅试Viper</title>
+      <link>https://a10nggg.github.io/archives/241/</link>
+      <pubDate>Fri, 15 Apr 2022 13:43:13 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/241/</guid>
+      <description>Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二</description>
+    </item>
+    <item>
+      <title>Burp Suite抓取https包原理</title>
+      <link>https://a10nggg.github.io/archives/231/</link>
+      <pubDate>Wed, 06 Apr 2022 04:55:35 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/231/</guid>
+      <description>https请求 之前面试问到了BurpSuite抓取https包原理这个问题，在面试官的提示下大概答出来了。在这里再总结一下。 首先说一下htt</description>
+    </item>
+    <item>
+      <title>Java多线程笔记</title>
+      <link>https://a10nggg.github.io/archives/214/</link>
+      <pubDate>Wed, 06 Apr 2022 01:15:51 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/214/</guid>
+      <description>Thread start方法 ​ start()用来启动一个线程，当调用start方法后，系统才会开启一个新的线程来执行用户定义的子任务，在这个过程中，会为</description>
+    </item>
+    <item>
+      <title>Ubuntu重启后直接进入tty1的解决办法</title>
+      <link>https://a10nggg.github.io/archives/163/</link>
+      <pubDate>Wed, 09 Feb 2022 06:47:36 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/163/</guid>
+      <description>网上说打开startx,但是我的机器显示没有这个命令。 直接安装一下ubuntu图形化。 发现没有网络。 先连接网络， sudo dhclient eth0 虚拟机提示cannot</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>Synaptics蠕虫病毒清理</title>
+      <link>https://a10nggg.github.io/archives/152/</link>
+      <pubDate>Sun, 23 Jan 2022 07:56:29 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/152/</guid>
+      <description>丢脸，中蠕虫了。 症状就是他会感染exe文件，没有图标他会贴心的给你换上一个巨丑无比的图标，然后就变成了病原体。xls会被强行加上宏，变成xl</description>
+    </item>
+    <item>
+      <title>MySQL写Shell</title>
+      <link>https://a10nggg.github.io/archives/132/</link>
+      <pubDate>Thu, 20 Jan 2022 09:32:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/132/</guid>
+      <description>日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指</description>
+    </item>
+    <item>
+      <title>fofa场景——st2入口内网WP</title>
+      <link>https://a10nggg.github.io/archives/134/</link>
+      <pubDate>Wed, 19 Jan 2022 13:05:37 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/134/</guid>
+      <description>靶场拓扑图 {.wp-editor-md-post-content-link} 入口struts2 进去根据拓扑图发现是struts2，工具一把梭，然后在/tmp目录拿到flag。 {.wp-editor-md-post-content-link} 内网探测。 在拓扑图上发现有两</description>
+    </item>
+    <item>
+      <title>R11s线刷降级</title>
+      <link>https://a10nggg.github.io/archives/127/</link>
+      <pubDate>Sat, 15 Jan 2022 07:10:45 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/127/</guid>
+      <description>难点主要是破解MsmDownloadTool。虚拟机在装完之后恢复快照了，忘截图了。 在加密🐕上添加授权🐎后，仍然是连接超时。 卡了两天。 步骤大</description>
+    </item>
+    <item>
+      <title>常用代理以及多层代理，端口转发</title>
+      <link>https://a10nggg.github.io/archives/119/</link>
+      <pubDate>Tue, 11 Jan 2022 07:53:46 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/119/</guid>
+      <description>常见工具 {.wp-editor-md-post-content-link} EW 反向内网穿透 反向代理就是我们服务端监听，⽬标客户端连接我们的服务端，这就叫做反向代理。 也就是红队⼈员的 VPS 称之为客户端，开启了⼀个</description>
+    </item>
+    <item>
+      <title>获取机器下各类密码</title>
+      <link>https://a10nggg.github.io/archives/117/</link>
+      <pubDate>Tue, 11 Jan 2022 07:34:26 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/117/</guid>
+      <description>通过注册表抓取密码hash ⾸先我们需要把当前系统注册表 SAM、SYSTEM 获取到： 然后把这两个⽂件拖回本地然后⽤ mimikatz 抓取密码hash： reg save HKLM\SYSTEM Sys.hiv</description>
+    </item>
+    <item>
+      <title>内网无域机器域渗透</title>
+      <link>https://a10nggg.github.io/archives/112/</link>
+      <pubDate>Tue, 11 Jan 2022 07:09:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/112/</guid>
+      <description>攻击思路 1、通过nltest或者nbtscan找到域控，并且可以建立空连接 2、找到域控，但是无法建立空连接 3、没找到域控，但是通过nbtsc</description>
+    </item>
+    <item>
+      <title>IPC$</title>
+      <link>https://a10nggg.github.io/archives/101/</link>
+      <pubDate>Tue, 11 Jan 2022 06:47:35 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/101/</guid>
+      <description>IPC（共享命名管道资源）其实就是为了实现进程间通信⽽开放的命名管道；IPC可以通过验证⽤户名和密码 获得相应的权限，通常在远程管理计算机和查</description>
+    </item>
+    <item>
+      <title>windows提权</title>
+      <link>https://a10nggg.github.io/archives/98/</link>
+      <pubDate>Tue, 11 Jan 2022 06:38:53 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/98/</guid>
+      <description>⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe</description>
+    </item>
+  </channel>
+</rss>

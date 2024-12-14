@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>WEB on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/web/</link>
+    <description>Recent content in WEB on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 10 Feb 2023 16:17:18 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个OneNote钓鱼样本分析</title>
+      <link>https://a10nggg.github.io/archives/399/</link>
+      <pubDate>Fri, 10 Feb 2023 16:17:18 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/399/</guid>
+      <description>一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分</description>
+    </item>
+    <item>
+      <title>go免杀捆绑器</title>
+      <link>https://a10nggg.github.io/archives/394/</link>
+      <pubDate>Fri, 14 Oct 2022 07:39:33 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/394/</guid>
+      <description>利用https://github.com/Yihsiwei/GoFileBinder改了加密算法和编译混淆。最开始不加混淆是可以过的，可能是</description>
+    </item>
+    <item>
+      <title>2022蓝帽决赛部分WP（awdp）</title>
+      <link>https://a10nggg.github.io/archives/370/</link>
+      <pubDate>Thu, 22 Sep 2022 15:43:55 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/370/</guid>
+      <description>web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p</description>
+    </item>
+    <item>
+      <title>ARL增强版搭建</title>
+      <link>https://a10nggg.github.io/archives/342/</link>
+      <pubDate>Fri, 02 Sep 2022 13:09:52 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/342/</guid>
+      <description>拉取项目 首先从GitHub克隆到服务器上。 git clone https://github.com/ki9mu/ARL-plus-docker/ 修改配置文件 因为ARL在配置文件里设置了黑名单，有时候项目为GOV或者EDU之类的时候无法进</description>
+    </item>
+    <item>
+      <title>Nuclei POC模板编写笔记（二）</title>
+      <link>https://a10nggg.github.io/archives/338/</link>
+      <pubDate>Mon, 08 Aug 2022 06:45:31 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/338/</guid>
+      <description>继续摸！ 匹配器 匹配器允许对协议响应进行不同类型的灵活比较。非常易于编写，并且可以根据需要添加多个检查以实现非常有效的扫描。 类型 可以在请求中指</description>
+    </item>
+    <item>
+      <title>Nuclei POC模板编写笔记（一）</title>
+      <link>https://a10nggg.github.io/archives/325/</link>
+      <pubDate>Sun, 07 Aug 2022 08:54:50 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/325/</guid>
+      <description>打不动了，开摸，很多地方（其实是基本上）都是cv的，原文是英文的，阅读不方便，记下来方便自己看看。。 基本介绍 id ID 不得包含空格。这样做是为了让</description>
+    </item>
+    <item>
+      <title>第十五届全国大学生信息安全竞赛创新实践能力赛</title>
+      <link>https://a10nggg.github.io/archives/281/</link>
+      <pubDate>Sun, 29 May 2022 13:48:21 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/281/</guid>
+      <description>基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2&amp;gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码</description>
+    </item>
+    <item>
+      <title>浅试Viper</title>
+      <link>https://a10nggg.github.io/archives/241/</link>
+      <pubDate>Fri, 15 Apr 2022 13:43:13 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/241/</guid>
+      <description>Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二</description>
+    </item>
+    <item>
+      <title>CTFSHOW-WEB入门-反序列化</title>
+      <link>https://a10nggg.github.io/archives/237/</link>
+      <pubDate>Thu, 14 Apr 2022 08:46:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/237/</guid>
+      <description>web254 &amp;lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(&amp;#039;flag.php&amp;#039;); class ctfShowUser{ public $username=&amp;#039;xxxxxx&amp;#039;; public $password=&amp;#039;xxxxxx&amp;#039;; public $isVip=false; public function checkVip(){ return $this-&amp;gt;isVip; } public function login($u,$p){ if($this-&amp;gt;username===$u&amp;&amp;$this-&amp;gt;password===$p){ $this-&amp;gt;isVip=true; } return $this-&amp;gt;isVip; } public function vipOneKeyGetFlag(){ if($this-&amp;gt;isVip){ global $flag; echo &#34;your flag is &#34;.$flag;</description>
+    </item>
+    <item>
+      <title>Burp Suite抓取https包原理</title>
+      <link>https://a10nggg.github.io/archives/231/</link>
+      <pubDate>Wed, 06 Apr 2022 04:55:35 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/231/</guid>
+      <description>https请求 之前面试问到了BurpSuite抓取https包原理这个问题，在面试官的提示下大概答出来了。在这里再总结一下。 首先说一下htt</description>
+    </item>
+    <item>
+      <title>红明谷2022部分wp</title>
+      <link>https://a10nggg.github.io/archives/198/</link>
+      <pubDate>Tue, 22 Mar 2022 12:26:12 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/198/</guid>
+      <description>WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi</description>
+    </item>
+    <item>
+      <title>[TQLCTF2022] Simple PHP WP</title>
+      <link>https://a10nggg.github.io/archives/171/</link>
+      <pubDate>Mon, 21 Feb 2022 13:22:27 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/171/</guid>
+      <description>做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>MySQL写Shell</title>
+      <link>https://a10nggg.github.io/archives/132/</link>
+      <pubDate>Thu, 20 Jan 2022 09:32:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/132/</guid>
+      <description>日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指</description>
+    </item>
+    <item>
+      <title>fofa场景——st2入口内网WP</title>
+      <link>https://a10nggg.github.io/archives/134/</link>
+      <pubDate>Wed, 19 Jan 2022 13:05:37 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/134/</guid>
+      <description>靶场拓扑图 {.wp-editor-md-post-content-link} 入口struts2 进去根据拓扑图发现是struts2，工具一把梭，然后在/tmp目录拿到flag。 {.wp-editor-md-post-content-link} 内网探测。 在拓扑图上发现有两</description>
+    </item>
+    <item>
+      <title>数据库提权</title>
+      <link>https://a10nggg.github.io/archives/114/</link>
+      <pubDate>Tue, 11 Jan 2022 07:29:41 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/114/</guid>
+      <description>上传一个php大马，或者直接用webshell管理工具也行。 二、利用条件 1、常规情况： 1.1 mysql配置文件secure_file_priv项</description>
+    </item>
+    <item>
+      <title>windows提权</title>
+      <link>https://a10nggg.github.io/archives/98/</link>
+      <pubDate>Tue, 11 Jan 2022 06:38:53 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/98/</guid>
+      <description>⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe</description>
+    </item>
+    <item>
+      <title>DNSlog利用姿势总结</title>
+      <link>https://a10nggg.github.io/archives/86/</link>
+      <pubDate>Fri, 07 Jan 2022 13:04:09 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/86/</guid>
+      <description>前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边</description>
+    </item>
+    <item>
+      <title>Redis_getshell的三种姿势（续）</title>
+      <link>https://a10nggg.github.io/archives/80/</link>
+      <pubDate>Fri, 07 Jan 2022 07:26:04 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/80/</guid>
+      <description>前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。 Redis简介 redis是一个使用C语言编写，开源高性能非关</description>
+    </item>
+    <item>
+      <title>Redis_主从复制 RCE</title>
+      <link>https://a10nggg.github.io/archives/77/</link>
+      <pubDate>Thu, 06 Jan 2022 11:22:34 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/77/</guid>
+      <description>Redis简介 redis是一个使用C语言编写，开源高性能非关系型的键值对存储系统，和memcached类似，在企业中一般被当作缓存中间件使用</description>
+    </item>
+    <item>
+      <title>SSRF之gopher</title>
+      <link>https://a10nggg.github.io/archives/72/</link>
+      <pubDate>Wed, 05 Jan 2022 13:05:15 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/72/</guid>
+      <description>一、什么是gopher Gopher是Internet上一个非常有名的信息查找系统，它将Internet上的文件组织成某种索引，很方便地将用户</description>
+    </item>
+  </channel>
+</rss>

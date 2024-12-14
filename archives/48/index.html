@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>谷歌语法 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="信息收集">
+<meta name="description" content="我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/48/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/48/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="谷歌语法" />
+<meta property="og:description" content="我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/48/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-21T13:27:43+00:00" />
+<meta property="article:modified_time" content="2021-12-21T13:27:43+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="谷歌语法"/>
+<meta name="twitter:description" content="我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "谷歌语法",
+      "item": "https://a10nggg.github.io/archives/48/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "谷歌语法",
+  "name": "谷歌语法",
+  "description": "我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身",
+  "keywords": [
+    "信息收集"
+  ],
+  "articleBody": "我记得某某带佬跟我说过：信息收集是渗透的本质。\n谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身份信息泄露，源代码泄露。重则直接mdb文件下载，未访问授权等。只要谷歌语法用得好，搞站没烦恼。\n首先讲一下常用的语法：\nsite:域名\n查找含有这个域名的网页，这个用来锁定一个单位的内容。\n{.wp-editor-md-post-content-link}\nintext:关键字\n返回含有这个关键字的网页。\n{.wp-editor-md-post-content-link}\nintitle:关键字\n返回含有关键字的标题\n{.wp-editor-md-post-content-link}\nallintitle:关键字 关键字\n用法和inurl类似，只不过可以指定多个词，例如：inurl:Login admin 将返回url中含有 Login 和 admin 的网页。\nlink:关键字\n查找与关键字做了链接的URL地址，利用它我们可能搜索到一些敏感信息。\n{.wp-editor-md-post-content-link}\ninfo:关键字\n返回指定网站的基本信息\n{.wp-editor-md-post-content-link}\nfiletype:关键字 site:关键字\n返回关键站点指定类型的文件\n{.wp-editor-md-post-content-link}\n谷歌语法需要几条命令组合起来才能发挥他最大的威力，单单是一个，往往在实战时作用微乎其微，下边我给大家列举几条常用的组合。\n查找后台\nsite:pku.edu.cn intitle:后台\nsite:pku.edu.cn inur:admin\nsite:pku.edu.cn intext:管理\n{.wp-editor-md-post-content-link}\n查找登录口\nsite:xxx.com intitle:登录\nsite: xxx.com inurl:login\nsite: xxx.com intext:登录\n{.wp-editor-md-post-content-link}\n查找上传点：\nsite: xxx.com inurl:upload\nsite: xxx.com intext:上传\n查找敏感信息：\nsite: xxx.com intext:身份证号|姓名|学号\n查找可能存在sql注入的点：\nsite: xxx.com inurl:?id=1\n查找可能存在文件包含的点：\nsite: xxx.com inurl:?file=\nsite: xxx.com inurl:?image=\n找编辑器页面：\nsite:xxx.com inurl:ewebeditor\n",
+  "wordCount" : "585",
+  "inLanguage": "en",
+  "datePublished": "2021-12-21T13:27:43Z",
+  "dateModified": "2021-12-21T13:27:43Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/48/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      谷歌语法
+    </h1>
+    <div class="post-meta"><span title='2021-12-21 13:27:43 +0000 +0000'>December 21, 2021</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>我记得某某带佬跟我说过：信息收集是渗透的本质。<br>
+谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身份信息泄露，源代码泄露。重则直接mdb文件下载，未访问授权等。只要谷歌语法用得好，搞站没烦恼。<br>
+首先讲一下常用的语法：<br>
+site:域名<br>
+查找含有这个域名的网页，这个用来锁定一个单位的内容。<br>
+<a href="/uploads/2021/12/wp_editor_md_8bfe432ac096f70876e93d26b7d3910d.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_8bfe432ac096f70876e93d26b7d3910d.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+intext:关键字<br>
+返回含有这个关键字的网页。<br>
+<a href="/uploads/2021/12/wp_editor_md_e54f599ff82bd3a327aa3f84ddda38b3.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_e54f599ff82bd3a327aa3f84ddda38b3.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+intitle:关键字<br>
+返回含有关键字的标题<br>
+<a href="/uploads/2021/12/wp_editor_md_e2f5cff53af7c7724dc9a00399f6d60a.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_e2f5cff53af7c7724dc9a00399f6d60a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+allintitle:关键字 关键字<br>
+用法和inurl类似，只不过可以指定多个词，例如：inurl:Login admin 将返回url中含有 Login 和 admin 的网页。<br>
+link:关键字<br>
+查找与关键字做了链接的URL地址，利用它我们可能搜索到一些敏感信息。<br>
+<a href="/uploads/2021/12/wp_editor_md_2b9a049732f68c3937cb2e1ba5e42ec0.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_2b9a049732f68c3937cb2e1ba5e42ec0.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+info:关键字<br>
+返回指定网站的基本信息<br>
+<a href="/uploads/2021/12/wp_editor_md_412a17b6dd79570d9b012bc10bc7bb7b.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_412a17b6dd79570d9b012bc10bc7bb7b.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+filetype:关键字 site:关键字<br>
+返回关键站点指定类型的文件<br>
+<a href="/uploads/2021/12/wp_editor_md_9837cf49e7ef4e0b9c86fc4c5b39d712.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_9837cf49e7ef4e0b9c86fc4c5b39d712.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+谷歌语法需要几条命令组合起来才能发挥他最大的威力，单单是一个，往往在实战时作用微乎其微，下边我给大家列举几条常用的组合。<br>
+查找后台<br>
+site:pku.edu.cn intitle:后台<br>
+site:pku.edu.cn inur:admin<br>
+site:pku.edu.cn intext:管理<br>
+<a href="/uploads/2021/12/wp_editor_md_4a03e2fb942f94acced271a32de5724a.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_4a03e2fb942f94acced271a32de5724a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+查找登录口<br>
+site:xxx.com intitle:登录<br>
+site: xxx.com inurl:login<br>
+site: xxx.com intext:登录<br>
+<a href="/uploads/2021/12/wp_editor_md_a48ff16b17550f10970b9d9627be9df5.jpg"><img loading="lazy" src="/uploads/2021/12/wp_editor_md_a48ff16b17550f10970b9d9627be9df5.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+查找上传点：<br>
+site: xxx.com inurl:upload<br>
+site: xxx.com intext:上传<br>
+查找敏感信息：<br>
+site: xxx.com intext:身份证号|姓名|学号<br>
+查找可能存在sql注入的点：<br>
+site: xxx.com inurl:?id=1<br>
+查找可能存在文件包含的点：<br>
+site: xxx.com inurl:?file=<br>
+site: xxx.com inurl:?image=<br>
+找编辑器页面：<br>
+site:xxx.com inurl:ewebeditor</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://a10nggg.github.io/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>内网渗透 on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/</link>
+    <description>Recent content in 内网渗透 on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 15 Apr 2022 13:43:13 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅试Viper</title>
+      <link>https://a10nggg.github.io/archives/241/</link>
+      <pubDate>Fri, 15 Apr 2022 13:43:13 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/241/</guid>
+      <description>Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>fofa场景——st2入口内网WP</title>
+      <link>https://a10nggg.github.io/archives/134/</link>
+      <pubDate>Wed, 19 Jan 2022 13:05:37 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/134/</guid>
+      <description>靶场拓扑图 {.wp-editor-md-post-content-link} 入口struts2 进去根据拓扑图发现是struts2，工具一把梭，然后在/tmp目录拿到flag。 {.wp-editor-md-post-content-link} 内网探测。 在拓扑图上发现有两</description>
+    </item>
+    <item>
+      <title>常用代理以及多层代理，端口转发</title>
+      <link>https://a10nggg.github.io/archives/119/</link>
+      <pubDate>Tue, 11 Jan 2022 07:53:46 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/119/</guid>
+      <description>常见工具 {.wp-editor-md-post-content-link} EW 反向内网穿透 反向代理就是我们服务端监听，⽬标客户端连接我们的服务端，这就叫做反向代理。 也就是红队⼈员的 VPS 称之为客户端，开启了⼀个</description>
+    </item>
+    <item>
+      <title>获取机器下各类密码</title>
+      <link>https://a10nggg.github.io/archives/117/</link>
+      <pubDate>Tue, 11 Jan 2022 07:34:26 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/117/</guid>
+      <description>通过注册表抓取密码hash ⾸先我们需要把当前系统注册表 SAM、SYSTEM 获取到： 然后把这两个⽂件拖回本地然后⽤ mimikatz 抓取密码hash： reg save HKLM\SYSTEM Sys.hiv</description>
+    </item>
+    <item>
+      <title>数据库提权</title>
+      <link>https://a10nggg.github.io/archives/114/</link>
+      <pubDate>Tue, 11 Jan 2022 07:29:41 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/114/</guid>
+      <description>上传一个php大马，或者直接用webshell管理工具也行。 二、利用条件 1、常规情况： 1.1 mysql配置文件secure_file_priv项</description>
+    </item>
+    <item>
+      <title>内网无域机器域渗透</title>
+      <link>https://a10nggg.github.io/archives/112/</link>
+      <pubDate>Tue, 11 Jan 2022 07:09:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/112/</guid>
+      <description>攻击思路 1、通过nltest或者nbtscan找到域控，并且可以建立空连接 2、找到域控，但是无法建立空连接 3、没找到域控，但是通过nbtsc</description>
+    </item>
+    <item>
+      <title>IPC$</title>
+      <link>https://a10nggg.github.io/archives/101/</link>
+      <pubDate>Tue, 11 Jan 2022 06:47:35 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/101/</guid>
+      <description>IPC（共享命名管道资源）其实就是为了实现进程间通信⽽开放的命名管道；IPC可以通过验证⽤户名和密码 获得相应的权限，通常在远程管理计算机和查</description>
+    </item>
+    <item>
+      <title>windows提权</title>
+      <link>https://a10nggg.github.io/archives/98/</link>
+      <pubDate>Tue, 11 Jan 2022 06:38:53 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/98/</guid>
+      <description>⼀般常⻅的提权⽅法有：（当然还有很多提权⼿段） 本地溢出漏洞提权 数据库提权 第三⽅软件提权 MS16-032 提权 影响版本 Windows Vista Windows 7 Windows 8.1 Windows 10 Windows 2008 Server 直接运行提权exe</description>
+    </item>
+    <item>
+      <title>内网信息收集</title>
+      <link>https://a10nggg.github.io/archives/93/</link>
+      <pubDate>Tue, 11 Jan 2022 06:29:12 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/93/</guid>
+      <description>判断当前机器是否在域内 1.查看当前⽹卡和IP信息： ipconfig /all 如果是域，在主dns处是域名 2、查看系统详细信息 Systeminfo 域内机器能看到域的地方是一个域名，同</description>
+    </item>
+    <item>
+      <title>记一次实战 CVE-2021-21972</title>
+      <link>https://a10nggg.github.io/archives/58/</link>
+      <pubDate>Tue, 21 Dec 2021 14:09:57 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/58/</guid>
+      <description>最近看到几个公众号发关于CVE-2021-22005的帖子，但是发现大家都是纸上谈兵，没有实操的帖子是没有灵魂的。正好我前几天做渗透测试（正</description>
+    </item>
+  </channel>
+</rss>

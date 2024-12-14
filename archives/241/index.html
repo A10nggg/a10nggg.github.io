@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>浅试Viper | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/241/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/241/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="浅试Viper" />
+<meta property="og:description" content="Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/241/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-15T13:43:13+00:00" />
+<meta property="article:modified_time" content="2022-04-15T13:43:13+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="浅试Viper"/>
+<meta name="twitter:description" content="Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "浅试Viper",
+      "item": "https://a10nggg.github.io/archives/241/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "浅试Viper",
+  "name": "浅试Viper",
+  "description": "Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二",
+  "keywords": [
+    
+  ],
+  "articleBody": "Viper(炫彩蛇)\nViper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二次开发， 提供图形化的操作界面,用户基于浏览器即可进行内网渗透。使用的方法都跟msf几乎一样，使用效果还是不错的里面现在已经集成了98个模块了。\n这里用我之前讲取证溯源讲座搭的环境，用Viper再打一次，看看有啥不一样的体验。\nViper安装 安装比较简单，没有什么坑，跟着官方给的文档直接安就OK了\n传送门\nviper-c is up-to-date\n当出现这串字符时，说明就安装成功了。\n然后用浏览器访问ip:60000，默认用户名是root，密码就是你自己设置的，就登上去了。\n打点 在linux上我安装的是dedecms-5.7_sp1。这个cms比较经典，因为dedecms漏洞比较多，整个合集都够写本小说了。。。\n首先访问http://testdede.com/(linux上用bt搭的)网站。\n然后就是找后台，dedecms默认的后台地址在/dede。\n如果修改之后的话，也是有很多方法找后台的，比如看robot.txt。\ninclude/dialog/select_soft.php?activepath=/st0pst0pst0pst0pst0pst0pst0pst0p\ninclude/dialog/select_soft.php文件可以爆出DEDECMS的后台,以前的老板本可以跳过登陆验证直接访问,无需管理员帐号,新版本的就直接转向了后台.\ninclude/dialog/config.php会爆出后台管理路径\ninclude/dialog/select_soft.php?activepath=/include/FCKeditor 跳转目录\n/dede/inc/inc_archives_functions.php\n根据错误日志信息，访问/plus/mysql_error_trace.inc\n实战的话，还可以用搜索引擎来搜索（列：site:test.com inurl:login.php）。\n实在不行，还可以利用tags.php来进行爆破，网上有很多脚本的。\n访问后台，尝试默认账密admin：admin。成功进入后台。\n如果这里不是弱口令的话，可以通过注入拿到账密，也可以识别验证码去爆破。一般后台的密码都是admin。\n进后台之后，就是getshell了，在后台可以通过配置文件写入webshell，这个方法我在实战的时候也用过。\n写进去之后，他不是存在数据库里的，而是存在在/data/config.cache.inc.php这个文件里。\n直接蚁剑连接就行http://testdede.com/data/config.cache.inc.php\n（如果有bt的waf的话 ，可以用冰蝎、哥斯拉，这些流量有加密的webshell，或者用蚁剑的rsa🐎，都可以绕过waf的特征检测的）。\n上去之后，一般bt都是有disable的，但是一般都会有 FPM ，可以通过bypass_disable_functions插件一键打 FPM 来绕disable_functions。\n绕过之后权限只有www，这里可以考虑一下提权了。\nViper 这时候就轮到主角Viper上场了。\n打开之后，先创建一个监听:\n监听载荷–\u003e新建监听。\n这里选64位Linux的反弹监听，端口任意。\n然后选生成载荷，这里还可以生成免杀，真不戳。。。那就浅浅试一下。\n生成之后会自动下载。然后把扔到机器上，运行之后上线成功。\nlinux提权 现在尝试linux提权\n首先尝试suid提权, 查看具有root用户权限的SUID文件\nfind / -perm -u=s -type f 2\u003e/dev/null\n这里首先尝试用find来尝试。\n利用成功。然后这里可以再反弹一个session回来就行了，执行成功之后得到一个root的shell。\n现在再去查看bt的相关配置文件就有权限了，同样，bt的面板我们就拿到了。\n接着进行横向，查看IP段，进行内网扫描。\n横向 先添加一个代理。然后用\n然后使用kali的代理工具proxychains连上代理，nmap进行扫描。\n发现域内机器一台，445和3389都开放。先用ms17_010探测模块进行探测。\n这里点击横向移动-\u003eMS-17010扫描，填写IP列表。然后进行探测。\n这里出现一个问题，当我准备攻击的时候，他提醒我，只支持windows的meterpreter。没办法，打不了了。只有用其他办法了。\n因为3389开放，我们还可以爆破rdp，或者爆破smb也行。\n继续用hadry进行爆破,最后爆破出一个弱口令test/Passw0rd。\n然后rdp登陆上去发现这台机器也是出网的。查看进程没有杀软之后。扔个马上去继续Viper。生成马儿的方法跟之前一样。\nwin7 查看网卡，这是台双网卡机器，并且这台机器在域里。ping一下域名得到域控地址10.0.0.10。\n要想搞掉域控，得要提个权先。\n这里使用它自带的提权模块提权失败了。\n但是比较他的 ’搜索可利用CVE ‘这个模块还是比较好用的。给我列了一堆可利用的提权cve，浅浅拿一个试试。\n使用ms16-032提权成功。上线system的session。\nMSF-令牌窃取 进入隐身模式：use incognito\n我这里已经加载过了，所以显示already been loaded\n第一次加载应该是Success\n列出可用的令牌\nlist_tokens -u\n模拟令牌\n命令：impersonate_token axxxx\\Administrator\n这里域名后面斜杠要写俩，不然要报错\n然后就可以用$ipc进行连接了。\n然后先添加路由。通过win7上添加路由，可以点自动添加。然后生成马儿上线。\n创建一个正向链接的监听。\n然后生成一个正向载荷。\n再通过ipc传到dc，用Psexec执行。\nPsExec64.exe -accepteula \\dc -s cmd.exe\n或者用计划任务来执行。\n创建计划任务\nschtasks /create /tn “test” /tr c:\\1644294636.exe /sc once /st 10:29 /S 10.0.0.10 /RU System /u\n立即执行\nschtasks /run /tn “test” /S 10.0.0.10\n.然后上线成功！\n总结 用Viper打自己搭的靶机玩了一下。体验还不错。听其他师傅说Viper的免杀效果不错。可惜我这个环境没装杀软。不然还可以试试。\n参考文章：https://mp.weixin.qq.com/s/Ua9J47hXgVs3xK96lgL-tg\n",
+  "wordCount" : "2294",
+  "inLanguage": "en",
+  "datePublished": "2022-04-15T13:43:13Z",
+  "dateModified": "2022-04-15T13:43:13Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/241/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      浅试Viper
+    </h1>
+    <div class="post-meta"><span title='2022-04-15 13:43:13 +0000 +0000'>April 15, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p><strong>Viper(炫彩蛇)</strong></p>
+<ul>
+<li>
+<p>Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二次开发， 提供图形化的操作界面,用户基于浏览器即可进行内网渗透。使用的方法都跟msf几乎一样，使用效果还是不错的里面现在已经集成了98个模块了。</p>
+<p>这里用我之前讲取证溯源讲座搭的环境，用Viper再打一次，看看有啥不一样的体验。</p>
+<h2 id="viper安装">Viper安装<a hidden class="anchor" aria-hidden="true" href="#viper安装">#</a></h2>
+<p>安装比较简单，没有什么坑，跟着官方给的文档直接安就OK了</p>
+<p><a href="https://www.yuque.com/vipersec/help/olg1ua">传送门</a></p>
+<p><code>viper-c is up-to-date</code></p>
+<p>当出现这串字符时，说明就安装成功了。</p>
+<p>然后用浏览器访问ip:60000，默认用户名是root，密码就是你自己设置的，就登上去了。</p>
+<h2 id="打点">打点<a hidden class="anchor" aria-hidden="true" href="#打点">#</a></h2>
+<p>在linux上我安装的是dedecms-5.7_sp1。这个cms比较经典，因为dedecms漏洞比较多，整个合集都够写本小说了。。。</p>
+<p>首先访问http://testdede.com/(linux上用bt搭的)网站。</p>
+<p>然后就是找后台，dedecms默认的后台地址在/dede。</p>
+<p>如果修改之后的话，也是有很多方法找后台的，比如看robot.txt。</p>
+<ul>
+<li>
+<p>include/dialog/select_soft.php?activepath=/st0pst0pst0pst0pst0pst0pst0pst0p</p>
+</li>
+<li>
+<p>include/dialog/select_soft.php文件可以爆出DEDECMS的后台,以前的老板本可以跳过登陆验证直接访问,无需管理员帐号,新版本的就直接转向了后台.</p>
+</li>
+<li>
+<p>include/dialog/config.php会爆出后台管理路径</p>
+</li>
+<li>
+<p>include/dialog/select_soft.php?activepath=/include/FCKeditor 跳转目录</p>
+</li>
+<li>
+<p>/dede/inc/inc_archives_functions.php</p>
+</li>
+<li>
+<p>根据错误日志信息，访问/plus/mysql_error_trace.inc</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>实战的话，还可以用搜索引擎来搜索（列：site:test.com inurl:login.php）。</p>
+<p>实在不行，还可以利用tags.php来进行爆破，网上有很多脚本的。</p>
+<p>访问后台，尝试默认账密admin：admin。成功进入后台。</p>
+<p>如果这里不是弱口令的话，可以通过注入拿到账密，也可以识别验证码去爆破。一般后台的密码都是admin。</p>
+<p>进后台之后，就是getshell了，在后台可以通过配置文件写入webshell，这个方法我在实战的时候也用过。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649991465902.png" alt=""  />
+</p>
+<p>写进去之后，他不是存在数据库里的，而是存在在/data/config.cache.inc.php这个文件里。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649992032694.png" alt="1649992032694"  />
+</p>
+<p>直接蚁剑连接就行http://testdede.com/data/config.cache.inc.php</p>
+<p>（如果有bt的waf的话 ，可以用冰蝎、哥斯拉，这些流量有加密的webshell，或者用蚁剑的rsa🐎，都可以绕过waf的特征检测的）。</p>
+<p>上去之后，一般bt都是有disable的，但是一般都会有 FPM ，可以通过bypass_disable_functions插件一键打 FPM 来绕disable_functions。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649992693514.png" alt="1649992693514"  />
+</p>
+<p>绕过之后权限只有www，这里可以考虑一下提权了。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649992803346.png" alt="1649992803346"  />
+</p>
+<h2 id="viper">Viper<a hidden class="anchor" aria-hidden="true" href="#viper">#</a></h2>
+<p>这时候就轮到主角Viper上场了。</p>
+<p>打开之后，先创建一个监听:</p>
+<p>监听载荷&ndash;&gt;新建监听。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649992979032.png" alt=""  />
+</p>
+<p>这里选64位Linux的反弹监听，端口任意。</p>
+<p>然后选生成载荷，这里还可以生成免杀，真不戳。。。那就浅浅试一下。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649993259002.png" alt="1649993259002"  />
+</p>
+<p>生成之后会自动下载。然后把扔到机器上，运行之后上线成功。</p>
+<h2 id="linux提权">linux提权<a hidden class="anchor" aria-hidden="true" href="#linux提权">#</a></h2>
+<p>现在尝试linux提权</p>
+<p>首先尝试suid提权, 查看具有root用户权限的SUID文件</p>
+<p><code>find / -perm -u=s -type f 2&gt;/dev/null</code></p>
+<p><img loading="lazy" src="/uploads/2022/04/1649996110794.png" alt="1649996110794"  />
+</p>
+<p>这里首先尝试用find来尝试。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649996284420.png" alt="1649996284420"  />
+</p>
+<p>利用成功。然后这里可以再反弹一个session回来就行了，执行成功之后得到一个root的shell。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1649996495138.png" alt="1649996495138"  />
+</p>
+<p>现在再去查看bt的相关配置文件就有权限了，同样，bt的面板我们就拿到了。</p>
+<p>接着进行横向，查看IP段，进行内网扫描。</p>
+<h2 id="横向">横向<a hidden class="anchor" aria-hidden="true" href="#横向">#</a></h2>
+<p>先添加一个代理。然后用</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650007066396.png" alt="1650007066396"  />
+</p>
+<p>然后使用kali的代理工具proxychains连上代理，nmap进行扫描。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650007494378.png" alt="1650007494378"  />
+</p>
+<p>发现域内机器一台，445和3389都开放。先用ms17_010探测模块进行探测。</p>
+<p>这里点击横向移动-&gt;MS-17010扫描，填写IP列表。然后进行探测。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650007665351.png" alt="1650007665351"  />
+</p>
+<p>这里出现一个问题，当我准备攻击的时候，他提醒我，只支持windows的meterpreter。没办法，打不了了。只有用其他办法了。</p>
+<p>因为3389开放，我们还可以爆破rdp，或者爆破smb也行。</p>
+<p>继续用hadry进行爆破,最后爆破出一个弱口令test/Passw0rd。</p>
+<p>然后rdp登陆上去发现这台机器也是出网的。查看进程没有杀软之后。扔个马上去继续Viper。生成马儿的方法跟之前一样。</p>
+<h1 id="win7">win7<a hidden class="anchor" aria-hidden="true" href="#win7">#</a></h1>
+<p>查看网卡，这是台双网卡机器，并且这台机器在域里。ping一下域名得到域控地址10.0.0.10。</p>
+<p>要想搞掉域控，得要提个权先。</p>
+<p>这里使用它自带的提权模块提权失败了。</p>
+<p>但是比较他的 ’搜索可利用CVE ‘这个模块还是比较好用的。给我列了一堆可利用的提权cve，浅浅拿一个试试。</p>
+<p>使用ms16-032提权成功。上线system的session。</p>
+<h1 id="msf-令牌窃取">MSF-令牌窃取<a hidden class="anchor" aria-hidden="true" href="#msf-令牌窃取">#</a></h1>
+<p>进入隐身模式：use incognito</p>
+<p>我这里已经加载过了，所以显示already been loaded</p>
+<p>第一次加载应该是Success</p>
+<p>列出可用的令牌</p>
+<p>list_tokens -u</p>
+<p>模拟令牌</p>
+<p>命令：<strong>impersonate_token axxxx\Administrator</strong></p>
+<p>这里域名后面斜杠要写俩，不然要报错</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650020403222.png" alt="1650020403222"  />
+</p>
+<p>然后就可以用$ipc进行连接了。</p>
+<p>然后先添加路由。通过win7上添加路由，可以点自动添加。然后生成马儿上线。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650025451995.png" alt="1650025451995"  />
+</p>
+<p>创建一个正向链接的监听。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650025329663.png" alt="1650025329663"  />
+</p>
+<p>然后生成一个正向载荷。</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650025777498.png" alt="1650025777498"  />
+</p>
+<p>再通过ipc传到dc，用Psexec执行。</p>
+<p>PsExec64.exe -accepteula \dc -s cmd.exe</p>
+<p>或者用计划任务来执行。</p>
+<p>创建计划任务</p>
+<p>schtasks /create /tn &ldquo;test&rdquo; /tr c:\1644294636.exe /sc once /st 10:29 /S 10.0.0.10 /RU System /u</p>
+<p>立即执行</p>
+<p>schtasks /run /tn &ldquo;test&rdquo; /S 10.0.0.10</p>
+<p>.然后上线成功！</p>
+<p><img loading="lazy" src="/uploads/2022/04/1650028529740.png" alt="1650028529740"  />
+</p>
+<h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<p>用Viper打自己搭的靶机玩了一下。体验还不错。听其他师傅说Viper的免杀效果不错。可惜我这个环境没装杀软。不然还可以试试。</p>
+<p>参考文章：<a href="https://mp.weixin.qq.com/s/Ua9J47hXgVs3xK96lgL-tg">https://mp.weixin.qq.com/s/Ua9J47hXgVs3xK96lgL-tg</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

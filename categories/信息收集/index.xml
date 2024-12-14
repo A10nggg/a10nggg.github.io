@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>信息收集 on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</link>
+    <description>Recent content in 信息收集 on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Sep 2022 13:09:52 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ARL增强版搭建</title>
+      <link>https://a10nggg.github.io/archives/342/</link>
+      <pubDate>Fri, 02 Sep 2022 13:09:52 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/342/</guid>
+      <description>拉取项目 首先从GitHub克隆到服务器上。 git clone https://github.com/ki9mu/ARL-plus-docker/ 修改配置文件 因为ARL在配置文件里设置了黑名单，有时候项目为GOV或者EDU之类的时候无法进</description>
+    </item>
+    <item>
+      <title>浅试Viper</title>
+      <link>https://a10nggg.github.io/archives/241/</link>
+      <pubDate>Fri, 15 Apr 2022 13:43:13 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/241/</guid>
+      <description>Viper(炫彩蛇) Viper(炫彩蛇)是一款图形化内网渗透工具,将内网渗透过程中常用的战术及技术进行模块化及武器化.Viper基于msf二</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>获取机器下各类密码</title>
+      <link>https://a10nggg.github.io/archives/117/</link>
+      <pubDate>Tue, 11 Jan 2022 07:34:26 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/117/</guid>
+      <description>通过注册表抓取密码hash ⾸先我们需要把当前系统注册表 SAM、SYSTEM 获取到： 然后把这两个⽂件拖回本地然后⽤ mimikatz 抓取密码hash： reg save HKLM\SYSTEM Sys.hiv</description>
+    </item>
+    <item>
+      <title>内网信息收集</title>
+      <link>https://a10nggg.github.io/archives/93/</link>
+      <pubDate>Tue, 11 Jan 2022 06:29:12 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/93/</guid>
+      <description>判断当前机器是否在域内 1.查看当前⽹卡和IP信息： ipconfig /all 如果是域，在主dns处是域名 2、查看系统详细信息 Systeminfo 域内机器能看到域的地方是一个域名，同</description>
+    </item>
+    <item>
+      <title>谷歌语法</title>
+      <link>https://a10nggg.github.io/archives/48/</link>
+      <pubDate>Tue, 21 Dec 2021 13:27:43 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/48/</guid>
+      <description>我记得某某带佬跟我说过：信息收集是渗透的本质。 谷歌的爬虫非常强大，在前期的信息收集里能给我们提供非常大的帮助，轻则给你找到后台登录口，用户身</description>
+    </item>
+  </channel>
+</rss>

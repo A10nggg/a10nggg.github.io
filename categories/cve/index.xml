@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CVE on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/cve/</link>
+    <description>Recent content in CVE on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Sep 2022 13:35:06 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/cve/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVE-2022-30190</title>
+      <link>https://a10nggg.github.io/archives/357/</link>
+      <pubDate>Fri, 02 Sep 2022 13:35:06 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/357/</guid>
+      <description>好久以前写的了，忘发了。。。 前言 昨天大哥扔了个MS office 0day（CVE-2022-30190）的截图到群里，晚上就复现了一下 ，随即有了下文 。 攻</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>复现Apache CVE-2021-41773</title>
+      <link>https://a10nggg.github.io/archives/64/</link>
+      <pubDate>Tue, 21 Dec 2021 14:17:59 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/64/</guid>
+      <description>前言 10月5号，Apache HTTP Server 项目修补了 CVE-2021-41773，这是 Apache HTTP Server 中的一个路径遍历和文件泄露漏洞，Apache HTTP Server 是一种用于</description>
+    </item>
+    <item>
+      <title>log4j2_rce复现</title>
+      <link>https://a10nggg.github.io/archives/29/</link>
+      <pubDate>Tue, 21 Dec 2021 12:36:05 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/29/</guid>
+      <description>拉取本地环境运行， docker pull vulfocus/log4j2-rce-2021-12-09:latest docker run -d -P vulfocus/log4j2-rce-2021-12-09:latest 1.首先在vps用JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar启</description>
+    </item>
+  </channel>
+</rss>

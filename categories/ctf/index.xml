@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CTF on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/categories/ctf/</link>
+    <description>Recent content in CTF on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 22 Sep 2022 15:44:44 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>免杀笔记（一）</title>
+      <link>https://a10nggg.github.io/archives/390/</link>
+      <pubDate>Thu, 22 Sep 2022 15:44:44 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/390/</guid>
+      <description>xxx</description>
+    </item>
+    <item>
+      <title>2022蓝帽决赛部分WP（awdp）</title>
+      <link>https://a10nggg.github.io/archives/370/</link>
+      <pubDate>Thu, 22 Sep 2022 15:43:55 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/370/</guid>
+      <description>web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p</description>
+    </item>
+    <item>
+      <title>第十五届全国大学生信息安全竞赛创新实践能力赛</title>
+      <link>https://a10nggg.github.io/archives/281/</link>
+      <pubDate>Sun, 29 May 2022 13:48:21 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/281/</guid>
+      <description>基于挑战码的双向认证1 这两个应该是属于非预期，查找文件内容，两个flag都出了： find / |xargs grep -ri flag{ 2&amp;gt;/dev/null flag{34f5fdaf-c373-47fd-afab-01ed2914c11a} 基于挑战码的双向认证2 解题步骤同上 基于挑战码</description>
+    </item>
+    <item>
+      <title>CTFSHOW-WEB入门-反序列化</title>
+      <link>https://a10nggg.github.io/archives/237/</link>
+      <pubDate>Thu, 14 Apr 2022 08:46:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/237/</guid>
+      <description>web254 &amp;lt;?php /* # -*- coding: utf-8 -*- # @Author: h1xa # @Date: 2020-12-02 17:44:47 # @Last Modified by: h1xa # @Last Modified time: 2020-12-02 19:29:02 # @email: h1xa@ctfer.com # @link: https://ctfer.com */ error_reporting(0); highlight_file(__FILE__); include(&amp;#039;flag.php&amp;#039;); class ctfShowUser{ public $username=&amp;#039;xxxxxx&amp;#039;; public $password=&amp;#039;xxxxxx&amp;#039;; public $isVip=false; public function checkVip(){ return $this-&amp;gt;isVip; } public function login($u,$p){ if($this-&amp;gt;username===$u&amp;&amp;$this-&amp;gt;password===$p){ $this-&amp;gt;isVip=true; } return $this-&amp;gt;isVip; } public function vipOneKeyGetFlag(){ if($this-&amp;gt;isVip){ global $flag; echo &#34;your flag is &#34;.$flag;</description>
+    </item>
+    <item>
+      <title>红明谷2022部分wp</title>
+      <link>https://a10nggg.github.io/archives/198/</link>
+      <pubDate>Tue, 22 Mar 2022 12:26:12 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/198/</guid>
+      <description>WEB Fan website 根据题目描述，发现这是一个zf框架，网上有很多链子，但是需要一个入口点，在首页没有发现 啥有用的玩意儿。 扫描目录，得到源码，www.zi</description>
+    </item>
+    <item>
+      <title>虎符2022部分wp</title>
+      <link>https://a10nggg.github.io/archives/189/</link>
+      <pubDate>Sun, 20 Mar 2022 10:50:16 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/189/</guid>
+      <description>WEB babysql 根据官方给的hint，这是个 regexp 还有也给了一个hint.md. CREATE TABLE `auth` ( `id` int NOT NULL AUTO_INCREMENT, `username` varchar(32) NOT NULL, `password` varchar(32) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `auth_username_uindex` (`username`) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci; import { Injectable } from &#39;@nestjs/common&#39;; import {</description>
+    </item>
+    <item>
+      <title>[TQLCTF2022] Simple PHP WP</title>
+      <link>https://a10nggg.github.io/archives/171/</link>
+      <pubDate>Mon, 21 Feb 2022 13:22:27 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/171/</guid>
+      <description>做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同</description>
+    </item>
+    <item>
+      <title>fofa场景——内网死角WP</title>
+      <link>https://a10nggg.github.io/archives/158/</link>
+      <pubDate>Sun, 06 Feb 2022 11:20:01 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/158/</guid>
+      <description>入口 入口是CVE-2021-3129，也就是Laravel Debug页面RCE，这里主要是搞内网。脚本一把梭了上传webshell。哥斯拉连</description>
+    </item>
+    <item>
+      <title>MySQL写Shell</title>
+      <link>https://a10nggg.github.io/archives/132/</link>
+      <pubDate>Thu, 20 Jan 2022 09:32:32 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/132/</guid>
+      <description>日志写马 条件 MySQL的两个全局变量： general_log指的是日志保存状态，一共有两个值（ON/OFF）ON代表开启 OFF代表关闭。 general_log_file 指</description>
+    </item>
+    <item>
+      <title>DNSlog利用姿势总结</title>
+      <link>https://a10nggg.github.io/archives/86/</link>
+      <pubDate>Fri, 07 Jan 2022 13:04:09 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/86/</guid>
+      <description>前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边</description>
+    </item>
+    <item>
+      <title>批量注册CTFd用户脚本</title>
+      <link>https://a10nggg.github.io/archives/70/</link>
+      <pubDate>Sun, 26 Dec 2021 14:13:57 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/70/</guid>
+      <description>import requests import json url = &#39;这里填地址！！！&#39; user = [] passwd =[] Cookie = input(&#39;输入session：&#39;) CSRF = input(&#39;输入CSRF-Token：&#39;) headers = {&#39;Accept&#39;:&#39;application/json&#39;,&#39;Content-Type&#39;: &#39;application/json&#39;,&#39;Cookie&#39;:Cookie,</description>
+    </item>
+    <item>
+      <title>sql姿势总结（一）</title>
+      <link>https://a10nggg.github.io/archives/55/</link>
+      <pubDate>Tue, 21 Dec 2021 14:05:33 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/55/</guid>
+      <description>mysql数据库基本操作语句可在以下博客学习。 https://blog.csdn.net/leiurse/article/details/106677106 SQL注入常用函数 mid()函数 SELECT MID(ColumnName, Start [, Length]) 从指定字段中提取出字段的内容 column_name</description>
+    </item>
+    <item>
+      <title>rce_bypass</title>
+      <link>https://a10nggg.github.io/archives/50/</link>
+      <pubDate>Tue, 21 Dec 2021 13:33:09 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/50/</guid>
+      <description>空格绕过： 在bash下可以用$IFS、${IFS}、$IFS$9、%09、&amp;lt;、&amp;gt;、&amp;lt;&amp;gt;、{,}（例如{cat,/et</description>
+    </item>
+  </channel>
+</rss>

